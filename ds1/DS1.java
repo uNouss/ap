@@ -117,7 +117,7 @@ class DS1 extends Program{
 	// sinon on represente NOT(|n|) + 1
 
 	// verifier que nombre est compris entre -128 et 127 pour 8 bits
-	if(n < -128 || n > 127 ) return "pas possible sur 7bits + 1bit de signe [OVERFLOW]";
+	if(n < -1*puissanceDe2(NB_OCTECT - 1) || n > (puissanceDe2(NB_OCTECT - 1) - 1) ) return "pas possible sur 7bits + 1bit de signe [OVERFLOW]";
 	String chaineBinaire = "";
 	int entier = ( n < 0) ? -1*n: n;
 	//println(entier);
@@ -183,6 +183,7 @@ class DS1 extends Program{
 	// s'il est positif on fait une conversion normal
 	// sinon on inverse chaque bit et on fait le complémenent à 2 cad NOT(|n|) + 1
 	//println("je suis celui qu'on converti en dec "+chaineBinaire);
+	if(length(chaineBinaire) > NB_OCTECT) return -1111111111;
 	int nombre = 0;
 	char signe = charAt(chaineBinaire,0);
 	if(signe == '1') chaineBinaire = inverserBitEtCompleterA1(chaineBinaire);
