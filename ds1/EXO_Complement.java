@@ -78,7 +78,6 @@ class EXO_Complement extends Program{
     // 	return estParenthese;
     // }
     boolean estBienParenthese(String s){
-	String mesParenthese = "(){}[]";
 	boolean parentheseCorrect = false;
 	int compteurDeParenthese = 0, compteurDeAccolade = 0, compteurDeCrochet = 0;
 	for(int i = 0; i < length(s); i++){
