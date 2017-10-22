@@ -1,5 +1,5 @@
 class DS1 extends Program{
-    final static int NB_OCTECT = 8; // avec 8e bit comme bit de signe
+    /*final static int NB_OCTECT = 8; // avec 8e bit comme bit de signe
     void algorithm(){
     	// assertFalse( estLettre('Z'));
     	// assertTrue ( estLettre('a'));
@@ -20,17 +20,10 @@ class DS1 extends Program{
 	String binaire = dec2bin(n);
 	println(n + " en binaire est = " + binaire );
 	println("et sa representation decimale est = "+ bin2dec(binaire));
-    }
-    
-    void testEstPangramme() {
-	assertTrue( estPangramme("portez ce vieux whisky au juge blond qui fume"));
-	assertTrue( estPangramme("monsieur jack vous dactylographiez bien mieux que votre ami wolf"));
-	assertTrue( estPangramme("buvez de ce whisky que le patron juge fameux"));
-	assertFalse( estRemarquable("buvez de ce whisky que le patron juge fameux"));
-    }
-    
+    }*/
+        
     boolean estLettre(char c){
-	return ( c > 96 && c < 123);
+	return ( c > 'a' && c <= 'z');
     }
     int positionLettre(char c, String chaine){
 	int position = -1, taille = length(chaine);
@@ -44,12 +37,13 @@ class DS1 extends Program{
 	return position;
     }
     String supprimeLettre(int n, String s){
-	String chaine = "";
+	/*String chaine = "";
 	for(int i = 0; i < length(s); i++){
 	    if (i != n)
 		chaine += charAt(s,i);
 	}
-	return chaine;
+	return chaine;*/
+	return substring(s, 0, n) + substring(s, n+1, length(s));
     }
     String genereAlphabet(){
 	String alphabet = "";
@@ -58,6 +52,13 @@ class DS1 extends Program{
 	return alphabet;
     }
 
+   void testEstPangramme() {
+	assertTrue( estPangramme("portez ce vieux whisky au juge blond qui fume"));
+	assertTrue( estPangramme("monsieur jack vous dactylographiez bien mieux que votre ami wolf"));
+	assertTrue( estPangramme("buvez de ce whisky que le patron juge fameux"));
+	assertFalse( estRemarquable("buvez de ce whisky que le patron juge fameux"));
+    }
+	
     boolean estPangramme(String s){
 	//boucler sur l'alphabet
 	//prendre lettre par lettre sur l'alphabet
@@ -75,7 +76,12 @@ class DS1 extends Program{
 	}
 	return true;
     }
-    
+
+    void testEstRemarquable() {
+	assertFalse( estPangramme("portez ce vieux whisky au juge blond qui fume"));
+	assertFalse( estRemarquable("buvez de ce whisky que le patron juge fameux"));
+    }
+	
     boolean estRemarquable(String s){
 	// String alphabet = genereAlphabet();
 	// for(int i = 0; i < 26 && ( i < length(s)) ; i++){
@@ -111,13 +117,28 @@ class DS1 extends Program{
      # Conversion de base en base: 
      # base 10 en base 2
     *******************************************************************/
+	
+    void testDec2bin() {
+	assertEquals("111", dec2bin(7));
+	assertEquals("1010", dec2bin(10));
+	assertEquals("10000000000", dec2bin(1024));
+	assertEquals("11001", dec2bin(25));
+    }    	
     String dec2bin(int n){
+	String chaineBinaire = "";
+	while(n/2 != 0){
+	    chaineBinaire = n%2 + chaineBinaire;
+	    n = n/2;
+	}	
+	chaineBinaire = n%2 + chaineBinaire;
+	return chaineBinaire;
+	
 	//println("Conversion decimal binaire");
 	// si n >= 0, on trouve sa répresentation binaire
 	// sinon on represente NOT(|n|) + 1
-
 	// verifier que nombre est compris entre -128 et 127 pour 8 bits
-	if(n < -1*puissanceDe2(NB_OCTECT - 1) || n > (puissanceDe2(NB_OCTECT - 1) - 1) ) return "pas possible sur 7bits + 1bit de signe [OVERFLOW]";
+		    
+	/*if(n < -1*puissanceDe2(NB_OCTECT - 1) || n > (puissanceDe2(NB_OCTECT - 1) - 1) ) return "pas possible sur 7bits + 1bit de signe [OVERFLOW]";
 	String chaineBinaire = "";
 	int entier = ( n < 0) ? -1*n: n;
 	//println(entier);
@@ -134,10 +155,10 @@ class DS1 extends Program{
 	chaineBinaire = completerBinaire(chaineBinaire, (n < 0)) + chaineBinaire;
 		    
 	//println("double c = "+2*'0');
-	return chaineBinaire;
+	return chaineBinaire;*/
     }
 
-    String completerBinaire(String s, boolean signe){
+    /*String completerBinaire(String s, boolean signe){
 	char prefixe = (signe)?'1':'0';
 	String chaineBinaire = "";
 	for(int i=0;i < (NB_OCTECT - 1) - length(s); i++)
@@ -177,8 +198,23 @@ class DS1 extends Program{
 	//println("position du premier 1 = "+position);
 	return chaineConvertie;
     }
+    */
+    void testBin2Dec() {
+	assertEquals(1024, bin2dec("10000000000"));
+	assertEquals(25, bin2dec("11001"));
+    }    	
 
     int bin2dec(String chaineBinaire){
+	int nombre = 0;
+	for(int i = 1; i < length(chaineBinaire); i++){
+	    if ( charAt(chaineBinaire,i) != '0'){
+		nombre += puissanceDe2(length(chaineBinaire) - (i+1));
+	    }
+	}
+	
+	return nombre;
+	    
+	/*    
 	// on recupere le bit de poids fort pour tester s'il a 1 ( entier negatif) ou 0 (entier positif)
 	// s'il est positif on fait une conversion normal
 	// sinon on inverse chaque bit et on fait le complémenent à 2 cad NOT(|n|) + 1
@@ -196,6 +232,7 @@ class DS1 extends Program{
 	//println("je suis le nombre obtenue" + nombre);
 	
 	return (signe == '1')?(-1*nombre):nombre;
+	*/
     }
 
     int puissanceDe2(int n){
