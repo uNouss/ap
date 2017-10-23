@@ -1,12 +1,15 @@
 class EXO_Complement extends Program{
-    void algorithm(){
-	ticketCaisse();
-	println("====================================================");
-	intersectionEnsemble();
-	println("====================================================");
-	testEstBienParenthesee();
-    }
-    
+    // void algorithm(){
+    // 	ticketCaisse();
+    // 	println("====================================================");
+    // 	intersectionEnsemble();
+    // 	println("====================================================");
+    // 	testEstBienParenthesee();
+    // }
+
+    // ==========================================================
+    // ==========================================================
+    // ==========================================================
     void ticketCaisse(){
 	double prixArticle = 0.0, prixTotale = 0.0;
 	String nomProduit = "", mesArticles = "";
@@ -24,29 +27,53 @@ class EXO_Complement extends Program{
 	}while( quantiteArticle != 0 && !equals(nomProduit,""));
 	println(mesArticles+
 		"-------------------------------------------------------\n"+
-		"\t\t\tvotre totale est de: " + prixTotale);
+		"\t\t\tvotre totale est de: " + prixTotale + " €");
     }
-    void intersectionEnsemble(){
-	String i1 = saiseIntervalle(), i2 = saiseIntervalle();
-	println("Vos intervalles sont : " + i1 + " et " + i2);
-	if( ((int)charAt(i1, 3) < (int)charAt(i2, 1))
-	    /*&& ((int)charAt(i1, 1) < (int)charAt(i2, 3))*/){
-	    println("non");
-	}else{
-	    println("oui");
-	}
-    }
-    String saiseIntervalle(){
-	int bornInf, bornSup;
-	print("Saisie des bornes d'un interval______\n\tSaisir la borne inférieur: ");
-	bornInf = readInt();
-	do{
-	    print("\tSaisir la borne supérieur( > "+ bornInf +"): ");
-	    bornSup = readInt();
-	}while(bornSup <= bornInf);
-	return "[" + bornInf + ";" + bornSup + "]";
+    // ==========================================================
+    // ==========================================================
+    // ==========================================================
+
+    void testIntersectionEnsemble(){
+	assertFalse(intersectionEnsemble(0, 2, 4, 6));
+	assertTrue(intersectionEnsemble(0, 5, 4, 6));
+	assertTrue(intersectionEnsemble(4, 7, 5, 6));
+	assertTrue(intersectionEnsemble(4, 6, 5, 7));
+	assertFalse(intersectionEnsemble(4, 6, 7, 8));
     }
 
+    // boolean intersectionEnsemble(){
+    // 	String i1 = saiseIntervalle(), i2 = saiseIntervalle();
+    // 	println("Vos intervalles sont : " + i1 + " et " + i2);
+    // 	if( ((int)charAt(i1, 3) < (int)charAt(i2, 1))
+    // 	    /*&& ((int)charAt(i1, 1) < (int)charAt(i2, 3))*/){
+    // 	    return false;
+    // 	}else{
+    // 	    return true;
+    // 	}
+    // }
+    // String saiseIntervalle(){
+    // 	int bornInf, bornSup;
+    // 	print("Saisie des bornes d'un interval______\n\tSaisir la borne inférieur: ");
+    // 	bornInf = readInt();
+    // 	do{
+    // 	    print("\tSaisir la borne supérieur( > "+ bornInf +"): ");
+    // 	    bornSup = readInt();
+    // 	}while(bornSup <= bornInf);
+    // 	return "[" + bornInf + ";" + bornSup + "]";
+    // }
+
+    boolean intersectionEnsemble(int a1, int a2, int b1, int b2){
+	boolean intersection = false;
+	if( a2 > b1 || (a1 < b1 && b2 < a2) || (a1 < b2 && b1 < a1) )
+	    intersection = true;
+	return intersection;
+    }
+
+    // ==========================================================
+    // ==========================================================
+    // ==========================================================
+
+    
     // boolean verificationParenthese(String s){
     // 	s = nettoyerString(s);
     // 	println(s);
@@ -77,6 +104,9 @@ class EXO_Complement extends Program{
     // 	}
     // 	return estParenthese;
     // }
+    // ==========================================================
+    // ==========================================================
+    // ========================================================== 
     boolean estBienParenthese(String s){
 	boolean parentheseCorrect = false;
 	int compteurDeParenthese = 0, compteurDeAccolade = 0, compteurDeCrochet = 0;
@@ -95,14 +125,45 @@ class EXO_Complement extends Program{
 	return (compteurDeCrochet == 0
 		&& compteurDeAccolade == 0
 		&& compteurDeParenthese == 0);
+	// une string pour stocker chaque caractère
     }
     void testEstBienParenthesee(){
-	print("Saisir une expression parenthesée: ");
-	String s = readString();
-	if(estBienParenthese(s))
-	    println(s+" est bien parenthesée");
-	else println(s+" n'est pas bien parenthesée");
+	// print("Saisir une expression parenthesée: ");
+	// String s = readString();
+	// if(estBienParenthese(s))
+	//     println(s+" est bien parenthesée");
+	// else println(s+" n'est pas bien parenthesée");
+	assertTrue(estBienParenthese("(a(b))c(d)"));
+	assertTrue(estBienParenthese("a[b[c(d)e] (f[g])h]ij"));
+	assertFalse(estBienParenthese("a[bc(d]e)"));
+	assertFalse(estBienParenthese("a(b(c)d"));
     }
+    // ==========================================================
+    // ==========================================================
+    // ==========================================================
+    void testEstParfait() {
+        assertTrue(estParfait(6));
+        assertTrue(estParfait(28));
+        assertTrue(estParfait(496));
+        assertTrue(estParfait(8128));
+        
+        assertFalse(estParfait(7));
+        assertFalse(estParfait(12));
+    } 
+    
+    boolean estParfait(int n) {
+	//a completer
+	int somme = 1;
+	for(int i = 2; i < n ; i++){
+	    if( n%i == 0) somme += i;
+	}
+        return (somme == n);
+    }
+    // ==========================================================
+    // ==========================================================
+    // ==========================================================
+
+    
 }
 
 //"(a(b))c(d)" correct; "a[b[c(d)e] (f[g])h]ij" correct; "a[bc(d]e)" incorrect; "a(b(c)d" incorrect

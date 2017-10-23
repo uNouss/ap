@@ -1,26 +1,26 @@
 class DS1 extends Program{
     final static int NB_OCTECT = 8; // avec 8e bit comme bit de signe
-    void algorithm(){
-    	// assertFalse( estLettre('Z'));
-    	// assertTrue ( estLettre('a'));
-    	// assertTrue ( estLettre('v'));
-    	// assertFalse( estLettre('!'));
+    // void algorithm(){
+    // 	// assertFalse( estLettre('Z'));
+    // 	// assertTrue ( estLettre('a'));
+    // 	// assertTrue ( estLettre('v'));
+    // 	// assertFalse( estLettre('!'));
 
-    	// assertEquals( -1, positionLettre('c', "azerty") );
-    	// assertEquals( 3, positionLettre('r', "azerty") );
+    // 	// assertEquals( -1, positionLettre('c', "azerty") );
+    // 	// assertEquals( 3, positionLettre('r', "azerty") );
 	
-    	// assertEquals( "onjour", supprimeLettre(0, "bonjour") );
-    	// assertEquals( "onour",supprimeLettre(2, "onjour") );
+    // 	// assertEquals( "onjour", supprimeLettre(0, "bonjour") );
+    // 	// assertEquals( "onour",supprimeLettre(2, "onjour") );
 	
-    	// assertEquals("abcdefghijklmnopqrstuvwxyz", genereAlphabet());
+    // 	// assertEquals("abcdefghijklmnopqrstuvwxyz", genereAlphabet());
 	
-    	testEstPangramme();
-	print("Entrez un entier à convertir: ");
-	int n = readInt();
-	String binaire = dec2bin(n);
-	println(n + " en binaire est = " + binaire );
-	println("et sa representation decimale est = "+ bin2dec(binaire));
-    }
+    // 	testEstPangramme();
+    // 	print("Entrez un entier à convertir: ");
+    // 	int n = readInt();
+    // 	String binaire = dec2bin(n);
+    // 	println(n + " en binaire est = " + binaire );
+    // 	println("et sa representation decimale est = "+ bin2dec(binaire));
+    // }
     
     void testEstPangramme() {
 	assertTrue( estPangramme("portez ce vieux whisky au juge blond qui fume"));
@@ -28,9 +28,11 @@ class DS1 extends Program{
 	assertTrue( estPangramme("buvez de ce whisky que le patron juge fameux"));
 	assertFalse( estRemarquable("buvez de ce whisky que le patron juge fameux"));
     }
+
+    
     
     boolean estLettre(char c){
-	return ( c > 96 && c < 123);
+	return ( c > 'a' && c <= 'z');
     }
     int positionLettre(char c, String chaine){
 	int position = -1, taille = length(chaine);
@@ -111,6 +113,10 @@ class DS1 extends Program{
      # Conversion de base en base: 
      # base 10 en base 2
     *******************************************************************/
+    void testDec2bin() {
+	assertEquals("00000111", dec2bin(7));
+    }
+
     String dec2bin(int n){
 	//println("Conversion decimal binaire");
 	// si n >= 0, on trouve sa répresentation binaire
@@ -207,3 +213,4 @@ class DS1 extends Program{
     }
     
 }
+
