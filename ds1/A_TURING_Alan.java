@@ -153,7 +153,7 @@ class A_TURING_Alan extends Program {
     boolean estParfait(int n) {
 	//a completer
 	int somme = 1;
-	for(int i = 2; i < n/2 ; i++){
+	for(int i = 2; i < (n/2) + 1 ; i++){
 	    if( n%i == 0) somme += i;
 	}
         return (somme == n);
