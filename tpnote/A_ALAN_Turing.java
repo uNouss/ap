@@ -1,5 +1,5 @@
 
-class F_SOW_Younoussa extends Program {
+class A_ALAN_Turing extends Program {
 
     /**
      * ---------------------------------------------------------------- 
