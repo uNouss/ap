@@ -7,7 +7,7 @@ class Pendu extends Program{
     String tabToString(char[] tab){
 	String s = "";
 	for(int i = 0; i < length(tab); i++){
-	    e += tab[i];
+	    s += tab[i];
 	}
 	return s;
     }
