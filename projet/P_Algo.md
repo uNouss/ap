@@ -1,5 +1,7 @@
 #  Projet Algo
 
+    Groupe: A. Leclerc, Y. Sow
+
 1. __Inspiration__: le keen
 
 
