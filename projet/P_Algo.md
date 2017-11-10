@@ -5,9 +5,9 @@
 
   Le projet que nous souhaitons réaliser est un jeu de grille inspiré du _Suduku_ et du _Solo_. Il est connu sous le nom de **keen**. C'est un jeu que nous avons découvert grâce à l'application [Puzzles](https://github.com/chrisboyle/sgtpuzzles).
 
-![keenimage1](https://github.com/uNouss/ap/raw/master/projet/Screenshot_2017-11-10-10-14-35.png)
+<img src="https://github.com/uNouss/ap/raw/master/projet/Screenshot_2017-11-10-10-14-35.png" width="290" align="left">
+<img src="https://github.com/uNouss/ap/raw/master/projet/Screenshot_2017-11-10-11-40-31.png" width="290" align="">
 
-![keenimage2](https://github.com/uNouss/ap/raw/master/projet/Screenshot_2017-11-10-11-40-31.png)
 
   Nous avons choisi ce jeu car en plus d'être ludique, il est également utile pour apprendre les calculs arithmétique avec des opérations simples. Nous avons donc estimé qu'il serait donc intéressant pour des élèves de primaire pour apprendre et consolider leurs pratiques des calculs. 
 
@@ -24,33 +24,33 @@
 
 2. __description initiale__
   
-![keenimage3](https://github.com/uNouss/ap/raw/master/projet/IMG_20171110_101732.jpg)
+<img src="https://github.com/uNouss/ap/raw/master/projet/IMG_20171110_101732.jpg" height="500" align="">
 
-  L'idée de départ consiste à faire un _Keen_ avec un niveau de difficulté en terme de jouabilité et de conception plus facile. C'est-à-dire de faire des blocs simples et homogène avec des opérations simples à faire comme la multiplication. 
-
+L'idée de départ consiste à faire un _Keen_ avec un niveau de difficulté en terme de jouabilité et de conception plus facile. C'est-à-dire de faire des blocs simples et homogène avec des opérations simples à faire comme la multiplication. 
 
 
 1.  **ce qu'on peut faire**
      
-![keenimage4]( https://raw.githubusercontent.com/uNouss/ap/master/projet/IMG_20171110_142216.JPG )
-![keenimage5](https://raw.githubusercontent.com/uNouss/ap/master/projet/IMG_20171110_142200.JPG)
+<img src="https://github.com/uNouss/ap/raw/master/projet/IMG_20171110_142216.JPG" width="290" align="left">
+<img src="https://github.com/uNouss/ap/raw/master/projet/IMG_20171110_142200.JPG" width="290" align="">
 
 Ici l'accent sera mis sur la simplicité et on aura qu'un type d'opérations: `×` qui permettra d'avoir une grille simple à remplir. En effet remplir une grille qui ne contient que des multiplications devient plus facile dès lors qu'on comprend le concept des tables de multiplications. En plus nous n'implementerons que le niveau de difficulté facile dans cette étape. 
 
-Nous allons également nous concentrer sur une version en console. 
-      
+Nous allons également nous concentrer sur une version en console.
+
  2.  **ce qu'on espère réaliser dans l'idéal**
  
-![keenimage6](https://github.com/uNouss/ap/blob/master/projet/IMG_20171110_142126.JPG?raw=true)
-![keenimage5](https://github.com/uNouss/ap/blob/master/projet/IMG_20171110_142103.JPG?raw=true) 
-   
+<img src="https://github.com/uNouss/ap/raw/master/projet/IMG_20171110_142126.JPG" width="290" align="left">
+<img src="https://github.com/uNouss/ap/raw/master/projet/IMG_20171110_142103.JPG" width="290" align="">
+
 Dans cette étape, nous allons mettre en œuvre les autres opérations ainsi que les règles qui y sont liées. 
 
 Dans cette étape nous souhaitons mettre au point une version avec une interface graphique. 
 
+
  3.   **ce qui serait génial 💡**
   
-![keenimage6](https://github.com/uNouss/ap/blob/master/projet/Screenshot_2017-11-10-17-17-11.png)
+<img src="https://github.com/uNouss/ap/raw/master/projet/Screenshot_2017-11-10-17-17-11.png" width="150" align="left">
 
 Pour finir nous aimerions, implémenter des niveaux de difficulté pour adapter le jeu en fonction de chacun avec une possibilité de garder une trace d'une partie.
 Nous souhaiterions également permettre dans cette à un joueur de pouvoir obtenir des astuces grâce à un système de bonus que nous essayerons de mettre en place. 
