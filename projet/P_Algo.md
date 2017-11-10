@@ -24,7 +24,7 @@
 
 2. __description initiale__
   
-<img src="https://github.com/uNouss/ap/raw/master/projet/IMG_20171110_101732.jpg" height="500" align="">
+<img src="https://github.com/uNouss/ap/raw/master/projet/IMG_20171110_101732.jpg" height="300" align="left">
 
 L'idée de départ consiste à faire un _Keen_ avec un niveau de difficulté en terme de jouabilité et de conception plus facile. C'est-à-dire de faire des blocs simples et homogène avec des opérations simples à faire comme la multiplication. 
 
@@ -38,7 +38,7 @@ Ici l'accent sera mis sur la simplicité et on aura qu'un type d'opérations: `�
 
 Nous allons également nous concentrer sur une version en console.
 
- 2.  **ce qu'on espère réaliser dans l'idéal**
+ 2.  **ce qu'on espère réaliser**
  
 <img src="https://github.com/uNouss/ap/raw/master/projet/IMG_20171110_142126.JPG" width="290" align="left">
 <img src="https://github.com/uNouss/ap/raw/master/projet/IMG_20171110_142103.JPG" width="290" align="">
