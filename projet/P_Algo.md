@@ -27,7 +27,9 @@
 <img src="https://github.com/uNouss/ap/raw/master/projet/IMG_20171110_101732.jpg" height="300" align="left">
 
 L'idée de départ consiste à faire un _Keen_ avec un niveau de difficulté en terme de jouabilité et de conception plus facile. C'est-à-dire de faire des blocs simples et homogène avec des opérations simples à faire comme la multiplication. 
-<img src="" height="0" align="">
+
+<img src="https://screenshots.firefoxusercontent.com/images/839e9358-b9ab-411d-9707-9b82d44f9702.png">
+
 
 1.  **ce qu'on peut faire**
      
