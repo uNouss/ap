@@ -43,7 +43,9 @@ Ici l'accent sera mis sur la simplicité et on aura qu'un type d'opérations: `�
    
 Dans cette étape, nous allons mettre en œuvre les autres opérations ainsi que les règles qui y sont liées. 
 
- 3. **ce qui serait génial 💡 **
+
+ 3.  **ce qui serait génial 💡**
+ 
   
 ![keenimage6](https://github.com/uNouss/ap/blob/master/projet/IMG_20171110_142126.JPG?raw=true)
 
