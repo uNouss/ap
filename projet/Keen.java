@@ -1,14 +1,15 @@
 import java.util.HashMap;
 
-public class Keen {
+class Keen extends Program {
 
-    static int[][] table;
-    static int width = 4;
+    int[][] table;
+    // static int width = 4;
+    final int width = 5;
 
 
-    static HashMap<String, String> constraints = new HashMap<>();
+    HashMap<String, String> constraints = new HashMap<>();
 
-    public static void main(String[] args) {
+    void main(String[] args) {
 
         table = getEmptyTable();
         fillConstraints();
@@ -46,14 +47,27 @@ public class Keen {
     }
    
     // keen constraints
-    private static void fillConstraints() {
-        constraints.put("0-0 0-1 0-2", "7 +"); 
-        constraints.put("0-1 0-2 1-2", "3 *");
-        constraints.put("0-3 1-3", "1 -"); 
-        constraints.put("1-1 2-1", "1 -"); 
-        constraints.put("2-2 2-3", "2 /"); 
-        constraints.put("3-0 3-1", "12 *"); 
-        constraints.put("3-2 3-3", "2 /");
+    void fillConstraints() {
+	constraints.put("0-0 0-1", "1 -"); 
+        constraints.put("0-2 1-1 1-2", "9 +");
+        constraints.put("0-3 0-4", "2 /"); 
+        constraints.put("1-0 2-0 3-0 2-1", "40 *"); 
+        constraints.put("1-3 1-4", "1 -"); 
+        constraints.put("2-2 2-3", "1 -"); 
+        constraints.put("2-4 3-4", "5 *"); 
+        constraints.put("4-0 3-1 4-1", "8 +");
+        constraints.put("3-2 4-2", "2 /");
+        constraints.put("3-3 4-3 4-4", "80 *");
+	
+
+
+	// constraints.put("0-0 0-1 0-2", "7 +"); 
+        // constraints.put("0-1 0-2 1-2", "3 *");
+        // constraints.put("0-3 1-3", "1 -"); 
+        // constraints.put("1-1 2-1", "1 -"); 
+        // constraints.put("2-2 2-3", "2 /"); 
+        // constraints.put("3-0 3-1", "12 *"); 
+        // constraints.put("3-2 3-3", "2 /");
 	
         // constraints.put("0-0 0-1", "1 -"); 
         // constraints.put("0-1 1-1 1-2", "6 +");
@@ -75,7 +89,7 @@ public class Keen {
     }
 
 
-    private static boolean isValid(int r, int c) {
+    boolean isValid(int r, int c) {
 	// cette fonction verifie que la valeur d'une case est valide pour une colonne et une ligne donnée ( genre une coordonnée)
 
         // on verifie la validité de la ligne
@@ -149,7 +163,7 @@ public class Keen {
 
    
    
-    private static int[][] getEmptyTable() {
+    int[][] getEmptyTable() {
         int[][] table = new int[width][];
 
         for (int i = 0; i < width; i++) {
@@ -165,7 +179,7 @@ public class Keen {
    
    
 
-    private static void printTable() {
+    void printTable() {
        
         for (int i = 0; i < table.length; i++) {
             StringBuilder sb = new StringBuilder();
