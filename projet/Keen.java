@@ -9,7 +9,7 @@ class Keen extends Program {
 
     HashMap<String, String> constraints = new HashMap<>();
 
-    void main(String[] args) {
+    void algorithm() {
 
         table = getEmptyTable();
         fillConstraints();
