@@ -61,13 +61,23 @@ class Keen extends Program {
 	
 
 
-	constraints.put("0-0 0-1 0-2", "7 +"); 
-        constraints.put("0-1 0-2 1-2", "3 *");
-        constraints.put("0-3 1-3", "1 -"); 
-        constraints.put("1-1 2-1", "1 -"); 
-        constraints.put("2-2 2-3", "2 /"); 
-        constraints.put("3-0 3-1", "12 *"); 
-        constraints.put("3-2 3-3", "2 /");
+	// constraints.put("0-0 0-1 0-2", "7 +"); 
+        // constraints.put("0-1 0-2 1-2", "3 *");
+        // constraints.put("0-3 1-3", "1 -"); 
+        // constraints.put("1-1 2-1", "1 -"); 
+        // constraints.put("2-2 2-3", "2 /"); 
+        // constraints.put("3-0 3-1", "12 *"); 
+        // constraints.put("3-2 3-3", "2 /");
+
+
+	constraints.put("0-0 0-1", "2 /"); 
+        constraints.put("0-2 1-2", "1 -");
+        constraints.put("0-3 1-3", "4 *"); 
+        constraints.put("1-0 1-1 2-1", "6 +"); 
+        constraints.put("2-2 2-3", "2 -"); 
+        constraints.put("2-0 3-0", "5 +"); 
+        constraints.put("3-1 3-2 3-3", "24 *");
+	
 	
         // constraints.put("0-0 0-1", "1 -"); 
         // constraints.put("0-1 1-1 1-2", "6 +");

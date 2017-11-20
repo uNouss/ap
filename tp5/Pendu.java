@@ -1,43 +1,70 @@
 class Pendu extends Program{
+    final int NB_TENTATIVE = 5;
     void algorithm(){
 	final String[] MOT_A_DEVINER = new String[]{"unix","linux","pipe","pendu","algorithm"};
-	pendu(MOT_A_DEVINER[(int)(random()*length(MOT_A_DEVINER))]);
+	int fin = length(MOT_A_DEVINER);
+	int debut = 0;
+	for(int i = 0; i < fin; i++){
+	    pendu(MOT_A_DEVINER[(int)(random()*length(MOT_A_DEVINER))]);
+	    
+	}
     }
 
     String tabToString(char[] tab){
-	String s = "";
-	for(int i = 0; i < length(tab); i++){
-	    s += tab[i];
-	}
-	return s;
+    	String s = "";
+    	for(int i = 0; i < length(tab); i++){
+    	    s += tab[i];
+    	}
+    	return s;
     }
    
-    char[] etoiler(int taille, char c){
-	char[] tabCar = new int[taille]; 
-	for(int i = 0; i < length(tabCar); i++){
-	     tabCar[i] = c;
-	}
-	return tabCar;
+    boolean[] initialize(int taille){
+    	boolean[] tab = new boolean[taille];
+    	for(int i = 0; i < length(tab); i++){
+    	    tab[i] = false;
+    	}
+    	return tab;
     }
-    
-    
-    void pendu(String secret){
-	int nbtentative = 5;
-	char[] cache = etoiler(length(secret), '*');
 
-	char c;
-	while(!equals(secret,tabToString(cache)) && nbtentative > 0){
-	    println("Il vous reste "+ nbtentative +" tentatives: " + cache);
-	    print("Entrez un caractère: ");
-	    c = readChar();
-	    
-	    for( int i = 0; i < length(secret); i++){
-		if(charAt(secret,i) == c){
-		    cache[i] = c;
-		}else{
-		    nbtentative -= 1;
-		}
-	    }	   
+    boolean motTrouve(boolean[] tab){
+	int index = 0;
+	while(index < length(tab) && tab[index]){
+	    index += 1;
 	}
+	return index == length(tab);
     }
+
+    String motEtoile(String motSecret, boolean[] tab){
+	String mot = "";
+	for(int i = 0; i < length(tab); i++){
+	    if(tab[i]) mot += charAt(motSecret,i);
+	    else mot += "*";
+	}
+	return mot;
+    }
+    
+    void pendu(String motsecret){
+	boolean[] verif = initialize(length(motsecret));
+	int nbTentative = NB_TENTATIVE;
+
+	while(nbTentative > 0 && !motTrouve(verif)){
+	    println("Il vous reste "+ nbTentative +" tentatives: " + motEtoile(motsecret,verif));
+	    print("Entrez un caractère: ");
+	    char c = readChar();
+	    boolean aRemplacer = false;
+	    for(int i = 0; i < length(motsecret); i++){
+		if(charAt(motsecret,i) == c){
+		    verif[i] = true;
+		    aRemplacer = true;
+		}
+	    }
+	    if(!aRemplacer) nbTentative -= 1;
+	}
+    	if(nbTentative > 0 && motTrouve(verif)){
+    	    println("Vous avez gagné ! Il fallait trouver: "+motsecret);
+    	}else{
+    	    println("Vous avez perdu ! Il fallait trouver: "+motsecret);
+    	}
+    }
+    
 }
