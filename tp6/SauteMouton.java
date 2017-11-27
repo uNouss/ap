@@ -24,7 +24,7 @@ class SauteMouton extends Program{
     String afficher(){
 	String maPrairie = "";
 	for(int i = 0; i < length(prairie); i++){
-	    maPrairie += prairie[i];
+	    maPrairie += (prairie[i] + " ");
 	}
 	return maPrairie;
     }
@@ -58,38 +58,17 @@ class SauteMouton extends Program{
 	return saisie;
     }
 
-    // void algorithm(){
-    // 	initialiser();
-    // 	prairie[3] = B;
-    // 	prairie[2] = V;
-    // 	int n = saisie();
-    // }
 
     void testAvancer(){
     	initialiser();
 	println(afficher());
     	assertTrue(avancer(2));
-	println();
-   	print("2: ");
-	println(afficher());
     	assertTrue(avancer(4));
-   	print("4: ");
-	println(afficher());
     	assertTrue(avancer(3));
-   	print("3: ");
-	println(afficher());
     	assertTrue(avancer(5));
-   	print("5: ");
-	println(afficher());
     	assertFalse(avancer(0));
-   	print("0: ");
-	println(afficher());
     	assertTrue(avancer(6));
-   	print("6: ");
-	println(afficher());
     	assertFalse(avancer(3));
-   	print("3: ");
-	println(afficher());
     }
 
     int trouverIndiceVide(){
@@ -123,9 +102,15 @@ class SauteMouton extends Program{
 
     void testVictoire(){
 	initialiser();
-	assertTrue(victoire());
-	//prairie = {N, N, N, V, B, B, B};
 	assertFalse(victoire());
+	prairie[0] = N;
+	prairie[1] = N;
+	prairie[2] = N;
+	prairie[3] = V;
+	prairie[4] = B;
+	prairie[5] = B;
+	prairie[6] = B;
+	assertTrue(victoire());
     }
 
     boolean victoire(){
@@ -135,5 +120,42 @@ class SauteMouton extends Program{
 	}
 	if( i == length(prairie)) return true;
 	return false;
+    }
+
+    void testBloque(){
+	initialiser();
+	println(afficher());
+	assertFalse(bloque());
+	prairie[0] = B;
+	prairie[1] = B;
+	prairie[2] = N;
+	prairie[3] = B;
+	prairie[4] = N;
+	prairie[5] = N;
+	prairie[6] = V;
+	println(afficher());
+	assertTrue(bloque());
+    }
+
+    boolean bloque(){
+	int idxVide = trouverIndiceVide();
+	if( idxVide - 2 >= 0 && prairie[idxVide - 2] == B) return false;
+	if( idxVide - 1 >= 0 && prairie[idxVide - 1] == B) return false;
+	if( idxVide + 1 < length(prairie) && prairie[idxVide + 1] == N) return false;
+	if( idxVide + 2 < length(prairie) && prairie[idxVide + 2] == N) return false;
+	return true;
+    }
+
+
+    void algorithm(){
+	int idxM;
+    	initialiser();
+	while ( !bloque() && !victoire()){
+	    println(afficher());
+	    idxM = saisie();
+	    avancer(idxM);
+	}
+	if(victoire()) println(":)");
+	else println(":(");
     }
 }
