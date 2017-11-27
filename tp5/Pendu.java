@@ -5,7 +5,10 @@ class Pendu extends Program{
 	int fin = length(MOT_A_DEVINER);
 	int debut = 0;
 	for(int i = 0; i < fin; i++){
-	    pendu(MOT_A_DEVINER[(int)(random()*length(MOT_A_DEVINER))]);
+	    int tmp = (int)(random()*fin);
+	    pendu(MOT_A_DEVINER[tmp]);
+	    String temp = MOT_A_DEVINER[fin-1];
+	    MOT_A_DEVINER[fin - 1] = MOT_A_DEVINER[tmp];
 	    
 	}
     }
