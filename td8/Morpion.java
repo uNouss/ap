@@ -12,8 +12,8 @@ class Morpion extends Program {
         initialize();
         char[][] grilleVide = new char[][]{
             {V, V, V},
-            {V, V, V},
-            {V, V, V}
+                {V, V, V},
+                {V, V, V}
         };
         assertArrayEquals(grilleVide, grille);
     }
@@ -72,11 +72,11 @@ class Morpion extends Program {
     boolean isAlignement(){
         // 1er cas: j'ai la même chose sur la 1ere diagone
         if(grille[0][0] != V && grille[0][0] == grille[1][1] && grille[1][1] == grille[2][2]){
-                return true;
+            return true;
         }
         // 2eme cas: j'ai la même chose sur la deuxième diagonale
         if(grille[0][2] != V && grille[0][2] == grille[1][1] && grille[1][1] == grille[2][0]){
-                return true;
+            return true;
         }
         // 3eme cas: même chose sur même ligne et colonne differente
         for(int idxL = 0; idxL < length(grille, 1); idxL++){
@@ -97,8 +97,8 @@ class Morpion extends Program {
         initialize();
         char[][] uneGrille = new char[][]{
             {X, O, X},
-            {O, O, X},
-            {O, X, O}
+                {O, O, X},
+                {O, X, O}
         };
         grille = uneGrille;
         println();printGrid();
@@ -136,25 +136,39 @@ class Morpion extends Program {
         }
     }
 
+    // verification de la valider du jeu
+    boolean isValid(int row, int col){
+        return row  >= 0 && row < length(grille, 1) && col >= 0 && col < length(grille, 2) && grille[row][col] == V;
+    }
+
+    void jouer(char player){
+        int row;
+        int col;
+        do{
+            print(player + " , donner un numero de case entre 1 et " + (TAILLE*TAILLE) + " : ");
+            int numCase = readInt();// utiliser la division et le modulo pour trouver les coordonnées
+            row = (numCase - 1)/length(grille, 1);
+            col = (numCase - 1) % length(grille, 1);
+            //est-ce que je peux jouer à cette case ?
+        }while(!isValid(row, col));
+        set(row, col, player);
+    }
+
     void algorithm(){
         initialize();
         char player = O;
         do{
             printGrid();
             /*println("au tour de "+player+ ":");
-            print(PROMPT);
-            int row = readInt();
-            print(PROMPT);
-            int col = readInt();*/
-            print(player + " , donner un numero de case entre 1 et " + (TAILLE*TAILLE) + " : ");
-            int numCase = readInt();// utiliser la division et le modulo pour trouver les coordonnées
-            int row = (numCase - 1)/length(grille, 1);
-            int col = (numCase - 1) % length(grille, 1);
-            set(row, col, player);
+              print(PROMPT);
+              int row = readInt();
+              print(PROMPT);
+              int col = readInt();*/
+            jouer(player);
             player = swap(player);
         }while(!isFilled() && ! isAlignement());
         printGrid();
-        if(isAlignement()) println(player + " gagne");
+        if(isAlignement()) println(swap(player) + " gagne"); // il faut swaper pour avoir le bon gagnant ?
         else println("match nul");
     }
 }
