@@ -191,21 +191,14 @@ class A_ALAN_Turing extends Program {
 	    if(charAt(s,i) == c )
 		compteur = compteur + 1;
 	}
-	println(compteur);
 	return compteur;
     }
-    String recupererMot(String Mot, int debut){
-	String tabMot = "";
 
-	//
-	
-	return tabMot;
-    }
-    
+        
     int[] morseStringToInts(String morseMessage) {
 	int tailleMot = nbreOccurence(morseMessage, '0');
 	int[] tabEntier = new int[tailleMot];
-	int debut = 0;
+	int debut = 0, int fin = 0;
 	
         for ( int i = 0; i < tailleMot; i++){
 	    tabEntier[i] = convert(recupererMot(morseMessage, debut));
