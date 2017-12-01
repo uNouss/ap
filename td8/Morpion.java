@@ -2,7 +2,7 @@ class Morpion extends Program {
     final int TAILLE = 3;
     final char O = 'O';
     final char X = 'X';
-    final char V = '_';
+    final char V = ' ';
 
     final String PROMPT = "$: ";
 
@@ -128,14 +128,24 @@ class Morpion extends Program {
     }
 
     void printGrid(){
+        println();
         for(int idxL = 0; idxL < length(grille, 1); idxL++){
+            afficheSeparateur(length(grille, 1));
             for(int idxC = 0; idxC < length(grille, 2); idxC++){
-                print(grille[idxL][idxC] + " ");
+                //print(grille[idxL][idxC] + " ");
+                print(String.format("|%3s", grille[idxL][idxC]+" "));
             }
-            println();
+            println("|");
         }
+        afficheSeparateur(length(grille,1));
+        println();
     }
 
+    void afficheSeparateur(int n) {
+        for (int i = 0; i < n; i++)
+            print("+---");
+        println("+");
+    }
     // verification de la valider du jeu
     boolean isValid(int row, int col){
         return row  >= 0 && row < length(grille, 1) && col >= 0 && col < length(grille, 2) && grille[row][col] == V;
@@ -145,7 +155,7 @@ class Morpion extends Program {
         int row;
         int col;
         do{
-            print(player + " , donner un numero de case entre 1 et " + (TAILLE*TAILLE) + " : ");
+            print("JOUEUR_[" + player + "] , num_case [1; " + (TAILLE*TAILLE) + "] : ");
             int numCase = readInt();// utiliser la division et le modulo pour trouver les coordonnées
             row = (numCase - 1)/length(grille, 1);
             col = (numCase - 1) % length(grille, 1);
