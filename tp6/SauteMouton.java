@@ -4,7 +4,7 @@ class SauteMouton extends Program{
     final char N = '<';
     final char V = '_';
 
-    final String PROMPT = "$: ";
+    final String PROMPT = ">$: ";
 
     char[] prairie = new char[TAILLE];
     final char[] GAGNER = new char[]{N, N, N, V, B, B, B};
@@ -24,12 +24,36 @@ class SauteMouton extends Program{
         assertEquals("> > > _ < < <",afficher());
     }
 
+
     String afficher(){
         String maPrairie = "";
         for(int i = 0; i < length(prairie); i++){
             maPrairie += (prairie[i] + " ");
         }
         return substring(maPrairie,0,length(maPrairie)-1);
+    }
+
+    void afficherPrairie(){
+        afficherEntete(length(prairie));
+        afficheSeparateur(length(prairie));
+        for(int i = 0; i < length(prairie); i++){
+            print(String.format("|%3s", prairie[i]+" "));
+        }
+        println("|");
+        afficheSeparateur(length(prairie));
+    }
+
+    void afficherEntete(int n){
+        for (int i = 0; i < n; i++){
+            print("  "+i+" ");
+        }
+        println(" ");
+    }
+    void afficheSeparateur(int n) {
+        for (int i = 0; i < n; i++){
+            print("+---");
+        }
+        println("+");
     }
 
 
@@ -154,11 +178,11 @@ class SauteMouton extends Program{
         int idxM;
         initialiser();
         while ( !bloque() && !victoire()){
-            println(afficher());
+            afficherPrairie();
             idxM = saisie();
             avancer(idxM);
         }
-        if(victoire()) println(":)");
-        else println(":(");
+        if(victoire()) println("win :)");
+        else println("lose :(");
     }
 }

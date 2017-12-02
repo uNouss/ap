@@ -1,5 +1,7 @@
+//import extensions.*;
+
 class Morpion extends Program {
-    final int TAILLE = 4;
+    final int TAILLE = 3;
     final char O = 'O';
     final char X = 'X';
     final char V = ' ';
@@ -237,6 +239,7 @@ class Morpion extends Program {
 
     void algorithm(){
         initialize();
+        //Image ihm = newImage(640,640);
         char player = ((int)(random()*2)==1)?O:X; // tirage au sort du debutant
         do{
             printGrid();
@@ -249,6 +252,8 @@ class Morpion extends Program {
             player = swap(player);
         }while(!isFilled() && ! isAlignement());
         printGrid();
+        //show(ihm);
+        //readString();
         if(isAlignement()) println(swap(player) + " gagne"); // il faut swaper pour avoir le bon gagnant ?
         else println("match nul");
     }
