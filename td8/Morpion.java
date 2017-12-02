@@ -78,29 +78,6 @@ class Morpion extends Program {
         assertFalse(isAlignement());
     }
 
-    /*boolean isAlignement(){
-        // 1er cas: j'ai la même chose sur la 1ere diagone
-        if(grille[0][0] != V && grille[0][0] == grille[1][1] && grille[1][1] == grille[2][2]){
-            return true;
-        }
-        // 2eme cas: j'ai la même chose sur la deuxième diagonale
-        if(grille[0][2] != V && grille[0][2] == grille[1][1] && grille[1][1] == grille[2][0]){
-            return true;
-        }
-        // 3eme cas: même chose sur même ligne et colonne differente
-        for(int idxL = 0; idxL < length(grille, 1); idxL++){
-            if(grille[idxL][0] != V && grille[idxL][0] == grille[idxL][1] && grille[idxL][1] == grille[idxL][2])
-                return true;
-        }
-        // 4eme cas: même chose sur ligne differente et même colonne
-        for(int idxC = 0; idxC < length(grille, 2); idxC++){
-            if(grille[0][idxC] != V && grille[0][idxC] == grille[1][idxC] && grille[1][idxC] == grille[2][idxC])
-                return true;
-        }
-
-        return false;
-    }*/
-
     boolean isAlignement(){
         char current, next = V, nextNext = V;
         for(int idxL = 0; idxL < length(grille,1); idxL++){
@@ -113,20 +90,6 @@ class Morpion extends Program {
                             nextNext = grille[idxL+2][idxC];
                             if( current == next && next == nextNext) return true;
                         }
-                        /*else if(idxC+1 < length(grille, 2)){
-                            next = grille[idxL+1][idxC+1];
-                            if(idxL+2 < length(grille, 1) && idxC+2 < length(grille, 2)){
-                                nextNext = grille[idxL+2][idxC+2];
-                                if( current == next && next == nextNext) return true;
-                            }
-                        }
-                        else if(idxC-1 >= 0){
-                            next = grille[idxL+1][idxC-1];
-                            if(idxL+2 < length(grille,1) && idxC-2 >= 0){
-                                nextNext = grille[idxL+2][idxC-2];
-                                if( current == next && next == nextNext) return true;
-                            }
-                        }*/
                     }
                     if(idxC+1 < length(grille, 2)){
                         next = grille[idxL][idxC+1];
@@ -243,11 +206,6 @@ class Morpion extends Program {
         char player = ((int)(random()*2)==1)?O:X; // tirage au sort du debutant
         do{
             printGrid();
-            /*println("au tour de "+player+ ":");
-              print(PROMPT);
-              int row = readInt();
-              print(PROMPT);
-              int col = readInt();*/
             jouer(player);
             player = swap(player);
         }while(!isFilled() && ! isAlignement());
