@@ -1,7 +1,7 @@
 //import extensions.*;
 
 class Morpion extends Program {
-    final int TAILLE = 3;
+    final int TAILLE = 5;
     final char O = 'O';
     final char X = 'X';
     final char V = ' ';

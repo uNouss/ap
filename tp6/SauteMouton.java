@@ -2,7 +2,7 @@ class SauteMouton extends Program{
     final int TAILLE = 7;
     final char B = '>';
     final char N = '<';
-    final char V = '_';
+    final char V = ' ';
 
     final String PROMPT = ">$: ";
 
@@ -182,6 +182,7 @@ class SauteMouton extends Program{
             idxM = saisie();
             avancer(idxM);
         }
+        afficherPrairie();
         if(victoire()) println("win :)");
         else println("lose :(");
     }
