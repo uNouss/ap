@@ -115,3 +115,4 @@ class JeuDeLaVie extends Program{
     }
 
 }
+// demo : https://asciinema.org/a/OgLmlGgAOYY5LWpm6bsK5cveA
