@@ -1,5 +1,5 @@
 class JeuDeLaVie extends Program{
-    final int TAILLE = 10;
+    final int TAILLE = 20;
     final boolean MORTE = false;
     final boolean VIVANTE = true;
     final String USAGE = "USAGE: Enter for play / Q for quit";
@@ -32,7 +32,10 @@ class JeuDeLaVie extends Program{
 
     void afficherEntete(int n){
         for (int i = 0; i < n; i++){
-            print("  "+i+" ");
+            if( i < 10) print("  "+i+" ");
+            else if ( i < 100) print(" "+i+" ");
+            else if ( i < 1000 ) print(" "+i);
+            else print(i);
         }
         println(" ");
     }
@@ -107,7 +110,8 @@ class JeuDeLaVie extends Program{
             evolutionMonde();
             printMonde();
             STOP = toUpperCase(readString());
-        }printMonde();
+        }
+        //printMonde();
     }
 
 }
