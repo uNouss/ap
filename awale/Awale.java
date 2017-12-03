@@ -70,11 +70,23 @@ class Awale extends Program{
 
     int deplacement(int saisie){
         //println();
+        //  je recupere les coordonnes de la case de depart
+        //  je compte le nombre de graine qui s'y trouve
+        //  je calcule de combien de case dans le sens de mon deplacement possible je suis du bord
+        //  je forme des paques de 6 avec le nombre de graine que j'ai dans la case choisie
+        //  sachant que le premier paquet ne fait pas 6 mais 6-l'ecart qui me separe de mon bord.
+        //  ensuite je fais une boucle pour aller d'un camp à l'autre selon de nombre de paquet obtenu: p1 + p2 + p3 + ... + pn
+        //  je calcule aussi ma dernière position d'où je me suis arreté pour après pouvoir ammasser mes graines gagnées
+        //
         int row = saisie / length(plateau, 2);
         int col = saisie % length(plateau, 2);
         int adistribuer = plateau[row][col];
         println(row+", "+col+", "+adistribuer);
-        int reste = 0;
+        int distanceDuBord = (joueurCourant == JOUEUR_1) ? col:length(plateau,2) - 1 - col;
+        // je fabrique les paquets
+        int premierPaquet = distanceDuBord;
+        int nbpaquetComplet = (adistribuer-premierPaquet)/length(plateau,2);
+        int dernierPaquer = (adistribuer-premierPaquet) % length(plateau,2);
         int marqueDernier = -1;
         if(row == 0){
             reste = adistribuer - col;
@@ -127,7 +139,12 @@ class Awale extends Program{
         return marqueDernier;
     }
 
-    void calculerGain(int indiceArret{}
+    void calculerGain(int indiceArret){
+        // si je dans le camp adverse
+        // je verifie si j'ai 2 ou 3 graine dans la case sur la quelle je viens de terminer de semer, si oui je les prends et je les ajoute dans mon tas et prend en reculant toute les cases où  j'ai entre 2 et 3 graine du camp de mon adversaire.
+        // j'arrête de prendre quand je suis plus dans le camp de mon adversaire ou j'arrive sur une case avec mois de 2 ou plus de 3 graine.
+    }
+
     void algorithm(){
         initialize();
 
@@ -148,3 +165,11 @@ class Awale extends Program{
 
     }
 }
+
+/*
+class Joueur {
+    int point;
+    int nom;
+    int camp;
+}
+*/
