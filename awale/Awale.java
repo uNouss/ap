@@ -1,14 +1,11 @@
 class Awale extends Program{
+    final String NOCOLOR = "\033[0m";
     final String PROMPT = ">$: ";
-    final boolean JOUEUR_1 = true;
-    final boolean JOUEUR_2 = false;
 
-    boolean joueurCourant = (((int)random()*2) == 1 )?JOUEUR_1:JOUEUR_2;//tirage au sort
+    Joueur j1 = new Joueur();
+    Joueur j2 = new Joueur();
 
     int[] plateau = new int[12] ;
-
-    int TAS_1 = 0;
-    int TAS_2 = 0;
 
     void testInitialize(){
         initialize();
@@ -18,7 +15,7 @@ class Awale extends Program{
     }
     void initialize(){
         for(int idx = 0; idx < length(plateau); idx++){
-                plateau[idx] = 4;
+            plateau[idx] = 4;
         }
     }
 
@@ -26,15 +23,16 @@ class Awale extends Program{
         afficherEntete(length(plateau)/2, 0);
         afficheSeparateur(length(plateau)/2);
         for(int idx = 0; idx < length(plateau)/2; idx++){
-            print(String.format("|%3s", plateau[idx] + " "));
+            if(plateau[idx] < 10 ) print(String.format("|%3s", j1.color+" " +plateau[idx]+ " "+NOCOLOR ));
+            else print(String.format("|%3s", j1.color+"" +plateau[idx]+ " "+NOCOLOR ));
         }
-        println("| TAS JOUEUR_" + 0 + " = " + TAS_1);
+        println("|      # " + j1.color + j2.point + NOCOLOR +" pour " + j1.nom);
         afficheSeparateur(length(plateau)/2);
         for(int idx = length(plateau)/2; idx < length(plateau); idx++){
-            //print(plateau[idxL][idxC] + " ");
-            print(String.format("|%3s", plateau[idx]+" "));
+            if(plateau[idx] < 10 ) print(String.format("|%3s",  j2.color+" " +plateau[idx]+" "+NOCOLOR));
+            else print(String.format("|%3s", j2.color+"" +plateau[idx]+ " "+NOCOLOR ));
         }
-        println("| TAS JOUEUR_" + 1 + " = " + TAS_2);
+        println("|      # " + j2.color + j2.point + NOCOLOR +" pour " +j2.nom);
         afficheSeparateur(length(plateau)/2);
         afficherEntete(length(plateau), length(plateau)/2);
         println();
@@ -43,7 +41,7 @@ class Awale extends Program{
     void afficherEntete(int n, int debut){
         for (int i = debut; i < n; i++){
             if(i < 10) print("  "+i+" ");
-            else print(" "+i+" ");
+            else print("  "+i);
         }
         println(" ");
     }
@@ -59,18 +57,17 @@ class Awale extends Program{
     }
 
     boolean estVictoire(){
-        if (TAS_1 > 24 || TAS_2  > 24)  return true;
+        if (j1.point > 24 || j2.point  > 24)  return true;
         return false;
     }
 
     boolean estValide(int indice ){
-        if(joueurCourant == JOUEUR_1) return ( indice >= 0 && indice < length(plateau)/2);
-        else return (indice >= length(plateau)/2 && indice < length(plateau));
+        if(j1.tour) return ( indice >= 0 && indice < length(plateau)/2 && plateau[indice] != 0);
+        else return (indice >= length(plateau)/2 && indice < length(plateau) && plateau[indice] != 0);
     }
 
     int deplacement(int indice){
         int nbGraine = plateau[indice];
-        //println(nbGraine);
         plateau[indice] = 0;
         int pas = (indice < length(plateau)/2) ? -1: 1;
         int indiceDepart = indice + pas;
@@ -83,57 +80,80 @@ class Awale extends Program{
                 indiceDepart = (length(plateau) - 1) - length(plateau)/2;
                 pas = -1;
             }
+            if( indiceDepart != indice ){
+                plateau[indiceDepart] += 1;
+                nbGraine -= 1;
+            }
             indiceFin = indiceDepart;
-            plateau[indiceDepart] += 1;
-            nbGraine -= 1;
             indiceDepart += pas;
         }
-        //println(indiceFin);
         return indiceFin;
     }
 
-    void calculerGain(int indiceArret){
-        // si je dans le camp adverse
-        // je verifie si j'ai 2 ou 3 graine dans la case sur la quelle je viens de terminer de semer, si oui je les prends et je les ajoute dans mon tas et prend en reculant toute les cases où  j'ai entre 2 et 3 graine du camp de mon adversaire.
-        // j'arrête de prendre quand je suis plus dans le camp de mon adversaire ou j'arrive sur une case avec mois de 2 ou plus de 3 graine.
-        println(indiceArret);
-        if(joeurCourant == JOUEUR_1 && (indiceArret >= 0 && indiceArret < length(plateau)/2){
-            boolean peuxRamasser  = (plateau[indiceArret] == 2 || plateau[indiceArret] == 3);
+    void calculerGain(int indice){
+        //println(indice);
+        if(j1.tour && (indice >= length(plateau)/2 && indice < length(plateau))){
+            boolean peuxRamasser  = (plateau[indice] == 2 || plateau[indice] == 3);
             while(peuxRamasser){
-                TAS_1 += plateau[indiceArret];
-                indiceArret += 1;
-                peuxRamasser  = (plateau[indiceArret] == 2 || plateau[indiceArret] == 3);
+                j1.point += plateau[indice];
+                plateau[indice] = 0;
+                indice -= 1;
+                peuxRamasser  = ((plateau[indice] == 2 || plateau[indice] == 3) && (indice >= length(plateau)/2 && indice < length(plateau)));
             }
-        }else{
-
+        }else if(j2.tour && (indice >= 0 && indice < length(plateau)/2)){
+            boolean peuxRamasser  = (plateau[indice] == 2 || plateau[indice] == 3);
+            while(peuxRamasser){
+                j2.point += plateau[indice];
+                plateau[indice] = 0;
+                indice += 1;
+                peuxRamasser  = ((plateau[indice] == 2 || plateau[indice] == 3) && (indice >= 0 && indice < length(plateau)/2));
+            }
         }
     }
 
     void algorithm(){
         initialize();
 
+        print("Joueur 1, Entrez votre nom: ");
+        j1.nom = readString();
+        print("Joueur 2, Entrez votre nom: ");
+        j2.nom = readString();
+
+        j1.point = 0; j2.point = 0;
+        j1.color = "\033[31m\033[1m\033[5m";
+        j2.color = "\033[34m\033[1m\033[5m";
+
+        if((int)(random()*2) == 1) { j1.tour = true; j2.tour = false; }
+        else { j1.tour = false; j2.tour = true ; }
+
         while(!estBloque() && !estVictoire()){
             afficherPlateau();
             int indice;
             do {
-                if(joueurCourant == JOUEUR_1) print("JOUEUR_1 "+PROMPT);
-                else print("JOUEUR_2 "+PROMPT);
+                if(j1.tour) print(j1.color+j1.nom+" ["+0+" - "+((length(plateau)/2)-1)+"]"+PROMPT+NOCOLOR);
+                else print(j2.color+j2.nom+" ["+((length(plateau)/2))+" - "+(length(plateau)-1)+"]"+PROMPT+NOCOLOR);
                 indice = readInt();
             }while(!estValide(indice));
-            //println(saisie);
             int positionStop = deplacement(indice);
             calculerGain(positionStop);
-            joueurCourant = ( joueurCourant == JOUEUR_1 )? JOUEUR_2: JOUEUR_1;
-
+            if(j1.tour) { j1.tour = false; j2.tour = true; }
+            else { j1.tour = true; j2.tour = false; }
         }
-
+        afficherPlateau();
+        if(estVictoire()){
+            if(j1.point > j2.point) println(j1.nom+" WIN !!! Fin du jeu...");
+            else println(j2.nom+" WIN !!! Fin du jeu...");
+        }
+        else{
+            println("BLOCAGE");
+        }
     }
 }
 
-/*
 class Joueur {
+    boolean tour;
     int point;
-    int nom;
-    int camp;
+    String nom;
+    String color;
 }
-*/
+// demo http://paste.ubuntu.com/26115253/
