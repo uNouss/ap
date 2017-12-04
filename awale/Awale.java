@@ -98,11 +98,14 @@ class Awale extends Program{
         // j'arrête de prendre quand je suis plus dans le camp de mon adversaire ou j'arrive sur une case avec mois de 2 ou plus de 3 graine.
         println(indiceArret);
         if(joeurCourant == JOUEUR_1 && (indiceArret >= 0 && indiceArret < length(plateau)/2){
-            while(jepeuxramasser()){
-                // je ramasse jusqu'à ce que je sois bloqué
+            boolean peuxRamasser  = (plateau[indiceArret] == 2 || plateau[indiceArret] == 3);
+            while(peuxRamasser){
+                TAS_1 += plateau[indiceArret];
+                indiceArret += 1;
+                peuxRamasser  = (plateau[indiceArret] == 2 || plateau[indiceArret] == 3);
             }
         }else{
-            
+
         }
     }
 
