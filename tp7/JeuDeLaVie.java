@@ -1,9 +1,13 @@
 class JeuDeLaVie extends Program{
-    final int TAILLE = 20;
+    //final int TAILLE = 20;
     final boolean MORTE = false;
     final boolean VIVANTE = true;
     final String USAGE = "USAGE: Enter for play / Q for quit";
 
+    final String ACTIVE_COLOR = "\033[45m";
+    final String DESACTIVE_COLOR = "\033[0m";
+
+    int TAILLE = readInt();
     boolean[][] monde = new boolean[TAILLE][TAILLE];
     boolean[][] mondeParallele = new boolean [length(monde,1)][length(monde,2)];
 
@@ -11,8 +15,12 @@ class JeuDeLaVie extends Program{
         for(int idxL = 0; idxL < length(monde, 1); idxL++){
             for(int idxC = 0; idxC < length(monde, 2); idxC++){
                 monde[idxL][idxC] = ((int)(random()*2) == 1)?VIVANTE:MORTE;
+                //monde[idxL][idxC] = MORTE;
             }
         }
+        /*monde[1][2] = VIVANTE;
+        monde[2][2] = VIVANTE;
+        monde[3][2] = VIVANTE;*/
     }
 
     void printMonde(){
@@ -21,7 +29,7 @@ class JeuDeLaVie extends Program{
             afficheSeparateur(length(monde, 2));
             for(int idxC = 0; idxC < length(monde, 2); idxC++){
                 //print(monde[idxL][idxC] + " ");
-                String cellule = (monde[idxL][idxC] == VIVANTE ) ? String.format("|%3s", "O "): String.format("|%3s", "  ");
+                String cellule = (monde[idxL][idxC] == VIVANTE ) ? String.format("|%3s", ACTIVE_COLOR + " O " + DESACTIVE_COLOR): String.format("|%3s", "  ");
                 print(cellule);
             }
             println("| " + idxL);
@@ -72,14 +80,16 @@ class JeuDeLaVie extends Program{
                     nbVoisineVivante += 1;
             }
         }
-        return nbVoisineVivante;
+        return (monde[row][col] == VIVANTE ) ? nbVoisineVivante - 1: nbVoisineVivante;
     }
 
     void evolutionMonde(){
+        //boolean[][] mondeParallele = new boolean [length(monde,1)][length(monde,2)];
         for(int idxL = 0; idxL < length(monde, 1); idxL++){
             for(int idxC = 0; idxC < length(monde, 2); idxC++){
                 int nbVoisineVivante = calculeNBVoisineVivante(idxL, idxC);
                 // là on peut appliquer les règles d'évolution
+                //println(nbVoisineVivante);
                 boolean cellule = monde[idxL][idxC];
                 if( cellule == MORTE && nbVoisineVivante == 3){
                     mondeParallele[idxL][idxC] = VIVANTE;
@@ -90,7 +100,10 @@ class JeuDeLaVie extends Program{
                 else mondeParallele[idxL][idxC] = MORTE;
             }
         }
+        boolean[][] tmp = monde;
         monde = mondeParallele;
+        mondeParallele = tmp;
+
     }
 
     void algorithm(){
@@ -99,11 +112,12 @@ class JeuDeLaVie extends Program{
         //      alor elle renait
         // si une cellule donnée est vivante mais qu'elle possède moins de 2 ou plus de 3 voisines vivantes
         //      alors elle meurt
-
+        //print("TAILLE>$: ");
+        println(USAGE);
+        //TAILLE = readInt();
         initialize();
         printMonde();
 
-        println(USAGE);
         String STOP = toUpperCase(readString());
 
         while(!equals("Q", STOP) && !finDuMonde()){

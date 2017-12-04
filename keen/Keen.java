@@ -5,6 +5,14 @@ class Keen extends Program {
     int[][] grille = new int[TAILLE][TAILLE];
     Bloc[] tabBlocs;
 
+    void initialize(){
+        for(int idxL; idxL < length(grille, 1); idxL++){
+            for(int idxC; idxC < length(grille, 2); idxC++){
+                
+            }
+        }
+    }
+
     void algorithm(){
         initialize();
         while(!victoire()){
@@ -15,7 +23,7 @@ class Keen extends Program {
             int col = (cellule - 1) % length(grille,2);
             print("nombre "+PROMPT);
             int nombre = readInt();
-            put(nombre, row, col);
+            poser(nombre, row, col);
         }
         printGrid();
         println("Bravo, vous avez gagné");
