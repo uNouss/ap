@@ -161,3 +161,4 @@ class Joueur {
 // http://paste.ubuntu.com/26115441/
 // http://paste.ubuntu.com/26115472/
 // http://paste.ubuntu.com/26115556/
+// https://asciinema.org/a/KK0Itm2LQUh8gxNXAeleb5RXE
