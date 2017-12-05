@@ -186,3 +186,5 @@ class Joueur {
 // http://paste.ubuntu.com/26115556/
 // https://asciinema.org/a/KK0Itm2LQUh8gxNXAeleb5RXE
 // http://paste.ubuntu.com/26119184/
+// http://s.helan.free.fr/awale/conseils/
+// http://s.helan.free.fr/awale/regles/
