@@ -3,6 +3,9 @@ class SauteMouton extends Program{
     final char B = '>';
     final char N = '<';
     final char V = ' ';
+    final String BC = "\033[31;1;4;5;7m";
+    final String NC = "\033[34;1;4;5;7m";
+    final String NOC = "\033[0m";
 
     final String PROMPT = ">$: ";
 
@@ -37,7 +40,9 @@ class SauteMouton extends Program{
         afficherEntete(length(prairie));
         afficheSeparateur(length(prairie));
         for(int i = 0; i < length(prairie); i++){
-            print(String.format("|%3s", prairie[i]+" "));
+            if ( prairie[i] == B ) print(String.format("|%3s", BC+" "+prairie[i]+" "+NOC));
+            else if (prairie[i] == N ) print(String.format("|%3s", NC+" "+prairie[i]+" "+NOC));
+            else print(String.format("|%3s", prairie[i]+" "));
         }
         println("|");
         afficheSeparateur(length(prairie));

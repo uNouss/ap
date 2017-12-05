@@ -26,13 +26,13 @@ class Awale extends Program{
             if(plateau[idx] < 10 ) print(String.format("|%3s", j1.color+" " +plateau[idx]+ " "+NOCOLOR ));
             else print(String.format("|%3s", j1.color+"" +plateau[idx]+ " "+NOCOLOR ));
         }
-        println("|      # " + j1.color + j2.point + NOCOLOR +" pour " + j1.nom);
+        println("|       Score# " + j1.color + j1.point + NOCOLOR);
         afficheSeparateur(length(plateau)/2);
         for(int idx = length(plateau)/2; idx < length(plateau); idx++){
             if(plateau[idx] < 10 ) print(String.format("|%3s",  j2.color+" " +plateau[idx]+" "+NOCOLOR));
             else print(String.format("|%3s", j2.color+"" +plateau[idx]+ " "+NOCOLOR ));
         }
-        println("|      # " + j2.color + j2.point + NOCOLOR +" pour " +j2.nom);
+        println("|       Score# " + j2.color + j2.point + NOCOLOR);
         afficheSeparateur(length(plateau)/2);
         afficherEntete(length(plateau), length(plateau)/2);
         println();
@@ -92,16 +92,16 @@ class Awale extends Program{
 
     void calculerGain(int indice){
         //println(indice);
-        if(j1.tour && (indice >= length(plateau)/2 && indice < length(plateau))){
-            boolean peuxRamasser  = (plateau[indice] == 2 || plateau[indice] == 3);
+        if(j1.tour){
+            boolean peuxRamasser  = ((plateau[indice] == 2 || plateau[indice] == 3) && (indice >= length(plateau)/2 && indice < length(plateau)));
             while(peuxRamasser){
                 j1.point += plateau[indice];
                 plateau[indice] = 0;
                 indice -= 1;
                 peuxRamasser  = ((plateau[indice] == 2 || plateau[indice] == 3) && (indice >= length(plateau)/2 && indice < length(plateau)));
             }
-        }else if(j2.tour && (indice >= 0 && indice < length(plateau)/2)){
-            boolean peuxRamasser  = (plateau[indice] == 2 || plateau[indice] == 3);
+        }else {
+            boolean peuxRamasser  = ((plateau[indice] == 2 || plateau[indice] == 3) && (indice >= 0 && indice < length(plateau)/2));
             while(peuxRamasser){
                 j2.point += plateau[indice];
                 plateau[indice] = 0;
@@ -134,6 +134,7 @@ class Awale extends Program{
                 else print(j2.color+j2.nom+" ["+((length(plateau)/2))+" - "+(length(plateau)-1)+"]"+PROMPT+NOCOLOR);
                 indice = readInt();
             }while(!estValide(indice));
+            //si adversaire affame, je dois le nourrir et si je ne peux pas on fait les compte et le jeux se termine.
             int positionStop = deplacement(indice);
             calculerGain(positionStop);
             if(j1.tour) { j1.tour = false; j2.tour = true; }
@@ -157,3 +158,6 @@ class Joueur {
     String color;
 }
 // demo http://paste.ubuntu.com/26115253/
+// http://paste.ubuntu.com/26115441/
+// http://paste.ubuntu.com/26115472/
+// http://paste.ubuntu.com/26115556/
