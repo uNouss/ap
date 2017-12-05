@@ -52,12 +52,34 @@ class Awale extends Program{
         println("+");
     }
 
+
+    void monNombreDegraine(){
+        int compteurJ1 = 0;
+        int compteurJ2 = 0;
+        for(int idx = 0; idx < length(plateau); idx++){
+            if( idx < length(plateau)/2) compteurJ1 += plateau[idx];
+            else compteurJ2 += plateau[idx];
+        }
+        j1.graines = compteurJ1;
+        j2.graines = compteurJ2;
+        println(j1.graines + " et " + j2.graines);
+    }
+
+    boolean estAffamee(){
+        return (j1.tour)?(j2.graines == 0):(j2.graines == 0);
+    }
+
+    void nourrirAdversaire(){
+    }
+
     boolean estBloque(){
         return false;
     }
 
     boolean estVictoire(){
         if (j1.point > 24 || j2.point  > 24)  return true;
+        else if(j1.tour && j1.graines == 0) return true;
+        else if(j2.tour && j2.graines == 0) return true;
         return false;
     }
 
@@ -156,9 +178,11 @@ class Joueur {
     int point;
     String nom;
     String color;
+    int graines = 24;
 }
 // demo http://paste.ubuntu.com/26115253/
 // http://paste.ubuntu.com/26115441/
 // http://paste.ubuntu.com/26115472/
 // http://paste.ubuntu.com/26115556/
 // https://asciinema.org/a/KK0Itm2LQUh8gxNXAeleb5RXE
+// http://paste.ubuntu.com/26119184/
