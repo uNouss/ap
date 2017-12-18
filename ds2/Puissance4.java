@@ -19,9 +19,9 @@ class Puissance4 extends Program{
         for(int idxL = 0; idxL < length(grille, 1); idxL++){
             afficheSeparateur(length(grille, 2));
             for(int idxC = 0; idxC < length(grille, 2); idxC++){
-                print(String.format("|%3s", grille[idxL][idxC]));
+                print(String.format("|%3s", " "+grille[idxL][idxC]+" "));
             }
-            println("| ");
+            println("|");
         }
         afficheSeparateur(length(grille,2));
     }
@@ -55,7 +55,7 @@ class Puissance4 extends Program{
             for(int idxC = 0; idxC < length(grille,2); idxC++){
                 courant = grille[idxL][idxC];
                 if(courant != V){
-                    if(idxL+1 < length(grille, 1)){
+                    if(idxL+1 < length(grille, 1)){ // je fixe une colonne et varie la ligne à la recherche d'un alignement
                         suivant = grille[idxL+1][idxC];
                         if(idxL+2 < length(grille, 1)){
                             suivantDuSuivant = grille[idxL+2][idxC];
@@ -67,19 +67,19 @@ class Puissance4 extends Program{
                             }
                         }
                     }
-                    if(idxC+1 < length(grille, 2)){
+                    if(idxC+1 < length(grille, 2)){ // je fixe une ligne et fait varier la colonne à la recherche d'un alignement
                         suivant = grille[idxL][idxC+1];
                         if(idxC+2 < length(grille, 2)){
                             suivantDuSuivant = grille[idxL][idxC+2];
-                            if( idxL+3 < length(grille, 1)){
-                                suivantDuSuivantDuSuivant = grille[idxL+3][idxC];
+                            if( idxC+3 < length(grille, 2)){
+                                suivantDuSuivantDuSuivant = grille[idxL][idxC+3];
                                 if( courant == suivant
                                         && suivant == suivantDuSuivant
                                         && suivantDuSuivant == suivantDuSuivantDuSuivant ) return true;
                             }
                         }
                     }
-                    if(idxL+1 < length(grille,1) && idxC+1 < length(grille, 2)){
+                    if(idxL+1 < length(grille,1) && idxC+1 < length(grille, 2)){ // je fais bouger ligne et colonne pour regarder dans la 1ere diagonale
                         suivant = grille[idxL+1][idxC+1];
                         if(idxL+2 < length(grille, 1) && idxC+2 < length(grille, 2)){
                             suivantDuSuivant = grille[idxL+2][idxC+2];
@@ -91,15 +91,15 @@ class Puissance4 extends Program{
                             }
                         }
                     }
-                    if(idxL+1 < length(grille,1) && idxC-1 >= 0){
+                    if(idxL+1 < length(grille,1) && idxC-1 >= 0){ // je fais bouger ligne et colonne pour regarder dans la 2nd diagonale
                         suivant = grille[idxL+1][idxC-1];
                         if(idxL+2 < length(grille,1) && idxC-2 >= 0){
                             suivantDuSuivant = grille[idxL+2][idxC-2];
                             if(idxL+3 < length(grille,1) && idxC - 3 >= 0){
                                 suivantDuSuivantDuSuivant = grille[idxL+3][idxC-3];
-                                if( courant == suivant
-                                        && suivant == suivantDuSuivant
-                                        && suivantDuSuivant == suivantDuSuivantDuSuivant) return true;
+                            if( courant == suivant
+                                    && suivant == suivantDuSuivant
+                                    && suivantDuSuivant == suivantDuSuivantDuSuivant) return true;
                             }
                         }
                     }
@@ -117,7 +117,7 @@ class Puissance4 extends Program{
     }
 
     boolean estValide(int col){
-        return (!estPleineColonne(col) && col >= 0 && col < length(grille, 2) );
+        return (col >= 0 && col < length(grille, 2) && !estPleineColonne(col));
     }
 
     char changer(char joueur){
