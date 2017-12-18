@@ -2,15 +2,11 @@ class Puissance4 extends Program{
     final char O = 'O';
     final char X = 'X';
     final char V = ' ';
-
-    final boolean JOUEUR1 = true;
-    final boolean JOUEUR2 = false;
-
-    boolean joueurCourant = ((int)(random()*2) == 1)? JOUEUR1: JOUEUR2;
+    final String PROMPT = ">$: ";
 
     char[][] grille = new char[6][7];
 
-    void initGrille(){
+    void initialisationGrille(){
         for(int idxL = 0; idxL < length(grille, 1); idxL++){
             for(int idxC = 0; idxC < length(grille, 2); idxC++){
                 grille[idxL][idxC] = V;
@@ -18,9 +14,7 @@ class Puissance4 extends Program{
         }
     }
 
-
-
-    void printGrille(){
+    void afficherGrille(){
         afficherEntete(length(grille, 2));
         for(int idxL = 0; idxL < length(grille, 1); idxL++){
             afficheSeparateur(length(grille, 2));
@@ -30,7 +24,6 @@ class Puissance4 extends Program{
             println("| ");
         }
         afficheSeparateur(length(grille,2));
-        //println("+---");
     }
 
     void afficherEntete(int n){
@@ -46,16 +39,121 @@ class Puissance4 extends Program{
         println("+");
     }
 
+    boolean estPleine(){
+        for(int idxL = 0; idxL < length(grille, 1); idxL++){
+            for(int idxC = 0; idxC < length(grille, 2); idxC++){
+                if(grille[idxL][idxC] == V) return false;
+            }
+        }
+        return true;
+    }
 
+    boolean estVictoire(){
+        // essayer de simplifier le code en essayant de factoriser de partie de code semblable
+        char courant, suivant = V, suivantDuSuivant = V, suivantDuSuivantDuSuivant = V;
+        for(int idxL = 0; idxL < length(grille,1); idxL++){
+            for(int idxC = 0; idxC < length(grille,2); idxC++){
+                courant = grille[idxL][idxC];
+                if(courant != V){
+                    if(idxL+1 < length(grille, 1)){
+                        suivant = grille[idxL+1][idxC];
+                        if(idxL+2 < length(grille, 1)){
+                            suivantDuSuivant = grille[idxL+2][idxC];
+                            if( idxL+3 < length(grille, 1)){
+                                suivantDuSuivantDuSuivant = grille[idxL+3][idxC];
+                                if( courant == suivant
+                                        && suivant == suivantDuSuivant
+                                        && suivantDuSuivant == suivantDuSuivantDuSuivant ) return true;
+                            }
+                        }
+                    }
+                    if(idxC+1 < length(grille, 2)){
+                        suivant = grille[idxL][idxC+1];
+                        if(idxC+2 < length(grille, 2)){
+                            suivantDuSuivant = grille[idxL][idxC+2];
+                            if( idxL+3 < length(grille, 1)){
+                                suivantDuSuivantDuSuivant = grille[idxL+3][idxC];
+                                if( courant == suivant
+                                        && suivant == suivantDuSuivant
+                                        && suivantDuSuivant == suivantDuSuivantDuSuivant ) return true;
+                            }
+                        }
+                    }
+                    if(idxL+1 < length(grille,1) && idxC+1 < length(grille, 2)){
+                        suivant = grille[idxL+1][idxC+1];
+                        if(idxL+2 < length(grille, 1) && idxC+2 < length(grille, 2)){
+                            suivantDuSuivant = grille[idxL+2][idxC+2];
+                            if(idxL+3 < length(grille, 1) && idxC+3 < length(grille, 2)){
+                                suivantDuSuivantDuSuivant = grille[idxL+3][idxC+3];
+                                if( courant == suivant
+                                        && suivant == suivantDuSuivant
+                                        && suivantDuSuivant == suivantDuSuivantDuSuivant) return true;
+                            }
+                        }
+                    }
+                    if(idxL+1 < length(grille,1) && idxC-1 >= 0){
+                        suivant = grille[idxL+1][idxC-1];
+                        if(idxL+2 < length(grille,1) && idxC-2 >= 0){
+                            suivantDuSuivant = grille[idxL+2][idxC-2];
+                            if(idxL+3 < length(grille,1) && idxC - 3 >= 0){
+                                suivantDuSuivantDuSuivant = grille[idxL+3][idxC-3];
+                                if( courant == suivant
+                                        && suivant == suivantDuSuivant
+                                        && suivantDuSuivant == suivantDuSuivantDuSuivant) return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    boolean estPleineColonne(int col){
+        for(int idxL = 0; idxL < length(grille, 1); idxL++){
+            if(grille[idxL][col] == V ) return false;
+        }
+        return true;
+    }
+
+    boolean estValide(int col){
+        return (!estPleineColonne(col) && col >= 0 && col < length(grille, 2) );
+    }
+
+    char changer(char joueur){
+        return (joueur == 'X') ? 'O': 'X';
+    }
+
+    void jouerALaColonne(char joueur, int col){
+        int pos = length(grille, 1) - 1;
+        while(grille[pos][col] != V){
+            pos -= 1;
+        }
+        grille[pos][col] = joueur;
+    }
+
+    void joue(char joueur){
+        int col = -1;
+        do{
+            print("JOUEUR_"+joueur+" "+PROMPT);
+            col = readInt();
+        }while(!estValide(col-1));
+        jouerALaColonne(joueur,col-1);
+    }
 
     void algorithm(){
-        initGrille();
-        //while(!bloque() && !victoire()){ // on joue
-            printGrille(); //afficher grille
-            // le joueurCourant joue;
-            // il choisie sa colonne entre 1 et 7
-            // si c'est possible le coup, tout est deplacer vers le bas
-            // et on change de joueur
-        //}
+        initialisationGrille();
+        char joueur = ((int)(random()*2) == 1) ? 'O' : 'X'; // TIRAGE AU SORT DU DEBUTANT
+        while(!estPleine() && !estVictoire()){ // on joue
+            afficherGrille(); //afficher grille
+            joue(joueur); // le joueur courant joue
+            joueur = changer(joueur); // on change de joueur
+        }
+        afficherGrille();
+        if(estVictoire()){
+            println("JOUEUR_" + changer(joueur) + " a gagné");
+        }else{
+            println("match null");
+        }
     }
 }
