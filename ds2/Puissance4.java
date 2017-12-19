@@ -49,70 +49,90 @@ class Puissance4 extends Program{
     }
 
     int calculIdentiqueVerticale(char symbole, int row, int col){
+        int cpt=1;// DEBUG
+        print("check V : ");// DEBUG
         int compteur = 1; // prise en compte de la case courante
         int sens = 1;
         boolean suffisant = false;
         while( (row+sens) < length(grille, 1) && symbole == grille[row+sens][col] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens += 1;
+            cpt += 1;// DEBUG
         }
-        if(suffisant) return compteur;
+        if(suffisant) {println(cpt); return compteur;}
         sens = -1;
         while((row+sens) >= 0 && symbole == grille[row+sens][col] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens -= 1;
+            cpt += 1;// DEBUG
         }
+        println(cpt);// DEBUG
         return compteur;
     }
 
     int calculIdentiqueHorizontale(char symbole, int row, int col){
+        int cpt=1;// DEBUG
+        print("check H : ");// DEBUG
         int compteur = 1; // prise en compte de la case courante
         int sens = 1;
         boolean suffisant = false;
         while( (col+sens) < length(grille, 2) && symbole == grille[row][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens += 1;
+            cpt += 1;// DEBUG
         }
-        if(suffisant) return compteur;
+        if(suffisant)  {println(cpt); return compteur;}
         sens = -1;
         while((col+sens) >= 0 && symbole == grille[row][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens -= 1;
+            cpt += 1;// DEBUG
         }
+        println(cpt);// DEBUG
         return compteur;
     }
 
     int calculIdentiqueDiagonaleLTR(char symbole, int row, int col){
+        int cpt=1;// DEBUG
+        print("check D1: ");// DEBUG
         int compteur = 1; // prise en compte de la case courante
         int sens = 1;
         boolean suffisant = false;
         while( (row+sens) < length(grille, 1) && (col+sens) < length(grille, 2) && symbole == grille[row+sens][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens += 1;
+            cpt += 1;// DEBUG
         }
-        if(suffisant) return compteur;
+        if(suffisant)  {println(cpt); return compteur;}
         sens = -1;
         while( (row+sens) >= 0 && (col+sens) >= 0 && symbole == grille[row+sens][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens -= 1;
+            cpt += 1;// DEBUG
         }
+        println(cpt);// DEBUG
         return compteur;
     }
 
     int calculIdentiqueDiagonaleRTL(char symbole, int row, int col){
+        int cpt=1;// DEBUG
+        print("check D2: ");// DEBUG
         int compteur = 1; // prise en compte de la case courante
         int sens = 1;
         boolean suffisant = false;
         while( (row-sens) >= 0 && (col+sens) < length(grille, 2) && symbole == grille[row-sens][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens += 1;
+            cpt += 1;// DEBUG
         }
-        if(suffisant) return compteur;
+        if(suffisant)  {println(cpt); return compteur;}
         sens = -1;
         while((row-sens) < length(grille, 1) && (col+sens) >= 0 && symbole == grille[row-sens][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens -= 1;
+            cpt += 1;// DEBUG
         }
+        println(cpt);// DEBUG
         return compteur;
     }
 
@@ -132,7 +152,11 @@ class Puissance4 extends Program{
                 || ( calculIdentiqueDiagonaleRTL(courant, row, col) >= 4 ) ) return true;
         else return false;
     }
-    /*boolean estVictoire(int x, int y, char joueur, int nbGagner){
+    /*boolean estVictoire(int pos){
+        int y = pos/length(grille, 2);
+        int x = pos%length(grille, 2);
+        char joueur = grille[y][x];
+        int nbGagner = 4;
         for (int i = (y - 1) >= 0 ? y: y - 1; i < ((y + 1) < length(grille, 1) ? y : y + 1); i++) {
             for (int j = (x - 1) >= 0 ? x: x - 1; j < ((x + 1) < length(grille, 2) ? x : x + 1); j++) {
                 if (grille[i][j] == joueur) {
