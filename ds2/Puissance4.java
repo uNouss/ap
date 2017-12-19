@@ -127,12 +127,35 @@ class Puissance4 extends Program{
         int col = position%length(grille, 2);
         char courant = grille[row][col];
         if( ( calculIdentiqueVerticale(courant, row, col) >= 4)
-            || ( calculIdentiqueHorizontale(courant, row, col) >= 4 )
-            || ( calculIdentiqueDiagonaleLTR(courant, row, col) >= 4 )
-            || ( calculIdentiqueDiagonaleRTL(courant, row, col) >= 4 ) ) return true;
+                || ( calculIdentiqueHorizontale(courant, row, col) >= 4 )
+                || ( calculIdentiqueDiagonaleLTR(courant, row, col) >= 4 )
+                || ( calculIdentiqueDiagonaleRTL(courant, row, col) >= 4 ) ) return true;
         else return false;
     }
+    /*boolean estVictoire(int x, int y, char joueur, int nbGagner){
+        for (int i = (y - 1) >= 0 ? y: y - 1; i < ((y + 1) < length(grille, 1) ? y : y + 1); i++) {
+            for (int j = (x - 1) >= 0 ? x: x - 1; j < ((x + 1) < length(grille, 2) ? x : x + 1); j++) {
+                if (grille[i][j] == joueur) {
+                    int variationX = x - j;
+                    int variationY = y - i;
+                    int current = 0;
 
+                    for (int k = i; current > nbGagner - 1 || k < 0 || k >= length(grille, 1); k += variationY) {
+                        for (int l = j; current > nbGagner || l < 0 || l >= length(grille, 2); l += variationX) {
+                            if (grille[k][j] == joueur) {
+                                current++;
+                            }
+                        }
+                    }
+
+                    if (current >= nbGagner) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }*/
     boolean estPleineColonne(int col){
         for(int idxL = 0; idxL < length(grille, 1); idxL++){
             if(grille[idxL][col] == V ) return false;
