@@ -23,13 +23,15 @@ class Awale extends Program{
         afficherEntete(length(plateau)/2, 0);
         afficheSeparateur(length(plateau)/2);
         for(int idx = 0; idx < length(plateau)/2; idx++){
-            if(plateau[idx] < 10 ) print(String.format("|%3s", j1.color+" " +plateau[idx]+ " "+NOCOLOR ));
+            if ( plateau[idx] == 0 ) print(String.format("|%3s", "   "));
+            else if(plateau[idx] < 10 ) print(String.format("|%3s", j1.color+" " +plateau[idx]+ " "+NOCOLOR ));
             else print(String.format("|%3s", j1.color+"" +plateau[idx]+ " "+NOCOLOR ));
         }
         println("|       Score# " + j1.color + j1.point + NOCOLOR);
         afficheSeparateur(length(plateau)/2);
         for(int idx = length(plateau)/2; idx < length(plateau); idx++){
-            if(plateau[idx] < 10 ) print(String.format("|%3s",  j2.color+" " +plateau[idx]+" "+NOCOLOR));
+            if ( plateau[idx] == 0 ) print(String.format("|%3s", "   "));
+            else if(plateau[idx] < 10 ) print(String.format("|%3s",  j2.color+" " +plateau[idx]+" "+NOCOLOR));
             else print(String.format("|%3s", j2.color+"" +plateau[idx]+ " "+NOCOLOR ));
         }
         println("|       Score# " + j2.color + j2.point + NOCOLOR);
