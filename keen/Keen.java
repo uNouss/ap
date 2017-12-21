@@ -289,6 +289,47 @@ class Keen extends Program {
         return cell.value;
     }
 
+    void testNumberOfCell(){
+        Cell cell = creerCell(creerCoordonnee(2,2), 2);
+        assertEquals(1, numberOfCell(cell));
+        assertEquals(0, numberOfCell(cell.next);
+    }
+
+    int numberOfCell(Cell cell){
+        if(cell == null) return 0;
+        return 1 + numberOfCell(cell.next);
+    }
+/*
+ * ######################################################
+ * #                       Bloc                         #
+ * ######################################################
+*/
+
+    void testCreerBloc(){
+        Bloc b = creerBloc(ANSI_BLUE);
+        assertEquals("ANSI_BLUE: ", toString(b));
+    }
+
+    Bloc creerBloc(String color, Contrainte contrainte, Cell listeCells){
+        Bloc bloc = new Bloc();
+        bloc.color = color;
+        bloc.contrainte = creerContrainte(clue,op);
+        bloc.cells = creerCell();
+        return bloc;
+    }
+
+    String toString(Bloc bloc){
+        String s = "";
+        Bloc courant = bloc.cells;
+        s += (bloc.color + ": " + toString(courant));
+        for(int i = 1; i < numberOfCell(b.cells); i++){
+            s += (", " + toString(courant));
+            Bloc suivant = bloc.cells.next;
+            courant = suivant;
+        }
+        return s;
+    }
+
     void _algorithm(){
         //initialize();
         initSuduku();
@@ -316,12 +357,8 @@ class Coordonnee {
 class Cell{
     int value = 0;
     Coordonnee coord;
-}
-
-class NoeudCell{
-    Cell cell;
-    NoeudCell next;
-    NoeudCell prev;
+    Cell next;
+    Cell prev;
 }
 
 class Contrainte {
@@ -332,10 +369,6 @@ class Contrainte {
 class Bloc{
     String color;
     Contrainte contrainte;
-    NoeudCell listeCoordonees;
-}
-
-class NoeudBloc{
-    Bloc b;
-    NoeudBloc next;
+    Cell cells;
+    Bloc next;
 }
