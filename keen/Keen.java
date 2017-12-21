@@ -153,8 +153,143 @@ class Keen extends Program {
         }
         return false;
     }*/
+/*
+ * ######################################################
+ * #               Coordonnee                           #
+ * ######################################################
+*/
 
-    void algorithm(){
+    void testCreerCoordonnee(){
+        Coordonnee c = creerCoordonnee(2,3);
+        assertEquals("(2,3)", toString(c));
+    }
+
+    void testToString(){
+        Coordonnee c = creerCoordonnee(2,3);
+        assertEquals("(2,3)", toString(c));
+    }
+
+    String toString(Coordonnee c){
+        return "(" + c.abs + "," + c.ord + ")";
+    }
+
+    Coordonnee creerCoordonnee(int abs, int ord){
+        Coordonnee c = new Coordonnee();
+        c.abs = abs;
+        c.ord = ord;
+        return c;
+    }
+
+    void testGetAbscisse(){
+        Coordonnee c = creerCoordonnee(1,0);
+        assertEquals(1, getAbscisse(c));
+    }
+
+    int getAbscisse(Coordonnee c){
+        return c.abs;
+    }
+
+    void testGetOrdonnee(){
+        Coordonnee c = creerCoordonnee(1,0);
+        assertEquals(0, getOrdonnee(c));
+    }
+
+    int getOrdonnee(Coordonnee c){
+        return c.ord;
+    }
+
+/*
+ * ######################################################
+ * #                     Contrainte                     #
+ * ######################################################
+*/
+    void testCreerContrainte(){
+        assertEquals("12+", toString(creerContrainte(12, '+')));
+    }
+
+    String toString(Contrainte c){
+        return c.clue + "" + c.operator;
+    }
+
+    Contrainte creerContrainte(int clue, char operator){
+        Contrainte c = new Contrainte();
+        c.clue = clue;
+        c.operator = operator;
+        return c;
+    }
+
+    void testGetClue(){
+        Contrainte c = creerContrainte(12, '+');
+        assertEquals(12, getClue(c));
+        c = creerContrainte(1, '*');
+        assertEquals(1, getClue(c));
+        c = creerContrainte(5, '/');
+        assertEquals(5, getClue(c));
+    }
+
+    int getClue(Contrainte c){
+        return c.clue;
+    }
+
+    void testGetOperator(){
+        Contrainte c = creerContrainte(12, '+');
+        assertEquals('+', getOperator(c));
+        c = creerContrainte(1, '*');
+        assertEquals('*', getOperator(c));
+        c = creerContrainte(5, '/');
+        assertEquals('/', getOperator(c));
+    }
+
+    char getOperator(Contrainte c){
+        return c.operator;
+    }
+
+/*
+ * ######################################################
+ * #                       Cell                         #
+ * ######################################################
+*/
+
+    void testCreerCell(){
+        Cell cell = creerCell(creerCoordonnee(0,0), 3);
+        assertEquals("(0,0): 3", toString(cell));
+    }
+/*
+    void testToString(){
+        Cell cell = creerCell(creerCoordonnee(2,3),6);
+        assertEquals("(2,3): 6", toString(cell));
+    }
+*/
+    String toString(Cell cell){
+        return toString(cell.coord) + ": " + cell.value;
+    }
+
+    Cell creerCell(Coordonnee coord, int value){
+        Cell cell = new Cell();
+        cell.coord = coord;
+        cell.value = value;
+        return cell;
+    }
+
+    void testgetCoordonnee(){
+        Cell cell = creerCell(creerCoordonnee(0,1),0);
+        assertEquals("(0,1)", toString(getCoordonnee(cell)));
+    }
+
+    Coordonnee getCoordonnee(Cell cell){
+        return cell.coord;
+    }
+
+    void testGetValue(){
+        Cell cell = creerCell(creerCoordonnee(1,0), 3);
+        assertEquals(3, getValue(cell));
+    }
+
+    int getValue(Cell cell){
+        return cell.value;
+    }
+
+    void _algorithm(){
         //initialize();
         initSuduku();
         /*while(!victoire()){
@@ -174,24 +309,33 @@ class Keen extends Program {
 }
 
 class Coordonnee {
-    int abscisse;
-    int ordonnee;
+    int abs;
+    int ord;
 }
 
-class NoeudCoord{
-    Coordonnee valeur;
-    NoeudCoord suivant;
+class Cell{
+    int value = 0;
+    Coordonnee coord;
 }
 
+class NoeudCell{
+    Cell cell;
+    NoeudCell next;
+    NoeudCell prev;
+}
 
 class Contrainte {
-    int nombre;
-    char operateur;
+    int clue;
+    char operator;
 }
 
 class Bloc{
-    Contrainte contrainte;
-    NoeudCoord listeCoordonees;
     String color;
+    Contrainte contrainte;
+    NoeudCell listeCoordonees;
 }
 
+class NoeudBloc{
+    Bloc b;
+    NoeudBloc next;
+}
