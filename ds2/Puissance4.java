@@ -49,90 +49,70 @@ class Puissance4 extends Program{
     }
 
     int calculIdentiqueVerticale(char symbole, int row, int col){
-        int cpt=1;// DEBUG
-        print("check V : ");// DEBUG
         int compteur = 1; // prise en compte de la case courante
         int sens = 1;
         boolean suffisant = false;
         while( (row+sens) < length(grille, 1) && symbole == grille[row+sens][col] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens += 1;
-            cpt += 1;// DEBUG
         }
-        if(suffisant) {println(cpt); return compteur;}
+        if(suffisant) return compteur;
         sens = -1;
         while((row+sens) >= 0 && symbole == grille[row+sens][col] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens -= 1;
-            cpt += 1;// DEBUG
         }
-        println(cpt);// DEBUG
         return compteur;
     }
 
     int calculIdentiqueHorizontale(char symbole, int row, int col){
-        int cpt=1;// DEBUG
-        print("check H : ");// DEBUG
         int compteur = 1; // prise en compte de la case courante
         int sens = 1;
         boolean suffisant = false;
         while( (col+sens) < length(grille, 2) && symbole == grille[row][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens += 1;
-            cpt += 1;// DEBUG
         }
-        if(suffisant)  {println(cpt); return compteur;}
+        if(suffisant) return compteur;
         sens = -1;
         while((col+sens) >= 0 && symbole == grille[row][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens -= 1;
-            cpt += 1;// DEBUG
         }
-        println(cpt);// DEBUG
         return compteur;
     }
 
     int calculIdentiqueDiagonaleLTR(char symbole, int row, int col){
-        int cpt=1;// DEBUG
-        print("check D1: ");// DEBUG
         int compteur = 1; // prise en compte de la case courante
         int sens = 1;
         boolean suffisant = false;
         while( (row+sens) < length(grille, 1) && (col+sens) < length(grille, 2) && symbole == grille[row+sens][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens += 1;
-            cpt += 1;// DEBUG
         }
-        if(suffisant)  {println(cpt); return compteur;}
+        if(suffisant) return compteur;
         sens = -1;
         while( (row+sens) >= 0 && (col+sens) >= 0 && symbole == grille[row+sens][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens -= 1;
-            cpt += 1;// DEBUG
         }
-        println(cpt);// DEBUG
         return compteur;
     }
 
     int calculIdentiqueDiagonaleRTL(char symbole, int row, int col){
-        int cpt=1;// DEBUG
-        print("check D2: ");// DEBUG
         int compteur = 1; // prise en compte de la case courante
         int sens = 1;
         boolean suffisant = false;
         while( (row-sens) >= 0 && (col+sens) < length(grille, 2) && symbole == grille[row-sens][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens += 1;
-            cpt += 1;// DEBUG
         }
-        if(suffisant)  {println(cpt); return compteur;}
+        if(suffisant) return compteur;
         sens = -1;
         while((row-sens) < length(grille, 1) && (col+sens) >= 0 && symbole == grille[row-sens][col+sens] && !(suffisant=(compteur >= 4))){
             compteur += 1;
             sens -= 1;
-            cpt += 1;// DEBUG
         }
-        println(cpt);// DEBUG
         return compteur;
     }
 
