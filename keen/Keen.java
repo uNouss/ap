@@ -367,8 +367,61 @@ class Contrainte {
 }
 
 class Bloc{
+    String id;
     String color;
     Contrainte contrainte;
     Cell cells;
-    Bloc next;
+    //Bloc next;
 }
+
+
+
+/*
+
+    ArrayList<String> formes = new ArrayList<String>();
+
+    List<String[]> bordures = new ArrayList<String[]>();
+
+    void initFormes(){
+        formes.add("[]");
+        formes.add("[0,1],[1,0]");
+        formes.add("[1,0]");
+        formes.add("[0,1]");
+        formes.add("[1,-1],[1,0]");
+        formes.add("[1,0],[1,1]");
+        formes.add("[0,1],[1,1]");
+        formes.add("[0,1],[1,0]");
+        formes.add("[1,0],[2,0]");
+        formes.add("[0,1],[0,2]");
+    }
+
+    void initBordures(){
+        bordures.add(new String[]{"0123"});
+        bordures.add(new String[]{"03","01","23","12"});
+        bordures.add(new String[]{"013","123"});
+        bordures.add(new String[]{"023","012"});
+        bordures.add(new String[]{"013","023","12"});
+        bordures.add(new String[]{"013","23","012"});
+        bordures.add(new String[]{"023","01","123"});
+        bordures.add(new String[]{"03","012","123"});
+        bordures.add(new String[]{"013","13","123"});
+        bordures.add(new String[]{"023","02","012"});
+    }
+
+    void printTab(String[] tab){
+        String s = "";
+        for(int i = 0; i < length(tab); i++)
+            s += "\""+tab[i]+"\",";
+        print(substring(s,0,length(s)-1));
+    }
+
+    /*boolean isVide(){
+        for(int l = 0; l < length(grid, 1); l++){
+            for(int c = 0; c < length(grid, 2); c++){
+                if(grid[l][c] == 0) return true;
+            }
+        }
+        return false;
+    }*/
+
+/*
