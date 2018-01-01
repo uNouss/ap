@@ -358,7 +358,7 @@ class Keen1 extends Program{
     void complete(Bloc b){
         Coordonnee[] coords = _formes.get(getType(b));
         int orgX = getOrg(b)%length(grid, 1);
-        int orgY = getType(b)/length(grid, 1);
+        int orgY = getOrg(b)/length(grid, 2);
 
         int[] tmp = new int[length(coords)];
 
@@ -404,54 +404,30 @@ class Keen1 extends Program{
     void printEltBloc(Bloc b){
         Coordonnee[] coords = _formes.get(getType(b));
         int orgX = getOrg(b)%length(arene, 1);
-        int orgY = getType(b)/length(arene, 2);
+        int orgY = getOrg(b)/length(arene, 2);
 
         for(int idx = 0; idx < length(coords); idx++){
             int y = orgY + getY(coords[idx]);
             int x = orgX + getX(coords[idx]);
-            print(arene[y][x]+" ");
+            print("("+y+";"+x+") ");
             //if( getType(b) >= length(arene,2))
-            println(ANSI_RESET);
-        }
-    }
-
-
-    void printHead(){
-        print("  ");
-        for(int i = 0; i < length(arene, 1); i++){
-            print(i+" ");
-        }
-        println();
-        for(int i = 0; i < length(arene, 1)*2+1; i++){
-            print("-");
-        }
-        println();
-    }
-
-    void printGrid(){
-        printHead();
-        char car = 'A';
-        for(int l = 0; l < length(grid, 1); l++){
-            print(car+"|");
-            car += 1;
-            for(int c = 0; c < length(grid, 2); c++){
-                print(grid[l][c]+" ");
-            }
-            println();
+            //println(ANSI_RESET);
         }
     }
 
     void printArene(){
         //printEntete();
-        //for(int idxB = 0; idxB < blocs.size(); idxB++){
-          //  Bloc b = blocs.get(idxB);
+        for(int idxB = 0; idxB < blocs.size(); idxB++){
+            Bloc b = blocs.get(idxB);
             //print(getColor(b)+String.format("%6s", toString(getContrainte(b))+" "));
-            //printEltBloc(b);
-        //}
+            print("Bloc_"+idxB+" ");
+            printEltBloc(b);
+            println();
+        }
         //FIXME: affichage de l'arène avec ce template
 /*
 
-      1       2       3       4       5       6       7
+      0       1       2       3       4       5       6
   +-------+-------+-------+-------+-------+-------+-------+
   | 12 +  |  12 + |  12 + |  12 + |  12 + |  12 + |  12 + |
 A |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
@@ -496,6 +472,31 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
         }
     }
 
+    void printHead(){
+        print("  ");
+        for(int i = 0; i < length(arene, 1); i++){
+            print(i+" ");
+        }
+        println();
+        for(int i = 0; i < length(arene, 1)*2+1; i++){
+            print("-");
+        }
+        println();
+    }
+
+    void printGrid(){
+        printHead();
+        char car = 'A';
+        for(int l = 0; l < length(grid, 1); l++){
+            print(car+"|");
+            car += 1;
+            for(int c = 0; c < length(grid, 2); c++){
+                print(grid[l][c]+" ");
+            }
+            println();
+        }
+    }
+
     boolean isWin(){
         for (int idxL = 0; idxL < length(arene, 1); idxL++){
             for(int idxC = 0; idxC < length(arene, 2); idxC++){
@@ -523,7 +524,7 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
         initialisation();
         initBlocs();
         initContraintes();
-        printGrid();
+        /*printGrid();
         do{
             printArene();
             String input;
@@ -535,7 +536,7 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
             int x = stringToInt(substring(input,1,2));
             arene[y][x] = stringToInt(substring(input,3,length(input)));
         }while(!isWin());
-        println("Victoire ^^");
+        println("Victoire ^^");*/
         printGrid();
         printBlocs();
         printArene();
