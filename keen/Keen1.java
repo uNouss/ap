@@ -6,24 +6,9 @@ class Keen1 extends Program{
 
     ArrayList<String> formes = new ArrayList<String>();
 
-    /*String[] lesformes = new String[]{
-        "[0,0]",
-            "[0,0];[0,1];[1,0];[1,1]",
-            "[0,0];[1,0]",
-            "[0,0];[0,1]",
-            "[0,0];[1,-1];[1,0]",
-            "[0,0];[1,0];[1,1]",
-            "[0,0];[0,1];[1,1]",
-            "[0,0];[0,1];[1,0]",
-            "[0,0];[1,0];[2,0]",
-            "[0,0];[0,1];[0,2]"
-    };*/
-
     ArrayList<Coordonnee[]> _formes = new ArrayList<>();
 
-
     ArrayList<Bloc> blocs = new ArrayList<>();
-
 
 
     void initForme(){
@@ -75,12 +60,6 @@ class Keen1 extends Program{
             newCoordonnee(0,2)
         });
     }
-
-
-
-
-
-
 /*
  * ######################################################
  * #               Coordonnee                           #
@@ -292,7 +271,6 @@ class Keen1 extends Program{
     }
 
 
-    // TYPE FORME
     void initFormes(){
 
         boolean[] helper = new boolean[length(grid, 1)*length(grid, 1)];
@@ -304,7 +282,6 @@ class Keen1 extends Program{
             for(int c = 0; c < length(grid, 2); c++){
                 if(helper[l*SIZE+c]){
                     int idF;
-                    //String[] coords;
                     Coordonnee[] coords;
                     boolean badForme;
                     int idx = 0;
@@ -313,15 +290,10 @@ class Keen1 extends Program{
                         idF = idx < 100 ? getRandom(9)+1:0;
                         print("idxF random = "+idF+" , et les formes: ");
                         printCoords(_formes.get(idF));
-                        //coords = lesformes[idF].split(";");
                         coords = _formes.get(idF);
                         badForme = false;
-                        //String[] coordSpliter = coords.split(";");
                         for(int idxco = 0; idxco < length(coords); idxco++){
-                            //println("les coords: "+coords[idxco]);
-                            //int y = l + car2Int(charAt(coords[idxco], 1));
                             int y = l + getY(coords[idxco]);
-                            //int x = (charAt(coords[idxco], 3) == '-') ? c - car2Int(charAt(coords[idxco], 4)): c + car2Int(charAt(coords[idxco], 3));
                             int x = c + getX(coords[idxco]);
                             if( x < 0
                                     || y < 0
@@ -334,21 +306,15 @@ class Keen1 extends Program{
                         }
                     }while(badForme);
                     for(int idxco = 0; idxco < length(coords); idxco++){
-                        //String[] coordSpliter = coords.split(";");
-                        //int idxC = (charAt(coords[idxco], 3) == '-') ? -1*car2Int(charAt(coords[idxco], 4)) : car2Int(charAt(coords[idxco], 3)) ;
                         int idxC = getX(coords[idxco]);
-                        //int idxL = car2Int(charAt(coords[idxco], 1)) ;
                         int idxL = getY(coords[idxco]);
                         helper[(l+idxL)*SIZE+(c+idxC)] = false ;
                     }
                     println((l*length(grid,1)+c)+":"+idF);
-                    //formes.add((l*SIZE+c)+":"+idF);
                     blocs.add(newBloc(l*SIZE+c, idF));
                 }
             }
         }
-        //return formes;
-
     }
     int car2Int(char c){
         return (int)(c) - 48;
@@ -361,12 +327,11 @@ class Keen1 extends Program{
         println();
     }
 
-    void algorithm(){// main program
+    void algorithm(){
         initForme();
         initialisation();
         printGrid();
         initFormes();
-        //printTab();
 
         for(int i = 0; i < _formes.size(); i++){
             print(i+" :  ");
