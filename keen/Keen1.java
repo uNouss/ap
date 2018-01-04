@@ -10,7 +10,7 @@ class Keen1 extends Program{
 
     ArrayList<Bloc> blocs = new ArrayList<>();
 
-    final int[] CODE_COLORS = new int[]{0, 1, 105, 4, 5, 6, 8, 93, 40, 12, 43, 16, 57, 18, 129, 30, 21, 32, 23, 34, 25, 36, 27, 38, 29, 20, 31, 22, 33, 24, 35, 26, 37, 28, 39, 10, 41, 88, 13, 44, 52, 54,17, 88, 9, 198, 19, 2};
+    final int[] CODE_COLORS = new int[]{1, 2, 8, 20, 5, 6, 52, 93, 40, 12, 43, 16, 57, 18, 129, 30, 21, 32, 23, 34, 25, 36, 27, 38, 29, 20, 31, 22, 33, 24, 35, 26, 37, 28, 39, 10, 41, 88, 13, 44, 1, 54,17, 88, 9, 8, 19, 2};
 
     void initFormes(){
         _formes.add(new Coordonnee[]{
@@ -401,29 +401,23 @@ class Keen1 extends Program{
         }
     }
 
-    void printEltBloc(Bloc b){
+    Coordonnee[] getEltBloc(Bloc b){
         Coordonnee[] coords = _formes.get(getType(b));
+
+        Coordonnee[] res = new Coordonnee[length(coords)];
+
         int orgX = getOrg(b)%length(arene, 1);
         int orgY = getOrg(b)/length(arene, 2);
 
         for(int idx = 0; idx < length(coords); idx++){
             int y = orgY + getY(coords[idx]);
             int x = orgX + getX(coords[idx]);
-            print("("+y+";"+x+") ");
-            //if( getType(b) >= length(arene,2))
-            //println(ANSI_RESET);
+            res[idx] = newCoordonnee(y,x);
         }
+        return res;
     }
 
     void printArene(){
-        //printEntete();
-        for(int idxB = 0; idxB < blocs.size(); idxB++){
-            Bloc b = blocs.get(idxB);
-            //print(getColor(b)+String.format("%6s", toString(getContrainte(b))+" "));
-            print("Bloc_"+idxB+" ");
-            printEltBloc(b);
-            println();
-        }
         //FIXME: affichage de l'arène avec ce template
 /*
 
@@ -461,24 +455,43 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
   jouer >$: A1:4 ( permet de jouer à la coordonnée ('A',1) la valeur 4
 */
         printHead();
+        printSeparator();
         char car = 'A';
+        int idxB = 0;
+        String color;
         for(int l = 0; l < length(arene, 1); l++){
             print(car+"|");
             car += 1;
             for(int c = 0; c < length(arene, 2); c++){
-                print(arene[l][c]+" ");
+                color = findColor(newCoordonnee(l,c));
+                String disp = (arene[l][c] == 0) ? " ":arene[l][c]+"";
+                print(color+ANSI_BOLD);
+                if( idxB < blocs.size()
+                        && l*length(arene,1)+c == getOrg(blocs.get(idxB))){
+                    String ctr = toString(getContrainte(blocs.get(idxB)));
+                    switch(length(ctr)){
+                    case 2: ctr += "  "; break;
+                    case 3: ctr += " "; break;
+                    default: ctr = ctr; break;
+                    }
+                    print(String.format("%8s",ANSI_WHITE+ctr+ANSI_RESET+color+" "+disp+ANSI_RESET+"|"));
+                    idxB += 1;
+                }
+                else print(String.format("%8s","     "+disp+ANSI_RESET+"|"));
             }
-            println();
+            println();printSeparator();
         }
     }
 
     void printHead(){
         print("  ");
         for(int i = 0; i < length(arene, 1); i++){
-            print(i+" ");
+            print("   "+i+"   ");
         }
         println();
-        for(int i = 0; i < length(arene, 1)*2+1; i++){
+    }
+    void printSeparator(){
+        for(int i = 0; i < length(arene, 1)*7+2; i++){
             print("-");
         }
         println();
@@ -498,6 +511,8 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
     }
 
     boolean isWin(){
+        //FIXME: verfier que chaque valeur est present une fois sur la même ligne et colonne
+        // et que toutes les valeurs d'un bloc verifie la contrainte lié au bloc
         for (int idxL = 0; idxL < length(arene, 1); idxL++){
             for(int idxC = 0; idxC < length(arene, 2); idxC++){
                 if(arene[idxL][idxC] != grid[idxL][idxC])
@@ -509,7 +524,7 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
 
     boolean isValidInput(String input){
         return length(input) == 4
-            && (charAt(input, 0) < 'A' + length(arene, 1))
+            && (charAt(toUpperCase(input), 0) < 'A' + length(arene, 1))
             && Character.isDigit(charAt(input, 1))
             && stringToInt(charAt(input, 1)+"") >= 0
             && stringToInt(charAt(input, 1)+"") < length(arene, 1)
@@ -519,12 +534,31 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
             && stringToInt(charAt(input, 3)+"") <= length(arene, 1);
     }
 
+
+    String findColor(Coordonnee c){
+        for(int idxB = 0; idxB < blocs.size(); idxB++){
+            Bloc b = blocs.get(idxB);
+            if (isFindCoord(getEltBloc(b), c)) return getColor(b);
+        }
+        return ANSI_WHITE;
+    }
+
+    boolean isFindCoord(Coordonnee[] tabCoord, Coordonnee c){
+        for(int idx = 0; idx < length(tabCoord); idx++){
+            if(equals(c, tabCoord[idx])) return true;
+        }
+        return false;
+    }
+
+    boolean equals(Coordonnee c1, Coordonnee c2){
+        return c1.x == c2.x && c1.y == c2.y;
+    }
+
     void algorithm(){
         initFormes();
         initialisation();
         initBlocs();
         initContraintes();
-        /*printGrid();
         do{
             printArene();
             String input;
@@ -532,13 +566,13 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
                 print("saisie [A0:1]: ");
                 input = readString();
             }while(!isValidInput(input));
-            int y = (int)(charAt(input,0)) - 65;
+            int y = (int)(charAt(toUpperCase(input),0)) - 65;
             int x = stringToInt(substring(input,1,2));
             arene[y][x] = stringToInt(substring(input,3,length(input)));
         }while(!isWin());
-        println("Victoire ^^");*/
-        printGrid();
-        printBlocs();
         printArene();
+        println("Victoire ^^");
     }
 }
+// https://asciinema.org/a/mUuas0YoQUVhxxbfKTwlgXwgT
+// TODO: ajouter fonction pour avertir qu'une valeur est déjà présente dans la colonne et/ou ligne ou qu'elle ne permet d'avoir la contrainte si tout le bloc est rempli
