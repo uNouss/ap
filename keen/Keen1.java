@@ -6,6 +6,8 @@ class Keen1 extends Program{
 
     int[][] arene;
 
+    String FG = "";
+
     ArrayList<Coordonnee[]> _formes = new ArrayList<>();
 
     ArrayList<Bloc> blocs = new ArrayList<>();
@@ -430,7 +432,7 @@ class Keen1 extends Program{
         return arene[row];
     }
 
-    void printArene(){
+    void printArene(int y, int x){
         //FIXME: affichage de l'arène avec ce template
 /*
 
@@ -481,6 +483,10 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
             print(ANSI_BOLD+ANSI_BLUE+car+ANSI_RESET+"|");
             car += 1;
             for(int c = 0; c < length(arene, 2); c++){
+                /*String fg = "";
+                if(( l == y || c == x) && (inArray(getColumn(c), value) || inArray(getRow(l), value))){
+                    fg = ANSI_YELLOW;
+                }*/
                 color = findColor(newCoordonnee(l,c));
                 String disp = (arene[l][c] == 0) ? " ":arene[l][c]+"";
                 print(color+ANSI_BOLD);
@@ -492,10 +498,10 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
                     case 3: ctr += " "; break;
                     default: ctr = ctr; break;
                     }
-                    print(String.format("%8s",ANSI_WHITE+ctr+ANSI_RESET+color+" "+disp+ANSI_RESET+"|"));
+                    print(String.format("%8s",ANSI_WHITE+ctr+ANSI_RESET+color+" "+FG+disp+ANSI_RESET+"|"));
                     idxB += 1;
                 }
-                else print(String.format("%8s","     "+disp+ANSI_RESET+"|"));
+                else print(String.format("%8s","     "+FG+disp+ANSI_RESET+"|"));
             }
             println();printSeparator();
         }
@@ -579,18 +585,24 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
         initBlocs();
         initContraintes();
         int y, x;
+        y = 0; x = 0;
         do{
-            printArene();
+            printArene(y, x);
             String input;
             do{
-                print("saisie ["+ANSI_BOLD+ANSI_BLUE+"A.."+(char)('A'+length(arene,1)-1)+ANSI_RED+"][0.."+(length(arene,2)-1)+ANSI_RESET+"]:"+ANSI_BOLD+ANSI_WHITE+"[1.."+length(arene,1)+ANSI_RESET+"] : ");
+                print("saisie "
+                        +ANSI_BOLD+ANSI_BLUE+"[A.."+(char)('A'+length(arene,1)-1)+"]"+ANSI_RED
+                        +"[0.."+(length(arene,2)-1)+"]"+ANSI_RESET+":"
+                        +ANSI_BOLD+ANSI_WHITE+"[1.."+length(arene,1)+ANSI_RESET+"] : ");
                 input = readString();
             }while(!isValidInput(input));
             y = (int)(charAt(toUpperCase(input),0)) - 65;
             x = stringToInt(substring(input,1,2));
-            arene[y][x] = stringToInt(substring(input,3,length(input)));
+            int value = stringToInt(substring(input,3,length(input)));
+            FG = (inArray(getColumn(y), value) || inArray(getRow(x), value)) ? ANSI_YELLOW:"";
+            arene[y][x] = value;
         }while(!isWin());
-        printArene();
+        printArene(y, x);
         println("Victoire ^^");
     }
 }
