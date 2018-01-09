@@ -10,7 +10,7 @@ class Keen1 extends Program{
 
     ArrayList<Bloc> blocs = new ArrayList<>();
 
-    final int[] CODE_COLORS = new int[]{1, 2, 8, 20, 5, 6, 52, 93, 40, 12, 43, 16, 57, 18, 129, 30, 21, 32, 23, 34, 25, 36, 27, 38, 29, 20, 31, 22, 33, 24, 35, 26, 37, 28, 39, 10, 41, 88, 13, 44, 1, 54,17, 88, 9, 8, 19, 2};
+    final int[] CODE_COLORS = new int[]{1, 2, 8, 20, 5, 52, 13, 0, 104, 12, 43, 208, 57, 18, 129, 30, 21, 32, 23, 34, 25, 36, 27, 38, 29, 93, 31, 22, 33, 24, 35, 26, 37, 28, 39, 10, 41, 88, 13, 44, 1, 54,17, 88, 9, 8, 19, 2};
 
     void initFormes(){
         _formes.add(new Coordonnee[]{
@@ -417,6 +417,19 @@ class Keen1 extends Program{
         return res;
     }
 
+
+    int[] getColumn(int col){
+        int[] column = new int[length(arene, 1)];
+        for(int idxL = 0; idxL < length(column); idxL++){
+            column[idxL] = arene[idxL][col];
+        }
+        return column;
+    }
+
+    int[] getRow(int row){
+        return arene[row];
+    }
+
     void printArene(){
         //FIXME: affichage de l'arène avec ce template
 /*
@@ -454,13 +467,18 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
 
   jouer >$: A1:4 ( permet de jouer à la coordonnée ('A',1) la valeur 4
 */
+        /*int value = (arene[y][x] != 0 ) ? arene[y][x]:-1;
+        println(value);
+        int[] column = getColumn(y);
+        int[] row = getRow(x);
+        boolean isInCol = inArray()*/
         printHead();
         printSeparator();
         char car = 'A';
         int idxB = 0;
         String color;
         for(int l = 0; l < length(arene, 1); l++){
-            print(car+"|");
+            print(ANSI_BOLD+ANSI_BLUE+car+ANSI_RESET+"|");
             car += 1;
             for(int c = 0; c < length(arene, 2); c++){
                 color = findColor(newCoordonnee(l,c));
@@ -486,13 +504,14 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
     void printHead(){
         print("  ");
         for(int i = 0; i < length(arene, 1); i++){
-            print("   "+i+"   ");
+            print("   "+ANSI_BOLD+ANSI_RED+i+ANSI_RESET+"   ");
         }
         println();
     }
     void printSeparator(){
-        for(int i = 0; i < length(arene, 1)*7+2; i++){
-            print("-");
+        print(" +");
+        for(int i = 0; i < length(arene, 1); i++){
+            print("------+");
         }
         println();
     }
@@ -559,15 +578,16 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
         initialisation();
         initBlocs();
         initContraintes();
+        int y, x;
         do{
             printArene();
             String input;
             do{
-                print("saisie [A0:1]: ");
+                print("saisie ["+ANSI_BOLD+ANSI_BLUE+"A.."+(char)('A'+length(arene,1)-1)+ANSI_RED+"][0.."+(length(arene,2)-1)+ANSI_RESET+"]:"+ANSI_BOLD+ANSI_WHITE+"[1.."+length(arene,1)+ANSI_RESET+"] : ");
                 input = readString();
             }while(!isValidInput(input));
-            int y = (int)(charAt(toUpperCase(input),0)) - 65;
-            int x = stringToInt(substring(input,1,2));
+            y = (int)(charAt(toUpperCase(input),0)) - 65;
+            x = stringToInt(substring(input,1,2));
             arene[y][x] = stringToInt(substring(input,3,length(input)));
         }while(!isWin());
         printArene();
@@ -575,4 +595,5 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
     }
 }
 // https://asciinema.org/a/mUuas0YoQUVhxxbfKTwlgXwgT
+// https://asciinema.org/a/HMi858kuezszd84XotFhL2cT6
 // TODO: ajouter fonction pour avertir qu'une valeur est déjà présente dans la colonne et/ou ligne ou qu'elle ne permet d'avoir la contrainte si tout le bloc est rempli
