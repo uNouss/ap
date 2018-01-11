@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 
 class Keen1 extends Program{
+    final String ANSI_PREFIX = "\033[1;48;5;";
+    final String ANSI_POSTFIX = "m";
 
     int[][] grid;
 
@@ -383,7 +385,7 @@ class Keen1 extends Program{
                         helper[(l+idxL)*length(grid, 1)+(c+idxC)] = false ;
                     }
                     Bloc b = newBloc(l*length(grid, 1)+c, idF);
-                    setColor(b, "\033[1;48;5;"+CODE_COLORS[idxColor++]+"m");
+                    setColor(b, ANSI_PREFIX+CODE_COLORS[idxColor++]+ANSI_POSTFIX);
                     blocs.add(b);
                 }
             }
@@ -629,6 +631,11 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
             && stringToInt(charAt(input, 3)+"") <= length(arene, 1);
     }
 
+    void testFindColor(){
+        Bloc b = newBloc(0,4);
+        b.color = ANSI_BLUE;
+        assertEquals(ANSI_BLUE, findColor(newCoordonnee(1,-1)));
+    }
 
     String findColor(Coordonnee c){
         for(int idxB = 0; idxB < blocs.size(); idxB++){
@@ -638,11 +645,21 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
         return ANSI_WHITE;
     }
 
+    void testIsFindCoord(){
+        assertTrue(isFindCoord(_formes.get(4), newCoordonnee(1,-1)));
+        assertFalse(isFindCoord(_formes.get(4), newCoordonnee(-1,-1)));
+    }
+
     boolean isFindCoord(Coordonnee[] tabCoord, Coordonnee c){
         for(int idx = 0; idx < length(tabCoord); idx++){
             if(equals(c, tabCoord[idx])) return true;
         }
         return false;
+    }
+
+    void testEquals(){
+        assertTrue(equals(newCoordonnee(0,1), newCoordonnee(0, 1)));
+        assertFalse(equals(newCoordonnee(0,1), newCoordonnee(1, 0)));
     }
 
     boolean equals(Coordonnee c1, Coordonnee c2){
@@ -662,7 +679,7 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
         return getTotal(total, op) == getClue(getContrainte(b));
     }
 
-    void algorithm(){
+    void _algorithm(){
         initFormes();
         initialisation();
         initBlocs();
