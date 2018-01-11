@@ -6,13 +6,27 @@ class Keen1 extends Program{
 
     int[][] arene;
 
-    String FG = "";
-
     ArrayList<Coordonnee[]> _formes = new ArrayList<>();
 
     ArrayList<Bloc> blocs = new ArrayList<>();
 
-    final int[] CODE_COLORS = new int[]{1, 2, 8, 20, 5, 52, 13, 0, 104, 12, 43, 208, 57, 18, 129, 30, 21, 32, 23, 34, 25, 36, 27, 38, 29, 93, 31, 22, 33, 24, 35, 26, 37, 28, 39, 10, 41, 88, 13, 44, 1, 54,17, 88, 9, 8, 19, 2};
+    final int[] CODE_COLORS = new int[]{1, 2, 8, 20, 5, 52, 130, 0, 104, 12, 43, 208, 57, 18, 129, 30, 21, 32, 23, 34, 25, 36, 27, 38, 29, 93, 31, 22, 33, 24, 35, 26, 37, 28, 39, 10, 41, 88, 13, 44, 1, 54,17, 88, 9, 8, 19, 2};
+
+    void testInitFormes(){
+        initFormes();
+        assertEquals(10, _formes.size());
+        assertEquals("(0,0)", toString(_formes.get(0)[0]));
+        assertEquals("(0,1)", toString(_formes.get(1)[1]));
+        assertEquals("(1,0)", toString(_formes.get(2)[1]));
+        assertEquals("(1,-1)", toString(_formes.get(4)[1]));
+        /*assertEquals("(0,0)", toString(_formes.get(4)));
+        assertEquals("(0,0)", toString(_formes.get(5)));
+        assertEquals("(0,0)", toString(_formes.get(6)));
+        assertEquals("(0,0)", toString(_formes.get(7)));
+        assertEquals("(0,0)", toString(_formes.get(8)));
+        assertEquals("(0,0)", toString(_formes.get(9)));
+*/
+    }
 
     void initFormes(){
         _formes.add(new Coordonnee[]{
@@ -74,6 +88,13 @@ class Keen1 extends Program{
         assertEquals("(2,3)", toString(c));
     }
 
+    Coordonnee newCoordonnee(int y, int x){
+        Coordonnee c = new Coordonnee();
+        c.y = y;
+        c.x = x;
+        return c;
+    }
+
     void testToString(){
         Coordonnee c = newCoordonnee(2,3);
         assertEquals("(2,3)", toString(c));
@@ -81,13 +102,6 @@ class Keen1 extends Program{
 
     String toString(Coordonnee c){
         return "(" + c.y + "," + c.x + ")";
-    }
-
-    Coordonnee newCoordonnee(int y, int x){
-        Coordonnee c = new Coordonnee();
-        c.y = y;
-        c.x = x;
-        return c;
     }
 
     void testGetX(){
@@ -117,15 +131,15 @@ class Keen1 extends Program{
         assertEquals("12+", toString(newContrainte(12, '+')));
     }
 
-    String toString(Contrainte c){
-        return c.clue + "" + c.operator;
-    }
-
     Contrainte newContrainte(int clue, char operator){
         Contrainte c = new Contrainte();
         c.clue = clue;
         c.operator = operator;
         return c;
+    }
+
+    String toString(Contrainte c){
+        return c.clue + "" + c.operator;
     }
 
     void testGetClue(){
@@ -163,7 +177,10 @@ class Keen1 extends Program{
 
     void testCreerBloc(){
         Bloc b = newBloc(0,3);
-        assertEquals("0:3 12+", toString(b));
+        assertEquals("0:3", toString(b));
+        b.contrainte = newContrainte(12, '+');
+        b.color = ANSI_BLUE;
+        assertEquals(ANSI_BLUE+" 0:3 12+", toString(b));
     }
 
     Bloc newBloc(int org, int type){
@@ -175,31 +192,70 @@ class Keen1 extends Program{
 
     String toString(Bloc b){
         String s = "";
-        s += (getColor(b) != "" ) ? getColor(b): "";
-        s += b.org+":"+b.type+" ";
-        s += (getContrainte(b) != null ) ? toString(getContrainte(b)): "null";
+        s += (getColor(b) != null ) ? getColor(b)+" ": "";
+        s += b.org+":"+b.type;
+        s += (getContrainte(b) != null ) ? " "+toString(getContrainte(b)): "";
         return s;
     }
 
+    void testSetContrainte(){
+        Contrainte c = newContrainte(12, '+');
+        Bloc b = newBloc(0, 4);
+        setContrainte(b, c);
+        assertEquals("12+", toString(getContrainte(b)));
+    }
 
     void setContrainte(Bloc b, Contrainte c){
         b.contrainte = c;
+    }
+
+    void testSetColor(){
+        String color = ANSI_BLUE;
+        Bloc b = newBloc(0, 4);
+        setColor(b, color);
+        assertEquals(ANSI_BLUE, getColor(b));
     }
 
     void setColor(Bloc b, String color){
         b.color = color;
     }
 
+    void testGetOrg(){
+        Bloc b = newBloc(0, 4);
+        assertEquals(0, getOrg(b));
+        b = newBloc(3,0);
+        assertEquals(3, getOrg(b));
+    }
+
     int getOrg(Bloc b){
         return b.org;
+    }
+
+    void testGetType(){
+        Bloc b = newBloc(0, 4);
+        assertEquals(4, getType(b));
+        b = newBloc(3,0);
+        assertEquals(0, getType(b));
     }
 
     int getType(Bloc b){
         return b.type;
     }
 
+    void testGetContrainte(){
+        Bloc b = newBloc(0, 4);
+        b.contrainte = newContrainte(12, '+');
+        assertEquals("12+", toString(getContrainte(b)));
+    }
+
     Contrainte getContrainte(Bloc b){
         return b.contrainte;
+    }
+
+    void testGetColor(){
+        Bloc b = newBloc(0, 4);
+        b.color = ANSI_BLUE;
+        assertEquals(ANSI_BLUE, getColor(b));
     }
 
     String getColor(Bloc b){
@@ -247,6 +303,12 @@ class Keen1 extends Program{
         }
     }
 
+    void testInArray(){
+        assertTrue(inArray(CODE_COLORS, 130));
+        assertFalse(inArray(CODE_COLORS, 300));
+        assertFalse(inArray(CODE_COLORS, -1));
+        assertTrue(inArray(CODE_COLORS, 88));
+    }
     boolean inArray(int[] tab, int value){
         int idx = 0;
         while(idx < length(tab) && tab[idx] != value)
@@ -270,8 +332,18 @@ class Keen1 extends Program{
         return (int)(random()*max);
     }
 
+    void testIsValid(){
+        grid = new int[5][7];
+        assertFalse(isNoValid(0, 4));
+        assertFalse(isNoValid(4,6));
+        assertFalse(isNoValid(0, 0));
+        assertTrue(isNoValid(-1,3));
+        assertTrue(isNoValid(3, 8));
+        assertTrue(isNoValid(-2,6));
+        assertTrue(isNoValid(7, 10));
+    }
 
-    boolean isValid(int y, int x){
+    boolean isNoValid(int y, int x){
         return x < 0
             || y < 0
             || x >= length(grid, 2)
@@ -299,7 +371,7 @@ class Keen1 extends Program{
                         for(int idxco = 0; idxco < length(coords); idxco++){
                             int y = l + getY(coords[idxco]);
                             int x = c + getX(coords[idxco]);
-                            if (isValid(y, x) || !helper[y*length(grid, 1)+x]){
+                            if (isNoValid(y, x) || !helper[y*length(grid, 1)+x]){
                                 badForme = true;
                                 break;
                             }
@@ -318,8 +390,14 @@ class Keen1 extends Program{
         }
     }
 
+    void testGetTotal(){
+        assertEquals(20, getTotal(new int[]{1,2,3,4,5,6,-1}, '+'));
+        assertEquals(20, getTotal(new int[]{100,10,20,30,40,-40,20}, '-'));
+        assertEquals(20, getTotal(new int[]{1,2,5,2,1}, '*'));
+        assertEquals(20, getTotal(new int[]{40,1,2}, '/'));
+    }
 
-    int calculNB(int[] tab, char op){
+    int getTotal(int[] tab, char op){
         int res = tab[0];
         for(int idx = 1; idx < length(tab); idx++){
             switch(op){
@@ -351,7 +429,7 @@ class Keen1 extends Program{
         }while(((op == 1 || op == 3) && length(tab) != 2) || ( op== 3 && isDec));
 
         String operation = "+-*/";
-        Contrainte c = newContrainte(calculNB(tab, charAt(operation, op)), charAt(operation,op));
+        Contrainte c = newContrainte(getTotal(tab, charAt(operation, op)), charAt(operation,op));
         setContrainte(b, c);
         }
     }
@@ -432,7 +510,6 @@ class Keen1 extends Program{
         return arene[row];
     }
 
-    void printArene(int y, int x){
         //FIXME: affichage de l'arène avec ce template
 /*
 
@@ -469,24 +546,17 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
 
   jouer >$: A1:4 ( permet de jouer à la coordonnée ('A',1) la valeur 4
 */
-        /*int value = (arene[y][x] != 0 ) ? arene[y][x]:-1;
-        println(value);
-        int[] column = getColumn(y);
-        int[] row = getRow(x);
-        boolean isInCol = inArray()*/
+    void printArene(boolean highlight){
         printHead();
         printSeparator();
         char car = 'A';
         int idxB = 0;
         String color;
+        String COLOR_HIGHLIGHT = (highlight) ? ANSI_YELLOW: "";
         for(int l = 0; l < length(arene, 1); l++){
             print(ANSI_BOLD+ANSI_BLUE+car+ANSI_RESET+"|");
             car += 1;
             for(int c = 0; c < length(arene, 2); c++){
-                /*String fg = "";
-                if(( l == y || c == x) && (inArray(getColumn(c), value) || inArray(getRow(l), value))){
-                    fg = ANSI_YELLOW;
-                }*/
                 color = findColor(newCoordonnee(l,c));
                 String disp = (arene[l][c] == 0) ? " ":arene[l][c]+"";
                 print(color+ANSI_BOLD);
@@ -498,10 +568,10 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
                     case 3: ctr += " "; break;
                     default: ctr = ctr; break;
                     }
-                    print(String.format("%8s",ANSI_WHITE+ctr+ANSI_RESET+color+" "+FG+disp+ANSI_RESET+"|"));
+                    print(String.format("%8s",ANSI_WHITE+ctr+ANSI_RESET+color+" "+COLOR_HIGHLIGHT+disp+ANSI_RESET+"|"));
                     idxB += 1;
                 }
-                else print(String.format("%8s","     "+FG+disp+ANSI_RESET+"|"));
+                else print(String.format("%8s","     "+COLOR_HIGHLIGHT+disp+ANSI_RESET+"|"));
             }
             println();printSeparator();
         }
@@ -579,30 +649,44 @@ G |   3   |   3   |    3  |    3  |    3  |    3  |    3  |
         return c1.x == c2.x && c1.y == c2.y;
     }
 
+    boolean isValidContrainteBloc(Bloc b){
+        char op = getOperator(getContrainte(b));
+        Coordonnee[] coords = getEltBloc(b);
+        int[] total = new int[length(coords)];
+        for(int i = 0; i < length(coords); i++){
+            int y = getX(coords[i]);
+            int x = getX(coords[i]);
+            if(arene[y][x] == 0) return false;
+            total[i] = arene[y][x];
+        }
+        return getTotal(total, op) == getClue(getContrainte(b));
+    }
+
     void algorithm(){
         initFormes();
         initialisation();
         initBlocs();
         initContraintes();
-        int y, x;
-        y = 0; x = 0;
+        boolean highlight = false;
+        printCoords(getEltBloc(blocs.get(3)));
+        println();
         do{
-            printArene(y, x);
+            printArene(highlight);
             String input;
             do{
                 print("saisie "
-                        +ANSI_BOLD+ANSI_BLUE+"[A.."+(char)('A'+length(arene,1)-1)+"]"+ANSI_RED
-                        +"[0.."+(length(arene,2)-1)+"]"+ANSI_RESET+":"
-                        +ANSI_BOLD+ANSI_WHITE+"[1.."+length(arene,1)+ANSI_RESET+"] : ");
+                        +ANSI_BOLD+ANSI_BLUE+"[A-"+(char)('A'+length(arene,1)-1)+"]"+ANSI_RED
+                        +"[0-"+(length(arene,2)-1)+"]"+ANSI_RESET+":"
+                        +ANSI_BOLD+ANSI_WHITE+"[1-"+length(arene,1)+ANSI_RESET+"] : ");
                 input = readString();
             }while(!isValidInput(input));
-            y = (int)(charAt(toUpperCase(input),0)) - 65;
-            x = stringToInt(substring(input,1,2));
+            int y = (int)(charAt(toUpperCase(input),0)) - 65;
+            int x = stringToInt(substring(input,1,2));
             int value = stringToInt(substring(input,3,length(input)));
-            FG = (inArray(getColumn(y), value) || inArray(getRow(x), value)) ? ANSI_YELLOW:"";
+            highlight = (inArray(getColumn(y), value) || inArray(getRow(x), value)) ? true: false;
             arene[y][x] = value;
         }while(!isWin());
-        printArene(y, x);
+        printArene(false);
         println("Victoire ^^");
     }
 }
