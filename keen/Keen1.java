@@ -733,14 +733,24 @@ class Keen1 extends Program{
         assertFalse(isValidInput("A0:03"));
     }
 
+    void testIsDigit(){
+        assertTrue(isDigit('0'));
+        assertFalse(isDigit('O'));
+    }
+
+    boolean isDigit(char c){
+        return c >= '0' && c <= '9';
+    }
+
     boolean isValidInput(String input){
         return length(input) == 4
-            && (charAt(toUpperCase(input), 0) < 'A' + length(arene, 1))
-            && Character.isDigit(charAt(input, 1))
+            && charAt(input, 0) >= 'A'
+            && (charAt(input, 0) < 'A' + length(arene, 1))
+            && isDigit(charAt(input, 1))
             && stringToInt(charAt(input, 1)+"") >= 0
             && stringToInt(charAt(input, 1)+"") < length(arene, 1)
             && charAt(input, 2) == ':'
-            && Character.isDigit(charAt(input, 3))
+            && isDigit(charAt(input, 3))
             && stringToInt(charAt(input, 3)+"") > 0
             && stringToInt(charAt(input, 3)+"") <= length(arene, 1);
     }
@@ -825,7 +835,7 @@ class Keen1 extends Program{
         do{
             printArene(y, x);
             String input = input();
-            y = (int)(charAt(toUpperCase(input),0)) - 65;
+            y = (int)(charAt(input,0)) - 65;
             x = stringToInt(substring(input,1,2));
             arene[y][x] = stringToInt(substring(input,3,length(input)));
         }while(!isWin());
