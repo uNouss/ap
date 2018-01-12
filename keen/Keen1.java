@@ -825,7 +825,7 @@ class Keen1 extends Program{
         return input;
     }
 
-    void algorithm(){
+    void _algorithm(){
         initFormes();
         initialisation();
         initBlocs();
