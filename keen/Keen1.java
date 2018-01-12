@@ -847,6 +847,7 @@ class Keen1 extends Program{
 // https://asciinema.org/a/HMi858kuezszd84XotFhL2cT6
 // https://asciinema.org/a/DexW5D7p2iHwaEwqbdYdMoSBS
 // https://asciinema.org/a/FwGtvD8p0nmof3j7EsKZO2o5q
+// https://asciinema.org/a/SHub0zT5cOwfaqXZiKgDZcdM8
 // TODO:
 //     -  ajouter fonction pour avertir qu'une valeur est déjà présente dans la colonne et/ou ligne ou qu'elle ne permet d'avoir la contrainte si tout le bloc est rempli
 //     -  ajouter fonction qui detecte violation contrainte suduku
