@@ -180,8 +180,8 @@ class Keen1 extends Program{
     void testCreerBloc(){
         Bloc b = newBloc(0,3);
         assertEquals("0:3", toString(b));
-        b.contrainte = newContrainte(12, '+');
-        b.color = ANSI_BLUE;
+        setContrainte(b, newContrainte(12, '+'));
+        setColor(b, ANSI_BLUE);
         assertEquals(ANSI_BLUE+" 0:3 12+", toString(b));
     }
 
@@ -246,7 +246,7 @@ class Keen1 extends Program{
 
     void testGetContrainte(){
         Bloc b = newBloc(0, 4);
-        b.contrainte = newContrainte(12, '+');
+        setContrainte(b, newContrainte(12, '+'));
         assertEquals("12+", toString(getContrainte(b)));
     }
 
@@ -256,7 +256,7 @@ class Keen1 extends Program{
 
     void testGetColor(){
         Bloc b = newBloc(0, 4);
-        b.color = ANSI_BLUE;
+        setColor(b, ANSI_BLUE);
         assertEquals(ANSI_BLUE, getColor(b));
     }
 
@@ -414,6 +414,7 @@ class Keen1 extends Program{
 
     int getTotal(int[] tab, char op){
         int res = tab[0];
+        if( op == '=' ) return res;
         for(int idx = 1; idx < length(tab); idx++){
             switch(op){
              case '+' : res += tab[idx]; break;
@@ -425,14 +426,26 @@ class Keen1 extends Program{
         return res;
     }
 
+    void testPermuter(){
+        int[] tab = new int[]{3, 4, 1, 2, 7, 5, 6, 0};
+        permuter(tab, 0, 7);
+        assertArrayEquals(new int[]{3, 4, 1, 2, 7, 5, 6, 0}, tab);
+        permuter(tab, 1, 2);
+        assertArrayEquals(new int[]{3, 4, 1, 2, 7, 5, 6, 0}, tab);
+    }
+
+    void permuter(int[] tab, int idx1, int idx2){
+            int tmp = tab[idx1];
+            tab[idx1] = max(tab[idx1],tab[idx2]);
+            tab[idx2] = min(tmp, tab[idx2]);
+    }
+
     void putRandomContrainte(Bloc b, int[] tab){
         if( length(tab) ==  1 ) {
             setContrainte(b, newContrainte(tab[0], '='));
         }
         else if ( length(tab) == 2 ) {
-            int tmp = tab[0];
-            tab[0] = max(tab[0],tab[1]);
-            tab[1] = min(tmp, tab[1]);
+            permuter(tab, 0, 1);
         }
 
         if( length(tab) >= 2){
@@ -449,29 +462,27 @@ class Keen1 extends Program{
         }
     }
 
-    int[] getValueCoordBloc(Bloc b){
+    int[] getValuesBloc(int[][] tab, Bloc b){
         Coordonnee[] coords = _formes.get(getType(b));
-        int orgX = getOrg(b)%length(grid, 1);
-        int orgY = getOrg(b)/length(grid, 2);
+        int orgX = getOrg(b)%length(arene, 1);
+        int orgY = getOrg(b)/length(arene, 2);
 
-        int[] coordsBloc = new int[length(coords)];
+        int[] valuesBloc = new int[length(coords)];
 
         for(int idx =  0; idx < length(coords); idx++){
             int y = orgY + getY(coords[idx]);
             int x = orgX + getX(coords[idx]);
-            coordsBloc[idx] = grid[y][x];
+            valuesBloc[idx] = tab[y][x];
         }
-        return coordsBloc;
-    }
-
-    void complete(Bloc b){
-        int[] coordsBloc = getValueCoordBloc(b);
-        putRandomContrainte(b, coordsBloc);
+        //print(getOrg(b)+":"+getType(b)+" = ");
+        //printTab(valuesBloc);
+        return valuesBloc;
     }
 
     void initContraintes(){
         for(int idx = 0; idx < blocs.size(); idx++){
-            complete(blocs.get(idx));
+            Bloc b = blocs.get(idx);
+            putRandomContrainte(b, getValuesBloc(grid, b));
         }
     }
 
@@ -578,7 +589,7 @@ class Keen1 extends Program{
                     String clue = toString(getContrainte(blocs.get(idxB)));
                     print(ANSI_WHITE+clue+ANSI_RESET+color+String.format("%"+(7-length(clue))+"s",disp)+ANSI_RESET+"|");
                     idxB += 1;
-                }
+                        }
                 else print(String.format("%7s", disp)+ANSI_RESET+"|");
             }
             println();printSeparator();
@@ -592,6 +603,7 @@ class Keen1 extends Program{
         }
         println();
     }
+
     void printSeparator(){
         print(" +");
         for(int i = 0; i < length(arene, 1); i++){
@@ -601,36 +613,95 @@ class Keen1 extends Program{
     }
 
     void printGrid(){
-        printHead();
-        char car = 'A';
         for(int l = 0; l < length(grid, 1); l++){
-            print(car+"|");
-            car += 1;
             for(int c = 0; c < length(grid, 2); c++){
-                print(grid[l][c]+" ");
+                print(ANSI_BLACK_BG+ANSI_BLACK+grid[l][c]+" "+ANSI_RESET);
             }
-            println();
+            print("     ");
         }
+        println();
+    }
+
+    void printTab(int[] tab){
+        for(int i = 0; i < length(tab); i++)
+            print(tab[i]+" ");
+        println();
+    }
+
+    void initAreneTest(){
+        arene = new int[][]{
+            {2, 1, 3},
+            {3, 2, 1},
+            {1, 3, 2}
+        };
+        blocs.add(newBloc(0,9));
+        blocs.add(newBloc(3,2));
+        blocs.add(newBloc(4,5));
+        blocs.add(newBloc(5,0));
+
+        setContrainte(blocs.get(0), newContrainte(6, '+'));
+        setColor(blocs.get(0), ANSI_PREFIX+CODE_COLORS[0]+ANSI_POSTFIX);
+
+        setContrainte(blocs.get(1), newContrainte(4, '+'));
+        setColor(blocs.get(1), ANSI_PREFIX+CODE_COLORS[1]+ANSI_POSTFIX);
+
+        setContrainte(blocs.get(2), newContrainte(12, '*'));
+        setColor(blocs.get(2), ANSI_PREFIX+CODE_COLORS[2]+ANSI_POSTFIX);
+
+        setContrainte(blocs.get(3), newContrainte(1, '='));
+        setColor(blocs.get(3), ANSI_PREFIX+CODE_COLORS[3]+ANSI_POSTFIX);
+    }
+
+    void testIsValidSuduku(){
+        initAreneTest();
+        assertTrue(isValidSuduku());
+    }
+
+    int sommeSuite(int n){
+        int somme = 0;
+        for(int i = 1; i <= n; i++){
+            somme += i;
+        }
+        return somme;
+    }
+
+    boolean isValidSuduku(){
+        int comparateur = sommeSuite(length(arene, 1));
+        for (int l = 0; l < length(arene, 1); l++){
+            for(int c = l; c <= l ; c++){
+                int totalC = getTotal(getColumn(c), '+');
+                int totalL = getTotal(getRow(l), '+');
+                if( totalC != comparateur || totalL != comparateur) return false;
+            }
+        }
+        return true;
+    }
+
+    void testIsValidContraintes(){
+        initAreneTest();
+        assertTrue(isValidContraintes());
+    }
+
+    boolean isValidContraintes(){
+        //printArene(0,0);
+        //println(blocs.size());
+        for(int idxB = 0; idxB < blocs.size(); idxB++){
+            if( ! isValidContrainteBloc(blocs.get(idxB)))
+                return false;
+            //println(idxB+" isValidContraintes appel");
+        }
+        return true;
+    }
+
+    void testIsWin(){
+        initAreneTest();
+        assertTrue(isWin());
     }
 
     boolean isWin(){
         //FIXME: verfier que chaque valeur est present une fois sur la même ligne et colonne
         // et que toutes les valeurs d'un bloc verifie la contrainte lié au bloc
-        int idxB = 0;
-        for (int l = 0; l < length(arene, 1); l++){
-            for(int c = 0; c < length(arene, 2); c++){
-                int value = arene[l][c];
-                if ( inArray(getColumn(c), value ) || inArray(getRow(l), value)) return false;
-                /*if(arene[idxL][idxC] != grid[idxL][idxC])
-                    return false;
-                */
-                if( idxB < blocs.size()
-                        && l*length(arene,1)+c == getOrg(blocs.get(idxB))){
-                    return isValidContrainteBloc(blocs.get(idxB));
-                }
-            }
-        }
-        return true;
+        return isValidSuduku() && isValidContraintes();
     }
 
     void testIsValidInput(){
@@ -655,7 +726,7 @@ class Keen1 extends Program{
 
     void testFindColor(){
         Bloc b = newBloc(0,4);
-        b.color = ANSI_BLUE;
+        setColor(b, ANSI_BLUE);
         assertEquals(ANSI_BLUE, findColor(newCoordonnee(1,-1)));
     }
 
@@ -685,20 +756,29 @@ class Keen1 extends Program{
     }
 
     boolean equals(Coordonnee c1, Coordonnee c2){
-        return c1.x == c2.x && c1.y == c2.y;
+        return getX(c1) == getX(c2) && getY(c1) == getY(c2);
+    }
+
+    void testIsValidContrainteBloc(){
+        initAreneTest();
+
+        assertTrue(isValidContrainteBloc(blocs.get(0)));
+
+        setContrainte(blocs.get(3), newContrainte(2, '='));
+        assertFalse(isValidContrainteBloc(blocs.get(3)));
+        setContrainte(blocs.get(3), newContrainte(1, '='));
     }
 
     boolean isValidContrainteBloc(Bloc b){
+        //println(toString(b));
         char op = getOperator(getContrainte(b));
-        Coordonnee[] coords = getEltBloc(b);
-        int[] total = new int[length(coords)];
-        for(int i = 0; i < length(coords); i++){
-            int y = getX(coords[i]);
-            int x = getX(coords[i]);
-            if(arene[y][x] == 0) return false;
-            total[i] = arene[y][x];
+        int[] valuesBloc = getValuesBloc(arene, b);
+        if(length(valuesBloc) == 2 && ( op == '-' || op == '/' )){
+            permuter(valuesBloc, 0, 1);
         }
-        return getTotal(total, op) == getClue(getContrainte(b));
+        int total = getTotal(valuesBloc, op);
+        //println("total = "+total);
+        return total == getClue(getContrainte(b));
     }
 
     String input(){
@@ -713,12 +793,12 @@ class Keen1 extends Program{
         return input;
     }
 
-    void algorithm(){
+    void _algorithm(){
         initFormes();
         initialisation();
         initBlocs();
         initContraintes();
-        boolean highlight = false;
+        printGrid();
         int x = 0, y = 0;
         do{
             printArene(y, x);
