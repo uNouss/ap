@@ -78,6 +78,19 @@ class Keen1 extends Program{
             newCoordonnee(0,1),
             newCoordonnee(0,2)
         });
+        _formes.add(new Coordonnee[]{
+            newCoordonnee(0,0),
+            newCoordonnee(1,0),
+            newCoordonnee(1,1),
+            newCoordonnee(2,0),
+            newCoordonnee(1,-1)
+        });
+        _formes.add(new Coordonnee[]{
+            newCoordonnee(0,0),
+            newCoordonnee(0,1),
+            newCoordonnee(0,2),
+            newCoordonnee(1,1)
+        });
     }
 /*
  * ######################################################
@@ -414,7 +427,7 @@ class Keen1 extends Program{
                     boolean badForme;
                     do{
                         idx++;
-                        idF = idx < 100 ? getRandom(9)+1:0;
+                        idF = idx < 144 ? getRandom(11)+1:0;
                         coords = _formes.get(idF);
                         badForme = isBadForme(coords, helper, l, c);
                     }while(badForme);
