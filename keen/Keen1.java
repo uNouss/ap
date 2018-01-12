@@ -8,7 +8,7 @@ class Keen1 extends Program{
 
     int[][] arene;
 
-    ArrayList<Coordonnee[]> _formes = new ArrayList<>();
+    ArrayList<Coordonnee[]> formes = new ArrayList<>();
 
     ArrayList<Bloc> blocs = new ArrayList<>();
 
@@ -16,87 +16,87 @@ class Keen1 extends Program{
 
     void testInitFormes(){
         initFormes();
-        assertEquals(10, _formes.size());
-        assertEquals("(0,0)", toString(_formes.get(0)[0]));
-        assertEquals("(0,1)", toString(_formes.get(1)[1]));
-        assertEquals("(1,0)", toString(_formes.get(2)[1]));
-        assertEquals("(1,-1)", toString(_formes.get(4)[1]));
-        /*assertEquals("(0,0)", toString(_formes.get(4)));
-        assertEquals("(0,0)", toString(_formes.get(5)));
-        assertEquals("(0,0)", toString(_formes.get(6)));
-        assertEquals("(0,0)", toString(_formes.get(7)));
-        assertEquals("(0,0)", toString(_formes.get(8)));
-        assertEquals("(0,0)", toString(_formes.get(9)));
-*/
+        assertEquals(10, formes.size());
+        assertEquals("(0,0)", toString(formes.get(0)[0]));
+        assertEquals("(0,1)", toString(formes.get(1)[1]));
+        assertEquals("(1,0)", toString(formes.get(2)[1]));
+        assertEquals("(1,-1)", toString(formes.get(4)[1]));
+        /*assertEquals("(0,0)", toString(formes.get(4)));
+          assertEquals("(0,0)", toString(formes.get(5)));
+          assertEquals("(0,0)", toString(formes.get(6)));
+          assertEquals("(0,0)", toString(formes.get(7)));
+          assertEquals("(0,0)", toString(formes.get(8)));
+          assertEquals("(0,0)", toString(formes.get(9)));
+          */
     }
 
     void initFormes(){
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0)
         });
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0),
-            newCoordonnee(0,1),
-            newCoordonnee(1,0),
-            newCoordonnee(1,1)
+                newCoordonnee(0,1),
+                newCoordonnee(1,0),
+                newCoordonnee(1,1)
         });
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0),
-            newCoordonnee(1,0)
+                newCoordonnee(1,0)
         });
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0),
-            newCoordonnee(0,1)
+                newCoordonnee(0,1)
         });
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0),
-            newCoordonnee(1,-1),
-            newCoordonnee(1,0)
+                newCoordonnee(1,-1),
+                newCoordonnee(1,0)
         });
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0),
-            newCoordonnee(1,0),
-            newCoordonnee(1,1)
+                newCoordonnee(1,0),
+                newCoordonnee(1,1)
         });
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0),
-            newCoordonnee(0,1),
-            newCoordonnee(1,1)
+                newCoordonnee(0,1),
+                newCoordonnee(1,1)
         });
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0),
-            newCoordonnee(0,1),
-            newCoordonnee(1,0)
+                newCoordonnee(0,1),
+                newCoordonnee(1,0)
         });
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0),
-            newCoordonnee(1,0),
-            newCoordonnee(2,0)
+                newCoordonnee(1,0),
+                newCoordonnee(2,0)
         });
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0),
-            newCoordonnee(0,1),
-            newCoordonnee(0,2)
+                newCoordonnee(0,1),
+                newCoordonnee(0,2)
         });
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0),
-            newCoordonnee(1,0),
-            newCoordonnee(1,1),
-            newCoordonnee(2,0),
-            newCoordonnee(1,-1)
+                newCoordonnee(1,0),
+                newCoordonnee(1,1),
+                newCoordonnee(2,0),
+                newCoordonnee(1,-1)
         });
-        _formes.add(new Coordonnee[]{
+        formes.add(new Coordonnee[]{
             newCoordonnee(0,0),
-            newCoordonnee(0,1),
-            newCoordonnee(0,2),
-            newCoordonnee(1,1)
+                newCoordonnee(0,1),
+                newCoordonnee(0,2),
+                newCoordonnee(1,1)
         });
     }
-/*
- * ######################################################
- * #               Coordonnee                           #
- * ######################################################
-*/
+    /*
+     * ######################################################
+     * #               Coordonnee                           #
+     * ######################################################
+     */
 
     void testnewCoordonnee(){
         Coordonnee c = newCoordonnee(2,3);
@@ -137,11 +137,11 @@ class Keen1 extends Program{
         return c.y;
     }
 
-/*
- * ######################################################
- * #                     Contrainte                     #
- * ######################################################
-*/
+    /*
+     * ######################################################
+     * #                     Contrainte                     #
+     * ######################################################
+     */
     void testCreerContrainte(){
         assertEquals("12+", toString(newContrainte(12, '+')));
     }
@@ -184,11 +184,11 @@ class Keen1 extends Program{
     }
 
 
-/*
- * ######################################################
- * #                       Bloc                         #
- * ######################################################
-*/
+    /*
+     * ######################################################
+     * #                       Bloc                         #
+     * ######################################################
+     */
 
     void testCreerBloc(){
         Bloc b = newBloc(0,3);
@@ -376,9 +376,9 @@ class Keen1 extends Program{
         grid = new int[4][4];
         assertArrayEquals(new boolean[] {
             true, true, true, true,
-            true, true, true, true,
-            true, true, true, true,
-            true, true, true, true} , initHelper());
+                true, true, true, true,
+                true, true, true, true,
+                true, true, true, true} , initHelper());
     }
 
     boolean[] initHelper(){
@@ -428,7 +428,7 @@ class Keen1 extends Program{
                     do{
                         idx++;
                         idF = idx < 144 ? getRandom(11)+1:0;
-                        coords = _formes.get(idF);
+                        coords = formes.get(idF);
                         badForme = isBadForme(coords, helper, l, c);
                     }while(badForme);
                     updateHelper(coords, helper, l, c);
@@ -451,10 +451,10 @@ class Keen1 extends Program{
         if( op == '=' ) return res;
         for(int idx = 1; idx < length(tab); idx++){
             switch(op){
-             case '+' : res += tab[idx]; break;
-             case '-' : res -= tab[idx]; break;
-             case '*' : res *= tab[idx]; break;
-             case '/' : res /= tab[idx]; break;
+                case '+' : res += tab[idx]; break;
+                case '-' : res -= tab[idx]; break;
+                case '*' : res *= tab[idx]; break;
+                case '/' : res /= tab[idx]; break;
             }
         }
         return res;
@@ -469,9 +469,9 @@ class Keen1 extends Program{
     }
 
     void permuter(int[] tab, int idx1, int idx2){
-            int tmp = tab[idx1];
-            tab[idx1] = max(tab[idx1],tab[idx2]);
-            tab[idx2] = min(tmp, tab[idx2]);
+        int tmp = tab[idx1];
+        tab[idx1] = max(tab[idx1],tab[idx2]);
+        tab[idx2] = min(tmp, tab[idx2]);
     }
 
     void putRandomContrainte(Bloc b, int[] tab){
@@ -483,21 +483,21 @@ class Keen1 extends Program{
         }
 
         if( length(tab) >= 2){
-        boolean isDec = tab[0]%tab[1] != 0;
+            boolean isDec = tab[0]%tab[1] != 0;
 
-        int op;
-        do{
-            op = getRandom(4);
-        }while(((op == 1 || op == 3) && length(tab) != 2) || ( op== 3 && isDec));
+            int op;
+            do{
+                op = getRandom(4);
+            }while(((op == 1 || op == 3) && length(tab) != 2) || ( op== 3 && isDec));
 
-        String operation = "+-*/";
-        Contrainte c = newContrainte(getTotal(tab, charAt(operation, op)), charAt(operation,op));
-        setContrainte(b, c);
+            String operation = "+-*/";
+            Contrainte c = newContrainte(getTotal(tab, charAt(operation, op)), charAt(operation,op));
+            setContrainte(b, c);
         }
     }
 
     int[] getValuesBloc(int[][] tab, Bloc b){
-        Coordonnee[] coords = _formes.get(getType(b));
+        Coordonnee[] coords = formes.get(getType(b));
         int orgX = getOrg(b)%length(arene, 1);
         int orgY = getOrg(b)/length(arene, 2);
 
@@ -528,16 +528,16 @@ class Keen1 extends Program{
     void printBlocs(){
         for(int i = 0; i < blocs.size(); i++){
             print(toString(blocs.get(i))+" : ");
-            printCoords(_formes.get(getType(blocs.get(i))));
+            printCoords(formes.get(getType(blocs.get(i))));
             println(ANSI_RESET);
         }
     }
 
     void printFormes(){
-        for(int i = 0; i < _formes.size(); i++){
+        for(int i = 0; i < formes.size(); i++){
             print(i+" :  ");
-            for(int j = 0; j < length(_formes.get(i)); j++){
-                print(toString(_formes.get(i)[j])+"  ");
+            for(int j = 0; j < length(formes.get(i)); j++){
+                print(toString(formes.get(i)[j])+"  ");
             }
             println();
         }
@@ -556,7 +556,7 @@ class Keen1 extends Program{
     }
 
     Coordonnee[] getEltBloc(Bloc b){
-        Coordonnee[] coords = _formes.get(getType(b));
+        Coordonnee[] coords = formes.get(getType(b));
 
         Coordonnee[] res = new Coordonnee[length(coords)];
 
@@ -684,8 +684,8 @@ class Keen1 extends Program{
     void initAreneTest(){
         arene = new int[][]{
             {2, 1, 3},
-            {3, 2, 1},
-            {1, 3, 2}
+                {3, 2, 1},
+                {1, 3, 2}
         };
     }
     void addContrainte(){
@@ -797,8 +797,8 @@ class Keen1 extends Program{
     }
 
     void testIsFindCoord(){
-        assertTrue(isFindCoord(_formes.get(4), newCoordonnee(1,-1)));
-        assertFalse(isFindCoord(_formes.get(4), newCoordonnee(-1,-1)));
+        assertTrue(isFindCoord(formes.get(4), newCoordonnee(1,-1)));
+        assertFalse(isFindCoord(formes.get(4), newCoordonnee(-1,-1)));
     }
 
     boolean isFindCoord(Coordonnee[] tabCoord, Coordonnee c){
