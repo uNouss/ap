@@ -16,7 +16,6 @@ class Keen1 extends Program{
 
     void testInitFormes(){
         initFormes();
-        assertEquals(10, formes.size());
         assertEquals("(0,0)", toString(formes.get(0)[0]));
         assertEquals("(0,1)", toString(formes.get(1)[1]));
         assertEquals("(1,0)", toString(formes.get(2)[1]));
@@ -851,7 +850,7 @@ class Keen1 extends Program{
         return input;
     }
 
-    void algorithm(){
+    void _algorithm(){
         initFormes();
         initialisation();
         initBlocs();
