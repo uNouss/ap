@@ -628,28 +628,32 @@ class Keen1 extends Program{
         println();
     }
 
+    void initBlocsTest(){
+        blocs.clear();
+        blocs.add(newBloc(0,9));
+        blocs.add(newBloc(3,2));
+        blocs.add(newBloc(4,5));
+        blocs.add(newBloc(5,0));
+    }
+
     void initAreneTest(){
         arene = new int[][]{
             {2, 1, 3},
             {3, 2, 1},
             {1, 3, 2}
         };
-        blocs.add(newBloc(0,9));
-        blocs.add(newBloc(3,2));
-        blocs.add(newBloc(4,5));
-        blocs.add(newBloc(5,0));
-
+    }
+    void addContrainte(){
         setContrainte(blocs.get(0), newContrainte(6, '+'));
-        setColor(blocs.get(0), ANSI_PREFIX+CODE_COLORS[0]+ANSI_POSTFIX);
-
         setContrainte(blocs.get(1), newContrainte(4, '+'));
-        setColor(blocs.get(1), ANSI_PREFIX+CODE_COLORS[1]+ANSI_POSTFIX);
-
         setContrainte(blocs.get(2), newContrainte(12, '*'));
-        setColor(blocs.get(2), ANSI_PREFIX+CODE_COLORS[2]+ANSI_POSTFIX);
-
         setContrainte(blocs.get(3), newContrainte(1, '='));
-        setColor(blocs.get(3), ANSI_PREFIX+CODE_COLORS[3]+ANSI_POSTFIX);
+    }
+
+    void addColor(){
+        for(int idx = 0; idx < blocs.size(); idx++){
+            setColor(blocs.get(idx), ANSI_PREFIX+CODE_COLORS[idx]+ANSI_POSTFIX);
+        }
     }
 
     void testIsValidSuduku(){
@@ -679,16 +683,16 @@ class Keen1 extends Program{
 
     void testIsValidContraintes(){
         initAreneTest();
+        initBlocsTest();
+        addContrainte();
+        addColor();
         assertTrue(isValidContraintes());
     }
 
     boolean isValidContraintes(){
-        //printArene(0,0);
-        //println(blocs.size());
         for(int idxB = 0; idxB < blocs.size(); idxB++){
             if( ! isValidContrainteBloc(blocs.get(idxB)))
                 return false;
-            //println(idxB+" isValidContraintes appel");
         }
         return true;
     }
@@ -699,8 +703,6 @@ class Keen1 extends Program{
     }
 
     boolean isWin(){
-        //FIXME: verfier que chaque valeur est present une fois sur la même ligne et colonne
-        // et que toutes les valeurs d'un bloc verifie la contrainte lié au bloc
         return isValidSuduku() && isValidContraintes();
     }
 
@@ -761,7 +763,9 @@ class Keen1 extends Program{
 
     void testIsValidContrainteBloc(){
         initAreneTest();
-
+        initBlocsTest();
+        addContrainte();
+        addColor();
         assertTrue(isValidContrainteBloc(blocs.get(0)));
 
         setContrainte(blocs.get(3), newContrainte(2, '='));
@@ -813,4 +817,5 @@ class Keen1 extends Program{
 }
 // https://asciinema.org/a/mUuas0YoQUVhxxbfKTwlgXwgT
 // https://asciinema.org/a/HMi858kuezszd84XotFhL2cT6
+// https://asciinema.org/a/DexW5D7p2iHwaEwqbdYdMoSBS
 // TODO: ajouter fonction pour avertir qu'une valeur est déjà présente dans la colonne et/ou ligne ou qu'elle ne permet d'avoir la contrainte si tout le bloc est rempli
