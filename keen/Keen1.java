@@ -12,7 +12,7 @@ class Keen1 extends Program{
 
     ArrayList<Bloc> blocs = new ArrayList<>();
 
-    final int[] CODE_COLORS = new int[]{1, 2, 8, 20, 5, 52, 130, 0, 104, 12, 43, 208, 57, 18, 129, 30, 21, 32, 23, 34, 25, 36, 27, 38, 29, 93, 31, 22, 33, 24, 35, 26, 37, 28, 39, 10, 41, 88, 13, 44, 1, 54,17, 88, 9, 8, 19, 2};
+    final int[] CODE_COLORS = new int[]{1, 2, 8, 20, 5, 52, 130, 0, 104, 12, 43, 208, 57, 18, 129, 30, 21, 32, 23, 34, 25, 36, 27, 38, 29, 93, 31, 22, 33, 24, 35, 26, 37, 28, 39, 10, 41, 88, 13, 44, 1, 54,17, 88, 9, 8, 19, 200};
 
     void testInitFormes(){
         initFormes();
@@ -264,6 +264,13 @@ class Keen1 extends Program{
         return b.color;
     }
 
+    boolean isFilled(Bloc b){
+        int[] valuesBloc = getValuesBloc(arene, b);
+        for(int idx = 0; idx < length(valuesBloc); idx++){
+            if(valuesBloc[idx] == 0) return false;
+        }
+        return true;
+    }
     /*
      * #########################################################
      * #########################################################
@@ -569,26 +576,40 @@ class Keen1 extends Program{
         return arene[row];
     }
 
+
+    boolean isMoreOne(int[] tab, int value){
+        int idx = 0;
+        int nbOccur = 0;
+        while(idx < length(tab) && nbOccur < 2){
+            if(tab[idx++] == value) nbOccur++;
+        }
+        return nbOccur > 1;
+    }
+
     void printArene(int y, int x){
+        //FIXME: soucis lieu au fait que inArray n'est pas adapté
         printHead();
         printSeparator();
         char car = 'A';
-        int idxB = 0;
+        int idxB = 0, value = arene[y][x];
         String color;
+        boolean hLT = (isMoreOne(getColumn(x), value) || isMoreOne(getRow(y), value)) ? true: false;
         for(int l = 0; l < length(arene, 1); l++){
             print(ANSI_BOLD+ANSI_BLUE+car+ANSI_RESET+"|");
             car += 1;
             for(int c = 0; c < length(arene, 2); c++){
                 color = findColor(newCoordonnee(l,c));
+                String colhLT = (hLT && (l == y || c == x) && arene[l][c] == value) ? ANSI_YELLOW : "";
                 String disp = (arene[l][c] == 0) ? " ":arene[l][c]+"";
                 print(color+ANSI_BOLD);
                 if( idxB < blocs.size()
                         && l*length(arene,1)+c == getOrg(blocs.get(idxB))){
                     String clue = toString(getContrainte(blocs.get(idxB)));
-                    print(ANSI_WHITE+clue+ANSI_RESET+color+String.format("%"+(7-length(clue))+"s",disp)+ANSI_RESET+"|");
+                    String colhLB = (isFilled(blocs.get(idxB)) && !isValidContrainteBloc(blocs.get(idxB))) ? ANSI_YELLOW: "";
+                    print(ANSI_WHITE+colhLB+clue+ANSI_RESET+color+colhLT+String.format("%"+(7-length(clue))+"s",disp)+ANSI_RESET+"|");
                     idxB += 1;
                         }
-                else print(String.format("%7s", disp)+ANSI_RESET+"|");
+                else print(colhLT+String.format("%7s", disp)+ANSI_RESET+"|");
             }
             println();printSeparator();
         }
@@ -615,7 +636,7 @@ class Keen1 extends Program{
             for(int c = 0; c < length(grid, 2); c++){
                 print(ANSI_BLACK_BG+ANSI_BLACK+grid[l][c]+" "+ANSI_RESET);
             }
-            print("     ");
+            print("  ");
         }
         println();
     }
@@ -725,9 +746,10 @@ class Keen1 extends Program{
     }
 
     void testFindColor(){
-        Bloc b = newBloc(0,4);
-        setColor(b, ANSI_BLUE);
-        assertEquals(ANSI_BLUE, findColor(newCoordonnee(1,-1)));
+        initAreneTest();
+        initBlocsTest();
+        addColor();
+        assertEquals(ANSI_PREFIX+CODE_COLORS[0]+ANSI_POSTFIX, findColor(newCoordonnee(0,0)));
     }
 
     String findColor(Coordonnee c){
@@ -735,7 +757,7 @@ class Keen1 extends Program{
             Bloc b = blocs.get(idxB);
             if (isFindCoord(getEltBloc(b), c)) return getColor(b);
         }
-        return ANSI_WHITE;
+        return ANSI_WHITE_BG;
     }
 
     void testIsFindCoord(){
@@ -793,7 +815,7 @@ class Keen1 extends Program{
         return input;
     }
 
-    void _algorithm(){
+    void algorithm(){
         initFormes();
         initialisation();
         initBlocs();
@@ -815,4 +837,9 @@ class Keen1 extends Program{
 // https://asciinema.org/a/HMi858kuezszd84XotFhL2cT6
 // https://asciinema.org/a/DexW5D7p2iHwaEwqbdYdMoSBS
 // https://asciinema.org/a/FwGtvD8p0nmof3j7EsKZO2o5q
-// TODO: ajouter fonction pour avertir qu'une valeur est déjà présente dans la colonne et/ou ligne ou qu'elle ne permet d'avoir la contrainte si tout le bloc est rempli
+// TODO:
+//     -  ajouter fonction pour avertir qu'une valeur est déjà présente dans la colonne et/ou ligne ou qu'elle ne permet d'avoir la contrainte si tout le bloc est rempli
+//     -  ajouter fonction qui detecte violation contrainte suduku
+//     -  ajouter fonction qui detecte violation contrainte bloc
+//     -  amelioration de l'affichage comme sur le template
+//     -  definir structure de donnée liste pour remplacer ArrayList
