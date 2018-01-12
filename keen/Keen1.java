@@ -376,6 +376,33 @@ class Keen1 extends Program{
         return helper;
     }
 
+    boolean isBadForme(Coordonnee[] coords, boolean[] helper, int l, int c){
+        boolean badForme = false;
+        for(int idxco = 0; idxco < length(coords); idxco++){
+            int y = l + getY(coords[idxco]);
+            int x = c + getX(coords[idxco]);
+            if (isNoValid(y, x) || !helper[y*length(grid, 1)+x]){
+                badForme = true;
+                break;
+            }
+        }
+        return badForme;
+    }
+
+    void updateHelper(Coordonnee[] coords, boolean[] helper, int l, int c){
+        for(int idxco = 0; idxco < length(coords); idxco++){
+            int idxC = getX(coords[idxco]);
+            int idxL = getY(coords[idxco]);
+            helper[(l+idxL)*length(grid, 1)+(c+idxC)] = false ;
+        }
+    }
+
+    void updateBlocs(int l, int c, int idF, int idxColor){
+        Bloc b = newBloc(l*length(grid, 1)+c, idF);
+        setColor(b, ANSI_PREFIX+CODE_COLORS[idxColor]+ANSI_POSTFIX);
+        blocs.add(b);
+    }
+
     void initBlocs(){
         boolean[] helper = initHelper();
         int idxColor = 0;
@@ -389,24 +416,11 @@ class Keen1 extends Program{
                         idx++;
                         idF = idx < 100 ? getRandom(9)+1:0;
                         coords = _formes.get(idF);
-                        badForme = false;
-                        for(int idxco = 0; idxco < length(coords); idxco++){
-                            int y = l + getY(coords[idxco]);
-                            int x = c + getX(coords[idxco]);
-                            if (isNoValid(y, x) || !helper[y*length(grid, 1)+x]){
-                                badForme = true;
-                                break;
-                            }
-                        }
+                        badForme = isBadForme(coords, helper, l, c);
                     }while(badForme);
-                    for(int idxco = 0; idxco < length(coords); idxco++){
-                        int idxC = getX(coords[idxco]);
-                        int idxL = getY(coords[idxco]);
-                        helper[(l+idxL)*length(grid, 1)+(c+idxC)] = false ;
-                    }
-                    Bloc b = newBloc(l*length(grid, 1)+c, idF);
-                    setColor(b, ANSI_PREFIX+CODE_COLORS[idxColor++]+ANSI_POSTFIX);
-                    blocs.add(b);
+                    updateHelper(coords, helper, l, c);
+                    updateBlocs(l, c, idF, idxColor);
+                    idxColor++;
                 }
             }
         }
@@ -587,7 +601,6 @@ class Keen1 extends Program{
     }
 
     void printArene(int y, int x){
-        //FIXME: soucis lieu au fait que inArray n'est pas adapté
         printHead();
         printSeparator();
         char car = 'A';
@@ -599,13 +612,13 @@ class Keen1 extends Program{
             car += 1;
             for(int c = 0; c < length(arene, 2); c++){
                 color = findColor(newCoordonnee(l,c));
-                String colhLT = (hLT && (l == y || c == x) && arene[l][c] == value) ? ANSI_YELLOW : "";
+                String colhLT = (hLT && (l == y || c == x) && arene[l][c] == value) ? ANSI_BLINK_SLOW : "";
                 String disp = (arene[l][c] == 0) ? " ":arene[l][c]+"";
                 print(color+ANSI_BOLD);
                 if( idxB < blocs.size()
                         && l*length(arene,1)+c == getOrg(blocs.get(idxB))){
                     String clue = toString(getContrainte(blocs.get(idxB)));
-                    String colhLB = (isFilled(blocs.get(idxB)) && !isValidContrainteBloc(blocs.get(idxB))) ? ANSI_YELLOW: "";
+                    String colhLB = (isFilled(blocs.get(idxB)) && !isValidContrainteBloc(blocs.get(idxB))) ? ANSI_BLINK_SLOW : "";
                     print(ANSI_WHITE+colhLB+clue+ANSI_RESET+color+colhLT+String.format("%"+(7-length(clue))+"s",disp)+ANSI_RESET+"|");
                     idxB += 1;
                         }
@@ -825,7 +838,7 @@ class Keen1 extends Program{
         return input;
     }
 
-    void _algorithm(){
+    void algorithm(){
         initFormes();
         initialisation();
         initBlocs();
