@@ -5,11 +5,9 @@ class Keen1 extends Program{
     final String ANSI_POSTFIX = "m";
 
     int[][] grid;
-
     int[][] arene;
 
     ArrayList<Coordonnee[]> formes = new ArrayList<>();
-
     ArrayList<Bloc> blocs = new ArrayList<>();
 
     final int[] CODE_COLORS = new int[]{1, 2, 8, 20, 5, 52, 130, 0, 104, 12, 43, 208, 57, 18, 129, 30, 21, 32, 23, 34, 25, 36, 27, 38, 29, 93, 31, 22, 33, 24, 35, 26, 37, 28, 39, 10, 41, 88, 13, 44, 1, 54,17, 88, 9, 8, 19, 200};
@@ -234,34 +232,88 @@ class Keen1 extends Program{
 
     /*
      * ######################################################
-     * #                     Formes                         #
+     * #                     ListeFormes                    #
      * ######################################################
      */
-
-    /*Forme newForme(Coordonnee[] coords){
-        Forme f = new Forme();
-        f.coords = coords;
-        f.next = null;
-        return f;
+    //FIXME: completer l'implemetation de ListeForme et ListeBloc pour se passer des ArrayList
+    /*ListeForme newListeForme(Coordonnee[] coords){
+        ListeForme lf = new ListeForme();
+        lf.coords = coords;
+        lf.next = null;
+        return lf;
     }
 
-    int size(Forme f){
-        if(f == null) return 0;
-        return 1+size(f.suivant);
+    boolean isEmpty(ListeForme lf){
+        return lf == null;
     }
 
-    String toString(Forme  f){
+    ListeForme next(ListeForme lf){
+        return lf.next;
+    }
+
+    int size(ListeForme lf){
+        if(isEmpty(lf)) return 0;
+        return 1+size(next(lf));
+    }
+
+    ListeForme add(ListeForme lf, Coordonnee[] coords){
+        ListeForme _lf = new ListeForme();
+        if(lf == null){
+            _lf.coords = coords;
+            _lf.next = null;
+            return _lf;
+        }
+        else{
+            _lf.coords = lf.coords;
+            _lf.next = add(lf.next, coords);
+            return _lf;
+        }
+    }
+
+    Coordonnee[] get(ListeForme lf, int idx){
+        if(idx < 0 || idx >= size(lf) || lf == null ) return null;
+        if(idx == 0) return lf.coords;
+        return get(lf.next, idx - 1);
+    }
+
+    String toString(ListeForme  f){
         String _f = "";
-        for(Forme p = f; p != null ; p = f.suivant){
+        for(ListeForme p = f; p != null ; p = f.next){
             _f = coordsToString(f.coords);
         }
         return _f;
     }
 
-    void add(Forme f, Coordonnee[] coords){
+    /*
+     * ######################################################
+     * #                     ListeBloc                    #
+     * ######################################################
+     */
+
+    /*Forme newListeBloc(Bloc bloc){
+        ListeBloc lb = new ListeBloc();
+        lb.bloc = bloc;
+        lb.next = null;
+        return lb;
     }
 
-    Coordonnee[] get(Forme f, int idx){
+    int size(ListeBloc lb){
+        if(lb == null) return 0;
+        return 1+size(lb.next);
+    }
+
+    String toString(ListeBloc  lb){
+        String _lb = "";
+        for(ListeBloc _b = lb; _b != null ; _b = lb.next){
+            _lb = toString(lb);
+        }
+        return _lb;
+    }
+
+    void add(ListeBloc lb, Bloc b){
+    }
+
+    Bloc get(ListeBloc lb, int idx){
     }
     */
 
@@ -932,10 +984,6 @@ class Keen1 extends Program{
     }
 }
 
-/*class Forme{
-    Coordonnee[] coords;
-    Forme next;
-}*/
 // https://asciinema.org/a/mUuas0YoQUVhxxbfKTwlgXwgT
 // https://asciinema.org/a/HMi858kuezszd84XotFhL2cT6
 // https://asciinema.org/a/DexW5D7p2iHwaEwqbdYdMoSBS
@@ -943,6 +991,7 @@ class Keen1 extends Program{
 // https://asciinema.org/a/SHub0zT5cOwfaqXZiKgDZcdM8
 // https://asciinema.org/a/iEF51do9YsEaHy7o4dYr2pWZZ
 // https://asciinema.org/a/nMXMqCLgQ0E1LeAp5s93kDgl1
+// https://asciinema.org/a/IFGxEExh6obXtubTFzHlT5zOn
 // TODO:
 //     -  ajouter fonction pour avertir qu'une valeur est déjà présente dans la colonne et/ou ligne ou qu'elle ne permet d'avoir la contrainte si tout le bloc est rempli
 //     -  ajouter fonction qui detecte violation contrainte suduku
