@@ -346,7 +346,7 @@ class Keen1 extends Program{
                     boolean badForme;
                     do{
                         idx++;
-                        idF = idx < 144 ? getRandom(11)+1:0;
+                        idF = idx < formes.size()*formes.size() ? getRandom(formes.size()-1)+1:0;
                         coords = formes.get(idF);
                         badForme = isBadForme(coords, helper, l, c);
                     }while(badForme);
