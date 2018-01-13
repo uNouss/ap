@@ -278,8 +278,8 @@ class Keen1 extends Program{
 
     String toString(ListeForme  f){
         String _f = "";
-        for(ListeForme p = f; p != null ; p = f.next){
-            _f = coordsToString(f.coords);
+        for(ListeForme p = f; p != null ; p = p.next){
+            _f = coordsToString(p.coords);
         }
         return _f;
     }
