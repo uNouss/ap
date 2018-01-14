@@ -996,7 +996,7 @@ class Keen1 extends Program{
         }while(!isWin());
         String duration = getDuration(getTime() - start);
         printArene(y, x);
-        println(ANSI_GREEN_BG+ANSI_BOLD+"Victoire en "+duration+" ^^"+ANSI_RESET);
+        println(ANSI_BLUE_BG+ANSI_BOLD+ANSI_BLACK+"Victoire en "+duration+" ^^"+ANSI_RESET);
     }
 }
 
