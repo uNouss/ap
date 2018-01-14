@@ -352,23 +352,21 @@ class Keen1 extends Program{
     void testInitFormes(){
         initFormes();
         assertEquals("(0,0)", coordsToString(formes.get(0)));
-        assertEquals("(0,0)(0,1)(1,0)(1,1)", coordsToString(formes.get(1)));
-        assertEquals("(0,0)(1,0)", coordsToString(formes.get(2)));
-        assertEquals("(0,0)(0,1)", coordsToString(formes.get(3)));
-        assertEquals("(0,0)(1,-1)(1,0)", coordsToString(formes.get(4)));
-        assertEquals("(0,0)(1,0)(1,1)", coordsToString(formes.get(5)));
-        assertEquals("(0,0)(0,1)(1,1)", coordsToString(formes.get(6)));
-        assertEquals("(0,0)(0,1)(1,0)", coordsToString(formes.get(7)));
-        assertEquals("(0,0)(1,0)(2,0)", coordsToString(formes.get(8)));
-        assertEquals("(0,0)(0,1)(0,2)", coordsToString(formes.get(9)));
-        assertEquals("(0,0)(1,0)(1,1)(2,0)(1,-1)", coordsToString(formes.get(10)));
-        assertEquals("(0,0)(0,1)(0,2)(1,1)", coordsToString(formes.get(11)));
+        assertEquals("(0,0)(1,0)", coordsToString(formes.get(1)));
+        assertEquals("(0,0)(0,1)", coordsToString(formes.get(2)));
+        assertEquals("(0,0)(1,-1)(1,0)", coordsToString(formes.get(3)));
+        assertEquals("(0,0)(1,0)(1,1)", coordsToString(formes.get(4)));
+        assertEquals("(0,0)(0,1)(1,1)", coordsToString(formes.get(5)));
+        assertEquals("(0,0)(0,1)(1,0)", coordsToString(formes.get(6)));
+        assertEquals("(0,0)(1,0)(2,0)", coordsToString(formes.get(7)));
+        assertEquals("(0,0)(0,1)(0,2)", coordsToString(formes.get(8)));
+        assertEquals("(0,0)(0,1)(1,0)(1,1)", coordsToString(formes.get(9)));
+        assertEquals("(0,0)(0,1)(0,2)(1,1)", coordsToString(formes.get(10)));
     }
 
     void initFormes(){
         Coordonnee[][] _formes = new Coordonnee[][]{
             {newCoordonnee(0,0)},
-            {newCoordonnee(0,0), newCoordonnee(0,1), newCoordonnee(1,0), newCoordonnee(1,1)},
             {newCoordonnee(0,0), newCoordonnee(1,0)},
             {newCoordonnee(0,0), newCoordonnee(0,1)},
             {newCoordonnee(0,0), newCoordonnee(1,-1), newCoordonnee(1,0)},
@@ -377,10 +375,11 @@ class Keen1 extends Program{
             {newCoordonnee(0,0), newCoordonnee(0,1), newCoordonnee(1,0)},
             {newCoordonnee(0,0), newCoordonnee(1,0), newCoordonnee(2,0)},
             {newCoordonnee(0,0), newCoordonnee(0,1), newCoordonnee(0,2)},
-            {newCoordonnee(0,0), newCoordonnee(1,0), newCoordonnee(1,1), newCoordonnee(2,0), newCoordonnee(1,-1)},
+            {newCoordonnee(0,0), newCoordonnee(0,1), newCoordonnee(1,0), newCoordonnee(1,1)},
             {newCoordonnee(0,0), newCoordonnee(0,1), newCoordonnee(0,2), newCoordonnee(1,1)},
             {newCoordonnee(0,0), newCoordonnee(1,0), newCoordonnee(2,0), newCoordonnee(1,1)},
-            {newCoordonnee(0,0), newCoordonnee(1,0), newCoordonnee(1,-1), newCoordonnee(1,1)}
+            {newCoordonnee(0,0), newCoordonnee(1,0), newCoordonnee(1,-1), newCoordonnee(1,1)},
+            {newCoordonnee(0,0), newCoordonnee(1,0), newCoordonnee(1,1), newCoordonnee(2,0), newCoordonnee(1,-1)}
         };
         for(int idx = 0; idx < length(_formes); idx++){
             formes.add(_formes[idx]);
@@ -443,9 +442,9 @@ class Keen1 extends Program{
 
     void initBlocsTest(){
         blocs.clear();
-        blocs.add(newBloc(0,9));
-        blocs.add(newBloc(3,2));
-        blocs.add(newBloc(4,5));
+        blocs.add(newBloc(0,8));
+        blocs.add(newBloc(3,1));
+        blocs.add(newBloc(4,4));
         blocs.add(newBloc(5,0));
     }
 
@@ -510,8 +509,8 @@ class Keen1 extends Program{
 
     void testIsFindCoord(){
         initTests();
-        assertTrue(isFindCoord(formes.get(4), newCoordonnee(1,-1)));
-        assertFalse(isFindCoord(formes.get(4), newCoordonnee(-1,-1)));
+        assertTrue(isFindCoord(formes.get(3), newCoordonnee(1,-1)));
+        assertFalse(isFindCoord(formes.get(3), newCoordonnee(-1,-1)));
     }
 
     boolean isFindCoord(Coordonnee[] tabCoord, Coordonnee c){
@@ -569,7 +568,6 @@ class Keen1 extends Program{
 
     void testIsValidContrainteBloc(){
         initTests();
-
         assertTrue(isValidContrainteBloc(blocs.get(0)));
         setContrainte(blocs.get(3), newContrainte(2, '='));
         assertFalse(isValidContrainteBloc(blocs.get(3)));
@@ -647,7 +645,7 @@ class Keen1 extends Program{
     void testUpdateHelper(){
         initTests();
         boolean[] helper = initHelper();
-        updateHelper(formes.get(1), helper, 1, 0);
+        updateHelper(formes.get(9), helper, 1, 0);
         assertFalse(helper[3]);
         assertFalse(helper[4]);
         assertFalse(helper[6]);
@@ -996,7 +994,7 @@ class Keen1 extends Program{
         }while(!isWin());
         String duration = getDuration(getTime() - start);
         printArene(y, x);
-        println(ANSI_BLUE_BG+ANSI_BOLD+ANSI_BLACK+"Victoire en "+duration+" ^^"+ANSI_RESET);
+        println(ANSI_BLUE_BG+ANSI_BOLD+"VICTOIRE en "+duration+" ^^"+ANSI_RESET);
     }
 }
 
