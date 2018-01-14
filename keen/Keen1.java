@@ -236,7 +236,8 @@ class Keen1 extends Program{
      * ######################################################
      */
     //FIXME: completer l'implemetation de ListeForme et ListeBloc pour se passer des ArrayList
-    /*ListeForme newListeForme(Coordonnee[] coords){
+    /*
+    ListeForme newListeForme(Coordonnee[] coords){
         ListeForme lf = new ListeForme();
         lf.coords = coords;
         lf.next = null;
@@ -256,7 +257,7 @@ class Keen1 extends Program{
         return 1+size(next(lf));
     }
 
-    ListeForme add(ListeForme lf, Coordonnee[] coords){
+    ListeForme addAux(ListeForme lf, Coordonnee[] coords){
         ListeForme _lf = new ListeForme();
         if(lf == null){
             _lf.coords = coords;
@@ -268,6 +269,10 @@ class Keen1 extends Program{
             _lf.next = add(lf.next, coords);
             return _lf;
         }
+    }
+
+    void add(ListeForme lf, Coordonnee[] coords){
+        lf = addAux(lf, coords);
     }
 
     Coordonnee[] get(ListeForme lf, int idx){
