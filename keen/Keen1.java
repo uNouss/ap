@@ -842,6 +842,20 @@ class Keen1 extends Program{
         return (int)(random()*max);
     }
 
+    void testGetDuration(){
+        assertEquals("9min 36s", getDuration(576000));
+    }
+
+    String getDuration(long milliseconds){
+        int seconds = (int) (milliseconds / 1000) % 60 ;
+        int minutes = (int) ((milliseconds / (1000*60)) % 60);
+        int hours   = (int) ((milliseconds / (1000*60*60)) % 24);
+        String duration = (hours > 0) ? hours+"h ": "";
+        duration += (minutes > 0) ? minutes+"min ": "";
+        duration += (seconds > 0) ? seconds+"s":"";
+        return duration;
+    }
+
     /*
      * ######################################################
      * #                  Affichages                        #
@@ -972,6 +986,7 @@ class Keen1 extends Program{
         initContraintes();
         printGrid();
         int x = 0, y = 0;
+        long start = getTime();
         do{
             printArene(y, x);
             String input = input();
@@ -979,8 +994,9 @@ class Keen1 extends Program{
             x = stringToInt(substring(input,1,2));
             arene[y][x] = stringToInt(substring(input,3,length(input)));
         }while(!isWin());
+        String duration = getDuration(getTime() - start);
         printArene(y, x);
-        println(ANSI_GREEN_BG+ANSI_BOLD+"Victoire ^^"+ANSI_RESET);
+        println(ANSI_GREEN_BG+ANSI_BOLD+"Victoire en "+duration+" ^^"+ANSI_RESET);
     }
 }
 
