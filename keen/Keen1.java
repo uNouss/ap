@@ -729,13 +729,8 @@ class Keen1 extends Program{
     }
 
     void testGetColumn(){
-        arene = new int[][]{
-            {1, 2, 3, 4, 5},
-                {6, 7, 8, 9, 10},
-                {11, 12, 13, 14, 15},
-                {16, 17, 18, 18, 20}
-        };
-        assertArrayEquals(new int[]{3, 8, 13, 18}, getColumn(2));
+        initAreneTest();
+        assertArrayEquals(new int[]{1, 2, 3}, getColumn(1));
     }
 
     int[] getColumn(int col){
@@ -747,13 +742,8 @@ class Keen1 extends Program{
     }
 
     void testGetRow(){
-        arene = new int[][]{
-            {1, 2, 3, 4, 5},
-                {6, 7, 8, 9, 10},
-                {11, 12, 13, 14, 15},
-                {16, 17, 18, 18, 20}
-        };
-        assertArrayEquals(new int[]{11, 12, 13, 14, 15}, getRow(2));
+        initAreneTest();
+        assertArrayEquals(new int[]{2, 1, 3}, getRow(0));
     }
 
     int[] getRow(int row){
