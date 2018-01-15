@@ -1,5 +1,3 @@
-//import java.util.ArrayList;
-
 class Keen extends Program{
     final String ANSI_PREFIX = "\033[1;48;5;";
     final String ANSI_POSTFIX = "m";
@@ -525,6 +523,18 @@ class Keen extends Program{
         return nbOccur > 1;
     }
 
+    boolean isColorNearRed(String color){
+        if ( equals(color, ANSI_PREFIX+CODE_COLORS[0]+ANSI_POSTFIX)
+            || equals(color, ANSI_PREFIX+CODE_COLORS[1]+ANSI_POSTFIX)
+            || equals(color, ANSI_PREFIX+CODE_COLORS[4]+ANSI_POSTFIX)
+            || equals(color, ANSI_PREFIX+CODE_COLORS[6]+ANSI_POSTFIX)
+            || equals(color, ANSI_PREFIX+CODE_COLORS[16]+ANSI_POSTFIX)
+            || equals(color, ANSI_PREFIX+CODE_COLORS[26]+ANSI_POSTFIX)){
+                return true;
+            }
+        return false;
+    }
+
     void testIsDigit(){
         assertTrue(isDigit('0'));
         assertFalse(isDigit('O'));
@@ -851,13 +861,14 @@ class Keen extends Program{
             car += 1;
             for(int c = 0; c < length(arene, 2); c++){
                 color = findColor(newCoordonnee(l,c));
-                String colhLT = (hLT && (l == y || c == x) && arene[l][c] == value) ? ANSI_BLINK_SLOW : "";
+                String colorHighligth = ( isColorNearRed(color)) ? ANSI_BLUE: ANSI_RED;
+                String colhLT = (hLT && (l == y || c == x) && arene[l][c] == value) ? colorHighligth : "";
                 String disp = (arene[l][c] == 0) ? " ":arene[l][c]+"";
                 print(color+ANSI_BOLD);
                 if( idxB < size(blocs)
                         && l*length(arene,1)+c == getOrg(get(blocs, idxB))){
                     String clue = toString(getContrainte(get(blocs, idxB)));
-                    String colhLB = (isFilled(get(blocs, idxB)) && !isValidContrainteBloc(get(blocs, idxB))) ? ANSI_BLINK_SLOW : "";
+                    String colhLB = (isFilled(get(blocs, idxB)) && !isValidContrainteBloc(get(blocs, idxB))) ? colorHighligth : "";
                     print(ANSI_WHITE+colhLB+clue+ANSI_RESET+color+colhLT+String.format("%"+(7-length(clue))+"s",disp)+ANSI_RESET+"|");
                     idxB += 1;
                         }
