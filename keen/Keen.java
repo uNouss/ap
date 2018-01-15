@@ -260,6 +260,13 @@ class Keen extends Program{
         return af.coords[pos];
     }
 
+    void clear(ArrayForme af){
+        for(int idx = 0; idx < size(af); idx++){
+            af.coords[idx] = null;
+        }
+        af.size = 0;
+    }
+
 
     /*
      * ######################################################
@@ -291,8 +298,11 @@ class Keen extends Program{
         return ab.blocs[pos];
     }
 
-    ArrayBloc clear(){
-        return newArrayBloc();
+    void clear(ArrayBloc ab){
+        for(int idx = 0; idx < size(ab); idx++){
+            ab.blocs[idx] = null;
+        }
+        ab.size = 0;
     }
 
     /*
@@ -343,6 +353,7 @@ class Keen extends Program{
     }
 
     void initFormes(){
+        clear(formes);
         Coordonnee[][] _formes = new Coordonnee[][]{
             {newCoordonnee(0,0)},
             {newCoordonnee(0,0), newCoordonnee(1,0)},
@@ -359,7 +370,7 @@ class Keen extends Program{
             {newCoordonnee(0,0), newCoordonnee(1,0), newCoordonnee(1,-1), newCoordonnee(1,1)},
             {newCoordonnee(0,0), newCoordonnee(1,0), newCoordonnee(1,1), newCoordonnee(2,0), newCoordonnee(1,-1)}
         };
-        for(int idx = 0; idx < length(_formes); idx++){
+        for(int idx = 0; idx < length(_formes, 1); idx++){
             add(formes, _formes[idx]);
         }
     }
@@ -388,7 +399,7 @@ class Keen extends Program{
     }
 
     void testInitHelper(){
-        initTests();
+        initAreneTest();
         assertArrayEquals(new boolean[] {
             true, true, true,
                 true, true, true,
@@ -412,14 +423,14 @@ class Keen extends Program{
 
     void initTests(){
         initFormes();
-        initAreneTest();
         initBlocsTest();
+        initAreneTest();
         addContrainte();
         addColor();
     }
 
     void initBlocsTest(){
-        blocs = clear();
+        clear(blocs);
         add(blocs, newBloc(0,8));
         add(blocs, newBloc(3,1));
         add(blocs, newBloc(4,4));

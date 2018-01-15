@@ -58,11 +58,11 @@ class TestList extends Program{
         return ab.blocs[pos];
     }
 
-    ArrayBloc clear(ArrayBloc blocs){
-        println("je supp tout moi "+blocs+" "+size(blocs));
-        blocs = newArrayBloc();
-        println("moi a present "+blocs+" "+size(blocs));
-        return blocs;
+    void clear(ArrayBloc ab){
+        for(int idx = 0; idx < size(ab); idx++){
+            ab.blocs[idx] = null;
+        }
+        ab.size = 0;
     }
 
     //ArrayForme
@@ -115,9 +115,10 @@ class TestList extends Program{
 
         println(blocs.blocs[0].org+":"+blocs.blocs[0].type+", "+get(formes, blocs.blocs[0].type));
         if ( ! isEmpty(blocs) ) println("je ne suis pas null");
-        blocs = clear(blocs);
+        println(size(blocs)+" @ "+blocs);
+        clear(blocs);
         println(size(blocs)+" @ "+blocs);
         if ( isEmpty(blocs)) println("je suis null là");
-        println(blocs.blocs[0].org+":"+blocs.blocs[0].type+", "+get(formes, blocs.blocs[0].type));
+        println(blocs.blocs);
     }
 }
