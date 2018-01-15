@@ -10,7 +10,7 @@ class Keen extends Program{
     ArrayList<Coordonnee[]> formes = new ArrayList<>();
     ArrayList<Bloc> blocs = new ArrayList<>();
 
-    final int[] CODE_COLORS = new int[]{1, 2, 8, 20, 5, 12, 130, 0, 104, 43, 208, 52, 57, 18, 129, 30, 21, 93, 23, 34, 25, 36, 27, 38, 29, 32, 200, 22, 33, 24, 88, 26, 37, 28, 39, 10, 41, 245, 13, 44, 1, 54,17, 88, 9, 8, 19, 200};
+    final int[] CODE_COLORS = new int[]{1, 208, 8, 20, 5, 12, 130, 0, 104, 43, 2, 52, 57, 18, 129, 30, 21, 93, 23, 34, 25, 36, 27, 38, 29, 32, 200, 22, 33, 24, 88, 26, 37, 28, 39, 10, 41, 245, 13, 44, 1, 54,17, 88, 9, 8, 19, 200};
 
     /*
      * ######################################################
@@ -232,66 +232,38 @@ class Keen extends Program{
 
     /*
      * ######################################################
-     * #                     ListeFormes                    #
+     * #                     ArrayFormes                    #
      * ######################################################
      */
     //FIXME: completer l'implemetation de ListeForme et ListeBloc pour se passer des ArrayList
     /*
-    ListeForme newListeForme(Coordonnee[] coords){
-        ListeForme lf = new ListeForme();
-        lf.coords = coords;
-        lf.next = null;
-        return lf;
+    ArrayForme newArrayForme(){
+        ArrayForme af = new ArrayForme();
+        af.coords = new Coordonnee[16][];
+        af.size = 0;
+        return af;
     }
 
-    boolean isEmpty(ListeForme lf){
-        return lf == null;
+    int size(ArrayForme af){
+        return af.size;
     }
 
-    ListeForme next(ListeForme lf){
-        return lf.next;
+    boolean isEmpty(ArrayForme af ){
+        return af.size == 0;
     }
 
-    int size(ListeForme lf){
-        if(isEmpty(lf)) return 0;
-        return 1+size(next(lf));
+    void add(ArrayForme af, Coordonnee[] coords){
+        af.coords[af.size] = coords;
+        af.size++;
     }
 
-    ListeForme addAux(ListeForme lf, Coordonnee[] coords){
-        ListeForme _lf = new ListeForme();
-        if(lf == null){
-            _lf.coords = coords;
-            _lf.next = null;
-            return _lf;
-        }
-        else{
-            _lf.coords = lf.coords;
-            _lf.next = add(lf.next, coords);
-            return _lf;
-        }
-    }
-
-    void add(ListeForme lf, Coordonnee[] coords){
-        lf = addAux(lf, coords);
-    }
-
-    Coordonnee[] get(ListeForme lf, int idx){
-        if(idx < 0 || idx >= size(lf) || lf == null ) return null;
-        if(idx == 0) return lf.coords;
-        return get(lf.next, idx - 1);
-    }
-
-    String toString(ListeForme  f){
-        String _f = "";
-        for(ListeForme p = f; p != null ; p = p.next){
-            _f = coordsToString(p.coords);
-        }
-        return _f;
+    Coordonnee[] get(ArrayForme af, int pos){
+        return af.coords[pos];
     }
 
     /*
      * ######################################################
-     * #                     ListeBloc                    #
+     * #                     ArrayBloc                    #
      * ######################################################
      */
 
