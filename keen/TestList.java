@@ -36,7 +36,7 @@ class TestList extends Program{
     // ArrayBloc
     ArrayBloc newArrayBloc(){
         ArrayBloc ab = new ArrayBloc();
-        ab.blocs = new Bloc[81];
+        ab.blocs = new Bloc[41];
         ab.size = 0;
         return ab;
     }
@@ -56,6 +56,13 @@ class TestList extends Program{
 
     Bloc get(ArrayBloc ab, int pos){
         return ab.blocs[pos];
+    }
+
+    ArrayBloc clear(ArrayBloc blocs){
+        println("je supp tout moi "+blocs+" "+size(blocs));
+        blocs = newArrayBloc();
+        println("moi a present "+blocs+" "+size(blocs));
+        return blocs;
     }
 
     //ArrayForme
@@ -83,25 +90,34 @@ class TestList extends Program{
         return af.coords[pos];
     }
 
+    void clear(ArrayForme af){
+        af = newArrayForme();
+    }
     //TEST
     void algorithm(){
         initFormes();
-        ArrayForme af = newArrayForme();
-        ArrayBloc ab = newArrayBloc();
 
-        println(size(af)+" ");
+        ArrayForme formes = newArrayForme();
+        ArrayBloc blocs = newArrayBloc();
+
+        println(size(formes)+" ");
 
         for(int idx = 0; idx < length(_formes, 1); idx++){
-            add(af, _formes[idx]);
-            print(size(af)+" ");
+            add(formes, _formes[idx]);
+            print(size(formes)+" ");
         }
         println();
-        for(int idx = 0; idx < size(af); idx++){
-            println(get(af, idx));
+        for(int idx = 0; idx < size(formes); idx++){
+            println(get(formes, idx));
         }
 
-        add(ab, newBloc(0,9));
+        add(blocs, newBloc(0,9));
 
-        print(ab.blocs[0].org+":"+ab.blocs[0].type+", "+get(af, ab.blocs[0].type));
+        println(blocs.blocs[0].org+":"+blocs.blocs[0].type+", "+get(formes, blocs.blocs[0].type));
+        if ( ! isEmpty(blocs) ) println("je ne suis pas null");
+        blocs = clear(blocs);
+        println(size(blocs)+" @ "+blocs);
+        if ( isEmpty(blocs)) println("je suis null là");
+        println(blocs.blocs[0].org+":"+blocs.blocs[0].type+", "+get(formes, blocs.blocs[0].type));
     }
 }
