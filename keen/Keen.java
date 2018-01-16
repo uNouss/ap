@@ -272,10 +272,10 @@ class Keen extends Program{
     void testAddFormes(){
         ArrayForme af = newArrayForme();
         add(af,  new Coordonnee[]{newCoordonnee(0,-1), newCoordonnee(1,0)});
-        assertEquals("(O,-1)(1,0)", toString(af));
+        assertEquals("(0,-1)(1,0)\n", toString(af));
         assertEquals(1, size(af));
         add(af,  new Coordonnee[]{newCoordonnee(0,0), newCoordonnee(0,1)});
-        assertEquals("(O,-1)(1,0)\n(0,0)(0,1)", toString(af));
+        assertEquals("(0,-1)(1,0)\n(0,0)(0,1)\n", toString(af));
         assertEquals(2, size(af));
     }
 
@@ -289,14 +289,18 @@ class Keen extends Program{
         add(af,  new Coordonnee[]{newCoordonnee(0,-1), newCoordonnee(1,0)});
         add(af,  new Coordonnee[]{newCoordonnee(0,0), newCoordonnee(0,1)});
         assertEquals("(0,0)(0,1)", coordsToString(get(af, 1)));
-        assertEquals("(O,-1)(1,0)", coordsToString(get(af, 0)));
+        assertEquals("(0,-1)(1,0)", coordsToString(get(af, 0)));
     }
 
     Coordonnee[] get(ArrayForme af, int pos){
         return (pos >= 0 && pos < size(af)) ? af.coords[pos]: null;
     }
 
-    //void testClearFormes(){}
+    void testClearFormes(){
+        initFormes();
+        clear(formes);
+        assertEquals(0, size(formes));
+    }
 
     void clear(ArrayForme af){
         for(int idx = 0; idx < size(af); idx++){
@@ -305,7 +309,12 @@ class Keen extends Program{
         af.size = 0;
     }
 
-    //void testToStringFormes(){}
+    void testToStringFormes(){
+        ArrayForme af = newArrayForme();
+        add(af,  new Coordonnee[]{newCoordonnee(0,-1), newCoordonnee(1,0)});
+        add(af,  new Coordonnee[]{newCoordonnee(0,0), newCoordonnee(0,1)});
+        assertEquals("(0,-1)(1,0)\n(0,0)(0,1)\n", toString(af));
+    }
 
     String toString(ArrayForme af){
         String res = "";
@@ -322,41 +331,76 @@ class Keen extends Program{
      * ######################################################
      */
 
-    //void testNewArrayBlocs(){}
+    void testNewArrayBlocs(){
+        ArrayBloc ab = newArrayBloc();
+        assertEquals(41, length(ab.blocs));
+        assertEquals(0, size(ab));
+    }
 
     ArrayBloc newArrayBloc(){
         ArrayBloc ab = new ArrayBloc();
-        ab.blocs = new Bloc[81];
+        ab.blocs = new Bloc[41];
         ab.size = 0;
         return ab;
     }
 
-    //void testSizeBlocs(){}
+    void testSizeBlocs(){
+        ArrayBloc ab = newArrayBloc();
+        assertEquals(0, size(formes));
+        add(ab, newBloc(0,1));
+        assertEquals(1, size(ab));
+        add(ab, newBloc(1,2));
+        assertEquals(2, size(ab));
+    }
 
     int size(ArrayBloc ab){
         return ab.size;
     }
 
-    //void testIsEmptyBlocs(){}
+    void testIsEmptyBlocs(){
+        ArrayBloc ab = newArrayBloc();
+        assertTrue(isEmpty(ab));
+        add(ab,  newBloc(0,1));
+        assertFalse(isEmpty(ab));
+    }
 
     boolean isEmpty(ArrayBloc ab ){
         return ab.size == 0;
     }
 
-    //void testAddBlocs(){}
+    void testAddBlocs(){
+        ArrayBloc ab = newArrayBloc();
+        add(ab,  newBloc(0,2));
+        assertEquals("0:2\n", toString(ab));
+        assertEquals(1, size(ab));
+        add(ab,  newBloc(2,1));
+        assertEquals("0:2\n2:1\n", toString(ab));
+        assertEquals(2, size(ab));
+    }
 
     void add(ArrayBloc ab, Bloc b){
         ab.blocs[ab.size] = b;
         ab.size++;
     }
 
-    //void testGetBlocs(){}
+    void testGetBlocs(){
+        initBlocsTest();
+        assertEquals("3:1", toString(get(blocs, 1)));
+        assertEquals("0:8", toString(get(blocs, 0)));
+        assertEquals("4:4", toString(get(blocs, 2)));
+    }
+
 
     Bloc get(ArrayBloc ab, int pos){
         return ab.blocs[pos];
     }
 
-    //void testClearBlocs(){}
+    void testClearBlocs(){
+        initBlocsTest();
+        clear(blocs);
+        assertEquals(0, size(blocs));
+    }
+
 
     void clear(ArrayBloc ab){
         for(int idx = 0; idx < size(ab); idx++){
@@ -365,14 +409,16 @@ class Keen extends Program{
         ab.size = 0;
     }
 
-    //void testToStringBlocs(){}
+    void testToStringBlocs(){
+        initBlocsTest();
+        assertEquals("0:8\n3:1\n4:4\n5:0\n", toString(blocs));
+    }
+
 
     String toString(ArrayBloc ab){
         String res = "";
         for(int idxB = 0; idxB < size(ab); idxB++){
-            res += toString(get(ab, idxB));
-            //res += " : "+coordsToString(get(formes, getType(get(ab, idxB))));
-            res += ANSI_RESET;
+            res += toString(get(ab, idxB))+"\n";
         }
         return res;
     }
@@ -975,36 +1021,6 @@ class Keen extends Program{
             print("  ");
         }
         println();
-    }
-
-    void printTab(int[] tab){
-        for(int i = 0; i < length(tab); i++)
-            print(tab[i]+" ");
-        println();
-    }
-
-    void printCoords(Coordonnee[] tab){
-        for(int idx = 0; idx < length(tab) ; idx++){
-            print(String.format("%4s",toString(tab[idx])));
-        }
-    }
-
-    void printBlocs(){
-        for(int i = 0; i < size(blocs); i++){
-            print(toString(get(blocs, i))+" : ");
-            printCoords(get(formes, getType(get(blocs, i))));
-            println(ANSI_RESET);
-        }
-    }
-
-    void printFormes(){
-        for(int i = 0; i < size(formes); i++){
-            print(i+" :  ");
-            for(int j = 0; j < length(get(formes, i)); j++){
-                print(toString(get(formes, i)[j])+"  ");
-            }
-            println();
-        }
     }
 
     /*
