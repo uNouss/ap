@@ -233,7 +233,13 @@ class Keen extends Program{
      * #                     ArrayFormes                    #
      * ######################################################
      */
-    //FIXME: completer l'implemetation de ListeForme et ListeBloc pour se passer des ArrayList
+
+    void testNewArrayFormes(){
+        ArrayForme af = newArrayForme();
+        assertEquals(0, size(af));
+        assertEquals(16, length(af.coords, 1));
+    }
+
     ArrayForme newArrayForme(){
         ArrayForme af = new ArrayForme();
         af.coords = new Coordonnee[16][];
@@ -241,12 +247,36 @@ class Keen extends Program{
         return af;
     }
 
+    void testSizeFormes(){
+        initFormes();
+        assertEquals(14, size(formes));
+        add(formes, new Coordonnee[]{newCoordonnee(0,-1)});
+        assertEquals(15, size(formes));
+    }
+
     int size(ArrayForme af){
         return af.size;
     }
 
+    void testIsEmptyFormes(){
+        ArrayForme af = newArrayForme();
+        assertTrue(isEmpty(af));
+        add(af,  new Coordonnee[]{newCoordonnee(0,-1), newCoordonnee(1,0)});
+        assertFalse(isEmpty(af));
+    }
+
     boolean isEmpty(ArrayForme af ){
         return af.size == 0;
+    }
+
+    void testAddFormes(){
+        ArrayForme af = newArrayForme();
+        add(af,  new Coordonnee[]{newCoordonnee(0,-1), newCoordonnee(1,0)});
+        assertEquals("(O,-1)(1,0)", toString(af));
+        assertEquals(1, size(af));
+        add(af,  new Coordonnee[]{newCoordonnee(0,0), newCoordonnee(0,1)});
+        assertEquals("(O,-1)(1,0)\n(0,0)(0,1)", toString(af));
+        assertEquals(2, size(af));
     }
 
     void add(ArrayForme af, Coordonnee[] coords){
@@ -254,15 +284,35 @@ class Keen extends Program{
         af.size++;
     }
 
-    Coordonnee[] get(ArrayForme af, int pos){
-        return af.coords[pos];
+    void testGetFormes(){
+        ArrayForme af = newArrayForme();
+        add(af,  new Coordonnee[]{newCoordonnee(0,-1), newCoordonnee(1,0)});
+        add(af,  new Coordonnee[]{newCoordonnee(0,0), newCoordonnee(0,1)});
+        assertEquals("(0,0)(0,1)", coordsToString(get(af, 1)));
+        assertEquals("(O,-1)(1,0)", coordsToString(get(af, 0)));
     }
+
+    Coordonnee[] get(ArrayForme af, int pos){
+        return (pos >= 0 && pos < size(af)) ? af.coords[pos]: null;
+    }
+
+    //void testClearFormes(){}
 
     void clear(ArrayForme af){
         for(int idx = 0; idx < size(af); idx++){
             af.coords[idx] = null;
         }
         af.size = 0;
+    }
+
+    //void testToStringFormes(){}
+
+    String toString(ArrayForme af){
+        String res = "";
+        for(int idxF = 0; idxF < size(af); idxF++){
+            res += coordsToString(get(af, idxF))+"\n";
+        }
+        return res;
     }
 
 
@@ -272,6 +322,8 @@ class Keen extends Program{
      * ######################################################
      */
 
+    //void testNewArrayBlocs(){}
+
     ArrayBloc newArrayBloc(){
         ArrayBloc ab = new ArrayBloc();
         ab.blocs = new Bloc[81];
@@ -279,28 +331,50 @@ class Keen extends Program{
         return ab;
     }
 
+    //void testSizeBlocs(){}
+
     int size(ArrayBloc ab){
         return ab.size;
     }
 
+    //void testIsEmptyBlocs(){}
+
     boolean isEmpty(ArrayBloc ab ){
         return ab.size == 0;
     }
+
+    //void testAddBlocs(){}
 
     void add(ArrayBloc ab, Bloc b){
         ab.blocs[ab.size] = b;
         ab.size++;
     }
 
+    //void testGetBlocs(){}
+
     Bloc get(ArrayBloc ab, int pos){
         return ab.blocs[pos];
     }
+
+    //void testClearBlocs(){}
 
     void clear(ArrayBloc ab){
         for(int idx = 0; idx < size(ab); idx++){
             ab.blocs[idx] = null;
         }
         ab.size = 0;
+    }
+
+    //void testToStringBlocs(){}
+
+    String toString(ArrayBloc ab){
+        String res = "";
+        for(int idxB = 0; idxB < size(ab); idxB++){
+            res += toString(get(ab, idxB));
+            //res += " : "+coordsToString(get(formes, getType(get(ab, idxB))));
+            res += ANSI_RESET;
+        }
+        return res;
     }
 
     /*
@@ -854,13 +928,12 @@ class Keen extends Program{
         printSeparator();
         char car = 'A';
         int idxB = 0, value = arene[y][x];
-        String color;
         boolean hLT = (isMoreOne(getColumn(x), value) || isMoreOne(getRow(y), value)) ? true: false;
         for(int l = 0; l < length(arene, 1); l++){
             print(ANSI_BOLD+ANSI_BLUE+car+ANSI_RESET+"|");
             car += 1;
             for(int c = 0; c < length(arene, 2); c++){
-                color = findColor(newCoordonnee(l,c));
+                String color = findColor(newCoordonnee(l,c));
                 String colorHighligth = ( isColorNearRed(color)) ? ANSI_BLUE: ANSI_RED;
                 String colhLT = (hLT && (l == y || c == x) && arene[l][c] == value) ? colorHighligth : "";
                 String disp = (arene[l][c] == 0) ? " ":arene[l][c]+"";
