@@ -45,7 +45,7 @@ Un compteur permet de dire combien de temps vous avez mis pour remplir la grille
 
 ## Exemples de parties
 
-[![asciicast](https://asciinema.org/a/Dlekz2vfdJ5UBcTwUcHWeg6zW.png)](https://asciinema.org/a/Dlekz2vfdJ5UBcTwUcHWeg6zW)
+[![asciicast](./shots/thumbs.png)](https://asciinema.org/a/Dlekz2vfdJ5UBcTwUcHWeg6zW)
 
 https://asciinema.org/a/NMsY7P2aCCvsZBVG0bpM6FKjj
 
