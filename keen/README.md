@@ -24,16 +24,15 @@ Les fonctionnalités proposées reste limités dans cette version, le seul param
 
 [![grille.png](./shots/grille.png)]
 
-Au lancement du jeu, il suffit de lancer depuis un terminal (de préference xterm/konsole) des commandes suivantes:
+Au lancement du jeu, il suffit de lancer depuis un terminal (de préference xterm/konsole) les commandes suivantes:
 
-`./compile.sh` <kbd>RET</kbd> permet de lancer la compilation des fichiers présents dans **src** et création des fichiers **.class** dans **classes**
+`./compile.sh` <kbd>RET</kbd> pour lancer la compilation des fichiers présents dans **src** et création des fichiers **.class** dans **classes**
 
 
-`./run.sh Keen` <kbd>RET</kbd> permet de lancer le jeu
+`./run.sh Keen` <kbd>RET</kbd> pour lancer le jeu
 
-Votre objectif est de remplir la grille aléatoire dont vous aurez choisi la taille en tre 3 et 9 grâce aux indices présents sur les blocs.
-Plus la taille est grande, le remplissage de la grille devient complexe.
-
+Votre objectif est de remplir la grille aléatoire dont vous aurez choisi la taille entre 3 et 9 grâce aux indices présents sur les blocs.
+Plus la taille est grande, plus le remplissage de la grille devient complexe.
 
 Vous devez séléctionner une case sur la quelle placer le chiffre de votre choix; ce chiffre doit être compris entre 1 et la taille de la grille.
 
@@ -49,3 +48,12 @@ Un compteur permet de dire combien de temps vous avez mis pour remplir la grille
 [![asciicast](https://asciinema.org/a/NMsY7P2aCCvsZBVG0bpM6FKjj.png)](https://asciinema.org/a/NMsY7P2aCCvsZBVG0bpM6FKjj)
 
 [![asciicast](https://asciinema.org/a/Dlekz2vfdJ5UBcTwUcHWeg6zW.png)](https://asciinema.org/a/Dlekz2vfdJ5UBcTwUcHWeg6zW)
+
+https://asciinema.org/a/mUuas0YoQUVhxxbfKTwlgXwgT
+https://asciinema.org/a/HMi858kuezszd84XotFhL2cT6
+https://asciinema.org/a/DexW5D7p2iHwaEwqbdYdMoSBS
+https://asciinema.org/a/FwGtvD8p0nmof3j7EsKZO2o5q
+https://asciinema.org/a/SHub0zT5cOwfaqXZiKgDZcdM8
+https://asciinema.org/a/iEF51do9YsEaHy7o4dYr2pWZZ
+https://asciinema.org/a/nMXMqCLgQ0E1LeAp5s93kDgl1
+https://asciinema.org/a/IFGxEExh6obXtubTFzHlT5zOn

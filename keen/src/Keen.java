@@ -1076,18 +1076,3 @@ class Keen extends Program{
         println(ANSI_BLUE_BG+ANSI_BOLD+"VICTOIRE en "+duration+" ^^"+ANSI_RESET);
     }
 }
-
-// https://asciinema.org/a/mUuas0YoQUVhxxbfKTwlgXwgT
-// https://asciinema.org/a/HMi858kuezszd84XotFhL2cT6
-// https://asciinema.org/a/DexW5D7p2iHwaEwqbdYdMoSBS
-// https://asciinema.org/a/FwGtvD8p0nmof3j7EsKZO2o5q
-// https://asciinema.org/a/SHub0zT5cOwfaqXZiKgDZcdM8
-// https://asciinema.org/a/iEF51do9YsEaHy7o4dYr2pWZZ
-// https://asciinema.org/a/nMXMqCLgQ0E1LeAp5s93kDgl1
-// https://asciinema.org/a/IFGxEExh6obXtubTFzHlT5zOn
-// TODO:
-//     -  ajouter fonction pour avertir qu'une valeur est déjà présente dans la colonne et/ou ligne ou qu'elle ne permet d'avoir la contrainte si tout le bloc est rempli
-//     -  ajouter fonction qui detecte violation contrainte suduku
-//     -  ajouter fonction qui detecte violation contrainte bloc
-//     -  amelioration de l'affichage comme sur le template
-//     -  definir structure de donnée liste pour remplacer ArrayList
