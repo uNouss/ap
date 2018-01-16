@@ -20,8 +20,6 @@ L'intérêt pédagogique répose sur l'apprentissage des calculs arithmétiques 
 
 Les fonctionnalités proposées reste limités dans cette version, le seul paramétrage possible est le choix de la taille.
 
-**demo**: https://framadrive.org/s/4LTwB81OMnWIG2E
-
 ## Utilisation de Keen
 
 ![grille.png](./shots/grille.png)
@@ -44,6 +42,8 @@ Par exemple `A0:4` aura pour effet de placer à la ligne `A` et le colonne `0` l
 Le jeu se termine quand vous avez correctement remplis la grille.
 
 Un compteur permet de dire combien de temps vous avez mis pour remplir la grille.
+
+**demo**: https://framadrive.org/s/4LTwB81OMnWIG2E
 
 ## Exemples de parties
 
