@@ -22,7 +22,7 @@ Les fonctionnalités proposées reste limités dans cette version, le seul param
 
 ## Utilisation de Keen
 
-[![grille.png](./shots/grille.png)]
+![grille.png](./shots/grille.png)
 
 Au lancement du jeu, il suffit de lancer depuis un terminal (de préference xterm/konsole) les commandes suivantes:
 
