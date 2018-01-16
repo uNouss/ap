@@ -6,19 +6,19 @@ uNouss
 
 ![grilleDepart.png](./shots/grilleDepart.png)
 
->> Le Keen plus connu sous le nom de kendoku ou kenken est un jeu de mathématique dérivé du suduku créé par le Japonais Tetsuya Miyamoto.
+> Le Keen plus connu sous le nom de kendoku ou kenken est un jeu de mathématique dérivé du suduku créé par le Japonais Tetsuya Miyamoto.
 
->> Le jeu consiste à compléter une grille par des chiffres en les trouvant par déduction ou par calcul.
+> Le jeu consiste à compléter une grille par des chiffres en les trouvant par déduction ou par calcul.
 
->> La grille est constitée d'un nombre égal de lignes et de colonnes contenant des blocs. Chaque bloc (ientifié par une couleur) peut contenir entre 1 et 5 cases pour cette variantes et peut avoir des formes variées.
+> La grille est constitée d'un nombre égal de lignes et de colonnes contenant des blocs. Chaque bloc (ientifié par une couleur) peut contenir entre 1 et 5 cases pour cette variantes et peut avoir des formes variées.
 
->> Le chiffre inscrit en haut à gauche de chaque bloc est le résultat de l'opération (addition, soustraction, multiplication, division), située juste à côté de ce chiffre, effectuée avec les chiffres des cases d'un même bloc.
+> Le chiffre inscrit en haut à gauche de chaque bloc est le résultat de l'opération (addition, soustraction, multiplication, division), située juste à côté de ce chiffre, effectuée avec les chiffres des cases d'un même bloc.
 
->> Comme pour le suduku, le but du jeu est de remplir toutes les cases de la grille avec des chiffres allant de 1 à la taille de la grille comprise sans jamais avoir deux fois le même chiffre dans la même colonne ou sur la même ligne.
+> Comme pour le suduku, le but du jeu est de remplir toutes les cases de la grille avec des chiffres allant de 1 à la taille de la grille comprise sans jamais avoir deux fois le même chiffre dans la même colonne ou sur la même ligne.
 
-L'intérêt pédagogique répose sur l'apprentissage des calculs arithmétiques simples et parfois qui nécessite quelques astuces de calculs. Cela peut permettre de réviser les règles de calculs.
+> L'intérêt pédagogique répose sur l'apprentissage des calculs arithmétiques simples et parfois qui nécessite quelques astuces de calculs. Cela peut permettre de réviser les règles de calculs.
 
-Les fonctionnalités proposées reste limités dans cette version, le seul paramétrage possible est le choix de la taille.
+> Les fonctionnalités proposées reste limités dans cette version, le seul paramétrage possible est le choix de la taille.
 
 ## Utilisation de Keen
 
@@ -26,7 +26,8 @@ Au lancement du jeu, il suffit de lancer depuis un terminal (de préference xter
 
 `./compile.sh` <kbd>RET</kbd>
 
->> lancer la compilation des fichiers présents dans **src** et création des fichiers **.class** dans **classes**
+> lancer la compilation des fichiers présents dans **src** et création des fichiers **.class** dans **classes**
+
 
 `./run.sh Keen` <kbd>RET</kbd> pour lancer le jeu
 
