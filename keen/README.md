@@ -20,7 +20,7 @@ L'intérêt pédagogique répose sur l'apprentissage des calculs arithmétiques 
 
 Les fonctionnalités proposées reste limités dans cette version, le seul paramétrage possible est le choix de la taille.
 
-**demo**: [![demoJeu](https://framadrive.org/s/4LTwB81OMnWIG2E)]
+**demo**: https://framadrive.org/s/4LTwB81OMnWIG2E
 
 ## Utilisation de Keen
 
