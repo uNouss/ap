@@ -22,6 +22,8 @@ Les fonctionnalités proposées reste limités dans cette version, le seul param
 
 ## Utilisation de Keen
 
+[![grille.png](./shots/grille.png)]
+
 Au lancement du jeu, il suffit de lancer depuis un terminal (de préference xterm/konsole) des commandes suivantes:
 
 `./compile.sh` <kbd>RET</kbd> permet de lancer la compilation des fichiers présents dans **src** et création des fichiers **.class** dans **classes**
