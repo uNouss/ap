@@ -4,7 +4,7 @@ uNouss
 
 ## Présentation de Keen
 
-![grilleDepart.png](./shots/grilleDepart.png)
+[![grilleDepart.png](./shots/grilleDepart.png)]
 
 Le Keen plus connu sous le nom de kendoku ou kenken est un jeu de mathématique dérivé du suduku créé par le Japonais Tetsuya Miyamoto.
 
@@ -41,3 +41,8 @@ Par exemple `A0:4` aura pour effet de placer à la ligne `A` et le colonne `0` l
 Le jeu se termine quand vous avez correctement remplis la grille.
 
 Un compteur permet de dire combien de temps vous avez mis pour remplir la grille.
+
+## Exemples de parties
+
+[![asciicast](https://asciinema.org/a/NMsY7P2aCCvsZBVG0bpM6FKjj.png)](https://asciinema.org/a/NMsY7P2aCCvsZBVG0bpM6FKjj)
+[![asciicast](https://asciinema.org/a/Dlekz2vfdJ5UBcTwUcHWeg6zW.png)](https://asciinema.org/a/Dlekz2vfdJ5UBcTwUcHWeg6zW)
