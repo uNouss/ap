@@ -24,7 +24,7 @@ Les fonctionnalités proposées restent limitées dans cette version, le seul pa
 
 ![grille.png](./shots/grille.png)
 
-Au lancement du jeu, il suffit de lancer depuis un terminal (de préference xterm/konsole) les commandes suivantes:
+Au lancement du jeu, il suffit de lancer depuis un terminal les commandes suivantes:
 
 `./compile.sh` <kbd>RET</kbd> pour lancer la compilation des fichiers présents dans **src** et création des fichiers **.class** dans **classes**
 
