@@ -429,6 +429,9 @@ class Keen extends Program{
      * ######################################################
      */
 
+    /*
+     * initiatialisation d'une grille de suduku valide
+     * */
     void initialisation(){
         int size = initSize();
         grid = new int[size][size];
@@ -470,6 +473,12 @@ class Keen extends Program{
         assertEquals("(0,0)(0,1)(0,2)(1,1)", coordsToString(get(formes, 10)));
     }
 
+    /*
+     * Initiatialisation des types de forme de bloc qui prend des coordonnées 
+     * TODO: se servir des formes pour implémenter les niveaux de difficultés
+     * les premiers sont les plus faciles et les derniers, si présent plusieurs fois
+     * demande des règles de calculs évolués comme les règles de divisibilités
+     * */
     void initFormes(){
         clear(formes);
         Coordonnee[][] _formes = new Coordonnee[][]{
@@ -493,6 +502,9 @@ class Keen extends Program{
         }
     }
 
+    /*
+     * En se servant de la grille de suduku, grid, et des ArrayForme, on genere aliatoirement des blocs pour paver l'arene de jeu
+     */
     void initBlocs(){
         boolean[] helper = initHelper();
         int idxColor = 0;
@@ -524,6 +536,9 @@ class Keen extends Program{
                 true, true, true} , initHelper());
     }
 
+    /*
+     * je me sers d'un tableau de boolean pour paver mon arene, elle me sert à garder une trace des cases déjà utilisé
+     */
     boolean[] initHelper(){
         boolean[] helper = new boolean[length(arene, 1)*length(arene, 1)];
         for(int idx = 0; idx < length(helper); idx++){
@@ -532,6 +547,13 @@ class Keen extends Program{
         return helper;
     }
 
+    /*
+     * une fois que les blocs sont définies, on gènere des contraintes en utilisant les règles de jeu
+     * si un bloc à une seule case, l'opération est = et la valeur de la case est la contrainte, utile aussi pour demarrer le jeu si présent
+     * une soustraction et une division ne peut être possible que sur des blocs à deux cases
+     * de plus une division doit être entière.
+     * l'addition et la multiplication peuvent être possible sur des blocs de 2 à n'importe quelle taille de bloc
+     */
     void initContraintes(){
         for(int idx = 0; idx < size(blocs); idx++){
             Bloc b = get(blocs, idx);
@@ -539,6 +561,9 @@ class Keen extends Program{
         }
     }
 
+    /*
+     * pour les test
+     */
     void initTests(){
         initFormes();
         initBlocsTest();
@@ -547,6 +572,9 @@ class Keen extends Program{
         addColor();
     }
 
+    /*
+     * que pour les test
+     */
     void initBlocsTest(){
         clear(blocs);
         add(blocs, newBloc(0,8));
@@ -555,6 +583,9 @@ class Keen extends Program{
         add(blocs, newBloc(5,0));
     }
 
+    /*
+     * sert que pour les test
+     */
     void initAreneTest(){
         arene = new int[][]{
             {2, 1, 3},
@@ -569,6 +600,10 @@ class Keen extends Program{
      * ######################################################
      */
 
+    /*
+     * pour tester si une valeur est déjà présente dans un tableau à une dimension
+     * utile dans le cas de la géneration de la grille de suduku et dans d'autre cas
+     * */
     void testInArray(){
         assertTrue(inArray(CODE_COLORS, 130));
         assertFalse(inArray(CODE_COLORS, 300));
@@ -601,6 +636,11 @@ class Keen extends Program{
             || y >= length(grid, 1);
     }
 
+    /*
+     * une fois qu'un type de forme est selectionné aléatoirement 
+     * cette fonction dis si elle est valide ou pas, si elle peut paver l'arene
+     *
+     */
     boolean isBadForme(Coordonnee[] coords, boolean[] helper, int l, int c){
         boolean badForme = false;
         for(int idxco = 0; idxco < length(coords); idxco++){
@@ -643,6 +683,11 @@ class Keen extends Program{
         return nbOccur > 1;
     }
 
+    /*
+     * je m'en sert pour eviter d'avoir une couleur de highlight, qui est en rouge, soit sur un fond rouge
+     * utile pour prévenir l'utilisateur qu'une valeur ne remplis pas une contrainte, lié à un bloc, ou une regle de suduku
+     * TODO: très rudimentaire pour les contraintes de lignes et de colonnes
+     */
     boolean isColorNearRed(String color){
         if ( equals(color, ANSI_PREFIX+CODE_COLORS[0]+ANSI_POSTFIX)
             || equals(color, ANSI_PREFIX+CODE_COLORS[1]+ANSI_POSTFIX)
@@ -672,6 +717,9 @@ class Keen extends Program{
         assertFalse(isValidInput("A0:03"));
     }
 
+    /*
+     * Pour tester validité de la saisie pour remplir l'arene
+     */
     boolean isValidInput(String input){
         return length(input) == 4
             && charAt(input, 0) >= 'A'
@@ -708,6 +756,9 @@ class Keen extends Program{
         assertTrue(isValidSuduku());
     }
 
+    /*
+     * pour verifier que l'arene respecte les règles du suduku
+     */
     boolean isValidSuduku(){
         int comparateur = sommeSuite(length(arene, 1));
         for (int l = 0; l < length(arene, 1); l++){
@@ -911,6 +962,10 @@ class Keen extends Program{
         return somme;
     }
 
+    /*
+     * pour donner une contrainte à un bloc
+     * en se servant des règles du jeu
+     */
     void putRandomContrainte(Bloc b, int[] tab){
         if( length(tab) ==  1 ) {
             setContrainte(b, newContrainte(tab[0], '='));
@@ -974,6 +1029,7 @@ class Keen extends Program{
         printSeparator();
         char car = 'A';
         int idxB = 0, value = arene[y][x];
+        // hLT pour highlighter si non respect des contraintes de lignes et de colonnes, TODO: à completer
         boolean hLT = (isMoreOne(getColumn(x), value) || isMoreOne(getRow(y), value)) ? true: false;
         for(int l = 0; l < length(arene, 1); l++){
             print(ANSI_BOLD+ANSI_BLUE+car+ANSI_RESET+"|");
@@ -981,6 +1037,7 @@ class Keen extends Program{
             for(int c = 0; c < length(arene, 2); c++){
                 String color = findColor(newCoordonnee(l,c));
                 String colorHighligth = ( isColorNearRed(color)) ? ANSI_BLUE: ANSI_RED;
+                // pour highlighter violation de contrainte lié à un bloc
                 String colhLT = (hLT && (l == y || c == x) && arene[l][c] == value) ? colorHighligth : "";
                 String disp = (arene[l][c] == 0) ? " ":arene[l][c]+"";
                 print(color+ANSI_BOLD);
@@ -1013,7 +1070,11 @@ class Keen extends Program{
         println();
     }
 
-    void printGrid(){
+    /*
+     * utilisé pour afficher la grille de suduku de depart avec masquages des valeurs
+     * sert à debloquer parfois :)
+    */
+     void printGrid(){
         for(int l = 0; l < length(grid, 1); l++){
             for(int c = 0; c < length(grid, 2); c++){
                 print(ANSI_BLACK_BG+ANSI_BLACK+grid[l][c]+" "+ANSI_RESET);
